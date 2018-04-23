@@ -1,0 +1,29 @@
+{
+  "name": "passberry",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node react-server/app.js",
+    "client": "cd react-ui && npm start && cd -",
+    "devstart": "concurrently \"npm run devserver\" \"npm run client\"",
+    "devserver": "nodemon react-server/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-validator": "^5.1.2",
+    "mysql": "^2.15.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "nodemon": "^1.17.3"
+  },
+  "description": ""
+}
