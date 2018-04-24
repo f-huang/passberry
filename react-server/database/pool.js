@@ -1,7 +1,7 @@
 "use strict";
 
 const mysql = require('mysql');
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'root',
@@ -9,4 +9,4 @@ const connection = mysql.createConnection({
     database: 'dev_passberry'
 });
 
-module.exports = connection;
+module.exports = pool;

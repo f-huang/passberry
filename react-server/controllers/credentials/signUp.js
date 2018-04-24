@@ -2,8 +2,20 @@
 
 const router = require('express').Router();
 
-router.post('/', (req, res) => {
+const addUser = require('../../models/User').addUser;
 
+router.post('/', (req, res) => {
+	const user = req.body;
+
+	addUser(user, (rows) => {
+		if (user) {
+			res.send("OK");
+		}
+		else {
+			res.send("NO");
+
+		}
+	});
 });
 
 module.exports = router;
