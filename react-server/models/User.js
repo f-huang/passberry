@@ -1,7 +1,7 @@
 "use strict";
 
 const pool = require('../database/pool');
-
+const query = require('../database/query');
 
 const EnumUserType = Object.freeze({
 	Tourist: "TOURIST",
@@ -20,15 +20,15 @@ const isMunicipality = (type) => type === EnumUserType.Municipality;
 const DEFAULT_USER_TYPE = EnumUserType.Tourist;
 
 
-const getUserTable = (user) => [
-	{column: 'mail', value: user.email},
-	{column: 'password', value: user.password},
-	{column: 'first_name', value: user.firstName},
-	{column: 'last_name', value: user.lastName},
-	{column: 'gender', value: user.gender},
-	{column: 'type', value: DEFAULT_USER_TYPE},
-	{column: 'country_code', value: user.country},
-	{column: 'birthday', value: user.birthday}
+const mapUserEntries = (user) => [
+	{tableName: 'mail', value: user.email},
+	{tableName: 'password', value: user.password},
+	{tableName: 'first_name', value: user.firstName},
+	{tableName: 'last_name', value: user.lastName},
+	{tableName: 'gender', value: user.gender},
+	{tableName: 'type', value: DEFAULT_USER_TYPE},
+	{tableName: 'address_id', value: 1},
+	// {tableName: 'birthday', value: user.dateOfBirth}
 ];
 
 
@@ -43,6 +43,16 @@ const getColumnsAsString = (columns, usual) => {
 	return columnsAsString;
 };
 
+const getValuesAsString = (columns)  => {
+	let str = "";
+	const count = (columns.match(/,/g) || []).length;
+	if (count === 0)
+		return str;
+	for (let i = 0; i < count + 1; i++)
+		str += (i === count) ? "?" : "?, ";
+	return (str);
+};
+
 
 exports.exists = (email, callback) => {
 	pool.query("SELECT `_id` FROM `user` WHERE `mail`=?", email,
@@ -52,6 +62,7 @@ exports.exists = (email, callback) => {
 		}
 	)
 };
+
 
 exports.getUserTypes = () => EnumUserType;
 
@@ -82,56 +93,43 @@ exports.getUserById = (id, columns, callback) => {
 
 exports.addUser = (user, callback) => {
 
-	function getValuesAsString(columns) {
-		let str = "";
-		const count = (columns.match(/,/g) || []).length;
-		if (count === 0)
-			return str;
-		for (let i = 0; i < count + 1; i++)
-			str += (i === count) ? "?" : "?, ";
-		return (str);
-	}
-
-	function addIntoDb(columns, values) {
+	const addIntoDb = (columns, values) => {
 		const valuesAsString = getValuesAsString(columns);
-		const query = `INSERT INTO \`user\`(${columns}) VALUES(${valuesAsString})
-				ON DUPLICATE KEY UPDATE 
-			`;
-
-		pool.query(query, values, (error, rows) => {
-			if (error) throw error;
+		const sql = `INSERT INTO \`user\`(${columns}) VALUES(${valuesAsString})`;
+		query(sql, values, (rows) => {
 			callback(rows);
 		});
-	}
-	const table = getUserTable(user);
+	};
+
+	const entries = mapUserEntries(user);
 
 	let columns = "";
 	let values = [];
 
-	for (let entry of table) {
-		if (!entry.value)
-			continue ;
-		columns += `\`${entry.column}\`, `;
-		values.push(entry.value);
+	for (let entry of entries) {
+		if (entry.value) {
+			columns += `\`${entry.tableName}\`, `;
+			values.push(entry.value);
+		}
 	}
 	addIntoDb(columns.slice(0, -2), values);
 };
 
 
 exports.updateUser = (user, callback) => {
-	const table = getUserTable(user);
-	let query = `UPDATE \`user\` SET `;
+	const entries = mapUserEntries(user);
+	let sql = `UPDATE \`user\` SET `;
 	let values = [];
 
-	for (let entry of table) {
-		if (!entry.value)
-			continue ;
-		query += `\`${entry.column}\` = ?, `;
-		values.push(entry.value);
+	for (let entry of entries) {
+		if (entry.value) {
+			sql += `\`${entry.tabIndex}\` = ?, `;
+			values.push(entry.value);
+		}
 	}
-	query.slice(0, -2).concat(` WHERE \`_id\`=${user.id}`);
-	pool.query(query, values, (error, rows) => {
-		if (error) throw error;
+	sql.slice(0, -2).concat(` WHERE \`_id\`= ?`);
+	values.push(user.id);
+	query(sql, values, (rows) => {
 		callback(rows);
 	});
 };

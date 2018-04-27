@@ -17,12 +17,27 @@ class SignUp extends Component {
 					<label htmlFor="SignUp-password">Password</label>
 					<input id="SignUp-password" name="password" type="password"/>
 					<br />
+					<label htmlFor="SignUp-date-of-birth">Date of birth</label>
+					<input id="SignUp-date-of-birth" name="dateOfBirth" type="text"/>
+					<br />
 					<label htmlFor="SignUp-gender-male">
 						<input id="SignUp-gender-male" name="gender" value="M" type="radio"/>Male
 					</label>
 					<label htmlFor="SignUp-gender-female">
 						<input id="SignUp-gender-female" name="gender" value="F" type="radio"/>Female
 					</label>
+					<br />
+					<label htmlFor="SignUp-address">Street address</label>
+					<input id="SignUp-address-street" name="address" type="text" placeholder="Street and number, P.O box"/>
+					<br />
+					<input id="SignUp-address-supplement" name="addressSupplement" type="text" placeholder="Flat, suite, unit, building, floor, etc."/>
+					<br />
+					<label htmlFor="SignUp-address-postcode">Postcode</label>
+					<input id="SignUp-address-postcode" name="postcode" type="text"/>
+					<br />
+					<label htmlFor="SignUp-address-city">Town/City</label>
+					<input id="SignUp-address-city" name="city" type="text"/>
+					<br />
 					<input type="submit"/>
 				</form>
 			</div>
