@@ -7,25 +7,6 @@ class App extends Component {
         this.state = {name: "Undefined"};
     }
 
-    // getTitle() {
-    //     fetch(`/me`, { accept: 'application/json' })
-    //         .then((response) => {
-	 //            if (response.status >= 200 && response.status < 300) {
-		//             return response;
-	 //            }
-	 //            const error = new Error(`HTTP Error ${response.statusText}`);
-	 //            error.status = response.statusText;
-	 //            error.response = response;
-	 //            console.log(error);
-	 //            throw error;
-    //         })
-    //         .then((response) => { return response.json() })
-    //         .then((response) => {
-    //         	this.setState({name: response.name})
-    //         })
-    //     .catch((error) => console.log(`An error occured ${error}`));
-    // }
-
 	render() {
 		return (
 			<div className="App">
