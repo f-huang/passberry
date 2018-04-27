@@ -14,8 +14,7 @@ CREATE TABLE IF NOT EXISTS
     address(
         `_id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
         `street` VARCHAR(126),
-        `supplement1` VARCHAR(126),
-        `supplement2` VARCHAR(126),
+        `supplement` VARCHAR(126),
         `city` VARCHAR(48),
         `zip_code` VARCHAR(12),
         `country_code` CHAR(2),
@@ -40,7 +39,7 @@ CREATE TABLE IF NOT EXISTS
 		`name` VARCHAR(128),
 		`address_id` INT UNSIGNED,
 		`bank_api_key` VARCHAR(128),
-		`is_deleted` TINYINT(1),
+		`is_deleted` TINYINT(1) NOT NULL DEFAULT 0,
 		FOREIGN KEY (`address_id`) REFERENCES address(`_id`),
 		PRIMARY KEY(`_id`)
 	) ENGINE=InnoDB;
@@ -81,13 +80,13 @@ CREATE TABLE IF NOT EXISTS
         `last_name` VARCHAR(48),
         `password` CHAR(128),
         `salt` VARCHAR(255),
-        `gender` ENUM('M', 'F'),
+        `gender` ENUM('M', 'F', 'O'),
 		`bank_api_key` VARCHAR(128),
         `registration_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         `type` ENUM('STAFF', 'MUNICIPALITY', 'PARTNER', 'TOURIST'),
-        `newsletters` TINYINT(1),
-        `is_activated` TINYINT(1),
-        `is_deleted` TINYINT(1),
+        `newsletters` TINYINT(1) NOT NULL DEFAULT 0,
+        `is_activated` TINYINT(1) NOT NULL  DEFAULT 0,
+        `is_deleted` TINYINT(1) NOT NULL DEFAULT 0,
         `address_id` INT UNSIGNED,
         `role_id` INT UNSIGNED,
         `partner_id` INT UNSIGNED,
@@ -100,7 +99,7 @@ CREATE TABLE IF NOT EXISTS
 	user_to_permission(
 		`user_id` INT UNSIGNED NOT NULL,
 		`permission_id` INT UNSIGNED NOT NULL,
-		`is_activated` TINYINT(1),
+		`is_activated` TINYINT(1) NOT NULL DEFAULT 0,
 		FOREIGN KEY(`user_id`) REFERENCES user(`_id`),
 		FOREIGN KEY(`permission_id`) REFERENCES permission(`_id`),
 		PRIMARY KEY(`user_id`, `permission_id`)
@@ -126,7 +125,7 @@ CREATE TABLE IF NOT EXISTS
         `address_id` INT UNSIGNED,
         `partner_id` INT UNSIGNED,
         `type` VARCHAR(48) DEFAULT NULL,
-        `is_used` TINYINT(1),
+        `is_used` TINYINT(1) NOT NULL DEFAULT 0,
         FOREIGN KEY (`address_id`) REFERENCES address(`_id`),
         FOREIGN KEY(`partner_id`) REFERENCES partner(`_id`),
         PRIMARY KEY (`_id`)
