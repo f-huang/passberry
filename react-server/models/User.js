@@ -2,17 +2,47 @@
 
 const pool = require('../database/pool');
 
-function getColumnsAsString(columns, usual) {
+
+const EnumUserType = Object.freeze({
+	Tourist: "TOURIST",
+	Partner: "PARTNER",
+	Staff: "STAFF",
+	Municipality: "MUNICIPALITY"
+});
+
+
+const isTourist = (type) => type === EnumUserType.Tourist;
+const isStaff = (type) => type === EnumUserType.Staff;
+const isPartner = (type) => type === EnumUserType.Partner;
+const isMunicipality = (type) => type === EnumUserType.Municipality;
+
+
+const DEFAULT_USER_TYPE = EnumUserType.Tourist;
+
+
+const getUserTable = (user) => [
+	{column: 'mail', value: user.email},
+	{column: 'password', value: user.password},
+	{column: 'first_name', value: user.firstName},
+	{column: 'last_name', value: user.lastName},
+	{column: 'gender', value: user.gender},
+	{column: 'type', value: DEFAULT_USER_TYPE},
+	{column: 'country_code', value: user.country},
+	{column: 'birthday', value: user.birthday}
+];
+
+
+const getColumnsAsString = (columns, usual) => {
 	let columnsAsString = "";
 	if (columns.length === 0 || typeof columns === undefined) {
 		columns = usual;
 	}
-	columnsAsString = "";
 	for (let i = 0; i < columns.length; i++) {
 		columnsAsString += `\`${columns[i]}\`` + (i + 1 === columns.length ? "" : ",");
 	}
 	return columnsAsString;
-}
+};
+
 
 exports.exists = (email, callback) => {
 	pool.query("SELECT `_id` FROM `user` WHERE `mail`=?", email,
@@ -22,6 +52,8 @@ exports.exists = (email, callback) => {
 		}
 	)
 };
+
+exports.getUserTypes = () => EnumUserType;
 
 
 exports.getUser = (email, password, columns, callback) => {
@@ -47,17 +79,6 @@ exports.getUserById = (id, columns, callback) => {
 	)
 };
 
-const DEFAULT_USER_TYPE = "TOURIST";
-const getUserTable = (user) => [
-	{column: 'mail', value: user.email},
-	{column: 'password', value: user.password},
-	{column: 'first_name', value: user.firstName},
-	{column: 'last_name', value: user.lastName},
-	{column: 'gender', value: user.gender},
-	{column: 'type', value: DEFAULT_USER_TYPE},
-	{column: 'country_code', value: user.country},
-	{column: 'birthday', value: user.birthday}
-];
 
 exports.addUser = (user, callback) => {
 
