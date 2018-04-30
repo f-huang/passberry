@@ -4,8 +4,8 @@ USE `dev_passberry`;
 
 CREATE TABLE IF NOT EXISTS
     country(
-        `code` CHAR(2),
         `name` VARCHAR(48) NOT NULL UNIQUE,
+        `code` CHAR(2),
         PRIMARY KEY(`code`)
     ) ENGINE=InnoDB;
 
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS
         `street` VARCHAR(126),
         `supplement` VARCHAR(126),
         `city` VARCHAR(48),
-        `zip_code` VARCHAR(12),
+        `postcode` VARCHAR(12),
         `country_code` CHAR(2),
         FOREIGN KEY(`country_code`) REFERENCES country(`code`),
         PRIMARY KEY (`_id`)
@@ -191,3 +191,11 @@ CREATE TABLE IF NOT EXISTS
 		`state` ENUM("SUCCESS", "NOT_FOUND", "NOT_MATCH", "ERROR", "CANCELED", "REJECTED"),
 		PRIMARY KEY(`_id`)
 	) ENGINE=InnoDB;
+
+LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/countries.csv'
+	INTO TABLE dev_passberry.country
+	FIELDS TERMINATED BY ','
+	OPTIONALLY ENCLOSED BY '"'
+	LINES TERMINATED BY '\n'
+	IGNORE 1 LINES;
+
