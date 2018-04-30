@@ -2,7 +2,7 @@
 
 const router = require('express').Router();
 
-const getUser = require('../../models/User').getUser;
+const getUser = require('../../models/UserModel').getUser;
 
 router.post('/', (req, res) => {
 	const email = req.body.email;
