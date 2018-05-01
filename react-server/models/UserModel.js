@@ -54,7 +54,7 @@ exports.getUserTypes = () => EnumUserType;
 
 exports.getUser = (email, password, columns) => {
 	return new Promise((resolve, reject) => {
-		const columnsAsString = utils.getColumnsAsString(columns, ['id', 'password']);
+		const columnsAsString = utils.getColumnsAsString(columns, ['_id', 'password']);
 		const sql = `SELECT ${columnsAsString} FROM \`user\` WHERE \`mail\`=?`;
 
 		pool.query(sql, email,
