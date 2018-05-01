@@ -1,6 +1,6 @@
 import React from 'react'
 
-import themes from '../app/themes.js';
+import themes from '../../app/themes.js';
 
 let styles = {
     container: {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import TextInput from '../component/TextInput';
+import TextInput from '../component/TextInput/TextInput';
 
 class SignIn extends Component {
 	constructor(props) {
