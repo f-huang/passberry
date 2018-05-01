@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import TextInput from '../component/TextInput';
+
 class SignIn extends Component {
 	constructor(props) {
 		super(props);
@@ -9,12 +11,19 @@ class SignIn extends Component {
 	render() {
 		return (
 			<div className="SignIn">
-				<form method="POST">
-					<label htmlFor="SignIn-email">Email</label>
-					<input id="SignIn-email" name="email" type="email" placeholder="example@mail.com"/>
-					<label htmlFor="SignIn-password">Password</label>
-					<input id="SignIn-password" name="password" type="password"/>
-					<input type="submit"/>
+				<form className="SignIn-form" method="POST">
+					<TextInput id="SignIn-form-email"
+					           name="email"
+					           type="email"
+					           label={true}
+					           title="Email"
+					           placeholder="example@mail.com"/>
+					<TextInput id="SignIn-form-password"
+					           name="password"
+					           type="password"
+					           label={true}
+					           title="Password"/>
+					<input className="SignIn-form-submit" type="submit"/>
 				</form>
 			</div>
 		);
