@@ -6,10 +6,3 @@ export default {
     colorInverse: '#fefefe',
     lightGrey: '#b3b3b3'
 };
-
-// facebook = {
-//     name: 'Facebook',
-//     shortName: 'FB',
-//     color: '#446aa8'
-// };
-

@@ -1,10 +1,10 @@
 import React from "react"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
-import App from "./views/app"
-import SignIn from "./views/signIn";
-import SignUp from "./views/signUp";
-import PageNotFound from "./views/pageNotFound";
-import Shop from "./views/shop";
+import App from "./views/App"
+import SignIn from "./views/SignIn";
+import SignUp from "./views/SignUp";
+import PageNotFound from "./views/PageNotFound";
+import Shop from "./views/Shop";
 
 const routes = (
     <BrowserRouter>
