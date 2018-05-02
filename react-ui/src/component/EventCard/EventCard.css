@@ -1,0 +1,30 @@
+.EventCard-List {
+	width: 100vw;
+	height: 50vw;
+	max-height: 200px;
+	overflow: scroll;
+	position: relative;
+	display: flex;
+	flex-direction: row;
+}
+
+.EventCard {
+	position: relative;
+	width: 100vw;
+	height: 100%;
+	flex: 0 0 100%;
+}
+
+.EventCard-container {
+	width: 80%;
+	height: 100%;
+	margin: 0 auto;
+	background: rgba(200, 10, 20, 0.5);
+	border-radius: 24px;
+	text-align: center;
+	font-size: 3vmax;
+}
+
+.EventCard-title {
+	margin: 0;
+}
