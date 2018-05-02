@@ -1,0 +1,11 @@
+.AppBar {
+	max-height: 104px;
+	padding: 1.5vh;
+	border-bottom: 2px solid #eeeeee
+}
+
+.AppBar-title {
+	margin: 0;
+	text-align: center;
+	font-size: 1.5em;
+}
