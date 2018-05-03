@@ -1,12 +1,15 @@
 import React from "react";
 import BottomNavigationBar from "../component/BottomNavigationBar/BottomNavigationBar";
 import AppBar from "../component/AppBar/AppBar";
-import EventCards from "../component/EventCard/EventCard";
+import Carousel from "../component/Carousel/Carousel";
+
+
+import imageTest from "../assets/Coucher-de-soleil.jpg";
 
 const items = [
-	{title: "1"},
-	{title: "2"},
-	{title: "3"},
+	{title: "1", image: imageTest},
+	{title: "2", image: imageTest},
+	{title: "3", image: imageTest},
 ];
 
 class Shop extends React.Component {
@@ -14,7 +17,7 @@ class Shop extends React.Component {
 		return (
 			<div className="Shop">
 				<AppBar/>
-				<EventCards items={items}/>
+				<Carousel items={items}/>
 				<BottomNavigationBar/>
 			</div>
 		);
