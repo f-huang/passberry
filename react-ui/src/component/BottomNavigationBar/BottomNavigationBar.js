@@ -1,10 +1,10 @@
 import React from "react";
 import "./BottomNavigationBar.css";
 
-import iconShop from "../../assets/search-empty.svg";
-import iconQR from "../../assets/qr-empty.svg";
-import iconPass from "../../assets/pass-empty.svg";
-import iconProfile from "../../assets/profile-empty.svg";
+import iconShop from "../../assets/icons/search-empty.svg";
+import iconQR from "../../assets/icons/qr-empty.svg";
+import iconPass from "../../assets/icons/pass-empty.svg";
+import iconProfile from "../../assets/icons/profile-empty.svg";
 
 const items = [
 	{title: "Shop", alt: "shop-icon", icon: iconShop},
