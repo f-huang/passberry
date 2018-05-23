@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha lib/**/**.spec.js",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node react-server/app.js",
     "client": "cd react-ui && npm start && cd -",
@@ -17,12 +17,16 @@
     "express": "^4.16.3",
     "express-validator": "^5.1.2",
     "mysql": "^2.15.0",
+    "qrcode.react": "^0.8.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-qr-reader": "^2.1.0",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "concurrently": "^3.5.1",
+    "mocha": "^5.2.0",
     "nodemon": "^1.17.3"
   },
   "description": ""
