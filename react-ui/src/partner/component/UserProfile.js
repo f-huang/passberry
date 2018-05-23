@@ -1,7 +1,7 @@
 import React from 'react'
 import UserProfilePicture from "./UserProfilePicture";
 
-import themes from '../../../app/themes'
+import themes from '../../app/themes'
 
 const styles = {
     container: {

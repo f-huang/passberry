@@ -31,7 +31,7 @@ exports.getCountryByCode = (code) => {
 exports.getAllCountries = () => {
 	return new Promise((resolve, reject) => {
 		const sql = `SELECT * from \`country\``;
-		pool.query(sql, code, (error, rows) => {
+		pool.query(sql, undefined, (error, rows) => {
 			if (error) {
 				reject(error);
 				throw error;

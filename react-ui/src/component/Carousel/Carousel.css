@@ -1,12 +1,13 @@
 .Carousel {
 	position: relative;
 	overflow: hidden;
-	width: 100vw;
+	width: 90vw;
+	margin: 0 auto;
 }
 
 .Carousel-images {
 	width: 100%;
-	height: 45vh;
+	height: 30vh;
 	display: flex;
 	flex-direction: row;
 }
@@ -19,6 +20,7 @@
 	overflow: hidden;
 	width: 100%;
 	height: 100%;
+	background-color: #dddddd;
 }
 
 .Carousel-dots {

@@ -3,6 +3,8 @@
 const pool = require('../database/pool');
 const utils = require('../database/utils');
 
+
+const TABLE_NAME = "user";
 const EnumUserType = Object.freeze({
 	Tourist: "TOURIST",
 	Partner: "PARTNER",
@@ -35,7 +37,7 @@ const mapForDB = (data) => {
 
 exports.exists = (email) => {
 	return new Promise((resolve, reject) => {
-		const sql = "SELECT `_id` FROM `user` WHERE `mail` = ?";
+		const sql = "SELECT `_id` FROM `customer` WHERE `mail` = ?";
 		pool.query(sql, email,
 			(error, rows) => {
 				if (error) {
@@ -55,7 +57,7 @@ exports.getUserTypes = () => EnumUserType;
 exports.getUser = (email, password, columns) => {
 	return new Promise((resolve, reject) => {
 		const columnsAsString = utils.getColumnsAsString(columns, ['_id', 'password']);
-		const sql = `SELECT ${columnsAsString} FROM \`user\` WHERE \`mail\`=?`;
+		const sql = `SELECT ${columnsAsString} FROM \`${TABLE_NAME}\` WHERE \`mail\`=?`;
 
 		pool.query(sql, email,
 			(error, rows) => {
@@ -73,7 +75,7 @@ exports.getUser = (email, password, columns) => {
 exports.getUserById = (id, columns) => {
 	return new Promise((resolve, reject) => {
 		const columnsAsString = utils.getColumnsAsString(columns, ['email']);
-		const sql = `SELECT ${columnsAsString} FROM \`user\` WHERE \`_id\`=?`;
+		const sql = `SELECT ${columnsAsString} FROM \`${TABLE_NAME}\` WHERE \`_id\`=?`;
 
 		pool.query(sql, id,
 			(error, rows) => {
@@ -90,7 +92,7 @@ exports.getUserById = (id, columns) => {
 
 exports.addUser = (user) => {
 	return new Promise((resolve, reject) => {
-		const sql = `INSERT INTO \`user\` SET ?`;
+		const sql = `INSERT INTO \`${TABLE_NAME}\` SET ?`;
 
 		pool.query(sql, mapForDB(user), (error, result) => {
 			if (error) {
@@ -106,7 +108,7 @@ exports.addUser = (user) => {
 exports.updateUser = (user) => {
 	return new Promise((resolve, reject) => {
 		const entries = mapForDB(user);
-		let sql = `UPDATE \`user\` SET `;
+		let sql = `UPDATE \`${TABLE_NAME}\` SET `;
 		let values = [];
 
 		for (let entry of entries) {

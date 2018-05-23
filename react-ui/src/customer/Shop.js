@@ -1,10 +1,10 @@
 import React from "react";
-import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
-import AppBar from "../../component/AppBar/AppBar";
-import Carousel from "../../component/Carousel/Carousel";
+import BottomNavigationBar from "../component/BottomNavigationBar/BottomNavigationBar";
+import AppBar from "../component/AppBar/AppBar";
+import Carousel from "../component/Carousel/Carousel";
 
 
-import imageTest from "../../assets/Coucher-de-soleil.jpg";
+import imageTest from "../assets/Coucher-de-soleil.jpg";
 
 const items = [
 	{title: "1", image: imageTest},

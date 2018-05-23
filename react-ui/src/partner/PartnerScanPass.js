@@ -2,8 +2,8 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 
 import ScanQRCodeView from './component/ScanQRCodeView';
-import '../../app/base.css'
-import AppBar from "../../component/AppBar/AppBar";
+import '../app/base.css'
+import AppBar from "../component/AppBar/AppBar";
 
 const title = "Scan pass";
 const to = "/partner-see-customer";

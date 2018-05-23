@@ -4,7 +4,7 @@ import EventInfo from './component/EventInfo';
 import Buttons from './component/ValidationButtons'
 
 // import profilePicture from '../image/profile_picture.jpg'
-import '../../app/base.css'
+import '../app/base.css'
 
 
 const user = {

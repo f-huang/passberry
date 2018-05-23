@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import TextInput from '../../component/TextInput/TextInput';
+import TextInput from '../component/TextInput/TextInput';
 
 class SignIn extends Component {
 	constructor(props) {
@@ -15,14 +15,12 @@ class SignIn extends Component {
 					<TextInput id="SignIn-form-email"
 					           name="email"
 					           type="email"
-					           label={true}
-					           title="Email"
+					           label="Email"
 					           placeholder="example@mail.com"/>
 					<TextInput id="SignIn-form-password"
 					           name="password"
 					           type="password"
-					           label={true}
-					           title="Password"/>
+					           label="Password"/>
 					<input className="SignIn-form-submit" type="submit"/>
 				</form>
 			</div>

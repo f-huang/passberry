@@ -5,7 +5,7 @@ class CarouselImage extends React.Component {
 	render() {
 		const getStyle = (image) => {
 			return {
-				background: `url(${image}) no-repeat center center fixed`,
+				// background: `url(${image}) no-repeat center center fixed`,
 				backgroundSize: "cover",
 			};
 		};
@@ -31,7 +31,6 @@ const getCarouselDots = (items, onDotClick, activeIndex) =>
 const styleAnimation = (index) => {
 	return 	{
 		marginLeft: `${- index * 100}vw`,
-		// transform: `translateX(${- index * 100}vw)`,
 		transition: "margin-left 1s linear",
 	};
 };
