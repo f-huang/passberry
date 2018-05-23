@@ -16,7 +16,8 @@ const middlewares = [
 ];
 const routes = [
 	'/',
-	'/sign-in'
+	'/sign-in',
+	'/sign-up',
 ];
 
 // =====================================
