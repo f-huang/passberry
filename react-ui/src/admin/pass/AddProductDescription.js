@@ -7,7 +7,7 @@ class AddProductDescription extends React.Component {
 	render() {
 		return (
 			<div className="AddActivity">
-				<form method="POST">
+				<form method="POST" encType="multipart/form-data">
 					<TextInput
 						id="AddActivity-name"
 						name="AddActivity-name"
@@ -40,6 +40,10 @@ class AddProductDescription extends React.Component {
 						label="Link"
 						type="url"
 					/>
+					<div>
+						<label htmlFor="AddActivity-images">Images</label>
+						<input id="AddActivity-images" type="file" accept=".jpg .jpeg .png .gif"/>
+					</div>
 					<input type="submit"/>
 				</form>
 			</div>
