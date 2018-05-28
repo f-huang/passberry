@@ -46,19 +46,8 @@ exports.addProductDescription = (description) => {
 
 exports.updateProductDescription = (description) => {
 	return new Promise((resolve, reject) => {
-		const entries = mapForDB(description);
-		let sql = `UPDATE \`${TABLE_NAME}\` SET `;
-		let values = [];
-
-		for (let entry of entries) {
-			if (entry.value) {
-				sql += `\`${entry.tabIndex}\` = ?, `;
-				values.push(entry.value);
-			}
-		}
-		sql.slice(0, -2).concat(` WHERE \`_id\`= ?`);
-		values.push(description.id);
-		pool.query(sql, values, (error, rows) => {
+		let sql = `UPDATE \`${TABLE_NAME}\` SET ? WHERE \\\`_id\\\`=${description._id}`;
+		pool.query(sql, description, (error, rows) => {
 			if (error) {
 				reject(error);
 				throw error;
