@@ -14,28 +14,28 @@ const middlewares = [
 	express.json(),
 	express.urlencoded()
 ];
-const routes = [
-	'/',
-	'/sign-in',
-	'/sign-up',
-];
+// const routes = [
+// 	'/',
+// 	'/sign-in',
+// 	'/sign-up',
+// ];
 
 // =====================================
 
 app.use(middlewares);
 app.use('/', router);
-app.use((req, res, next) => {
-	match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
-		if (error)
-			res.status(500).send(error.message);
-		else if (redirectLocation)
-			res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-		else if (renderProps)
-			res.status(200);
-		else
-			res.status(404).send('Not found');
-	})
-});
+// app.use((req, res, next) => {
+// 	match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
+// 		if (error)
+// 			res.status(500).send(error.message);
+// 		else if (redirectLocation)
+// 			res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+// 		else if (renderProps)
+// 			res.status(200);
+// 		else
+// 			res.status(404).send('Not found');
+// 	})
+// });
 
 app.listen(port);
 
