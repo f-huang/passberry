@@ -22,7 +22,7 @@ const routes = (
 		    <Route exact path="/shop" component={Shop}/>
 		    <Route exact path="/qr" component={QR}/>
 		    <Route exact path="/qr-scan" component={PartnerScanPass}/>
-		    <Route exact path="/partner-see-user" component={PartnerSeeUser}/>
+		    <Route exact path="/partner-see-customer" component={PartnerSeeUser}/>
 		    <Route exact path="/pass" component={Pass}/>
 		    <Route exact path="/profile" component={Profile}/>
 		    <Route exact path="/sign-in" component={SignIn}/>

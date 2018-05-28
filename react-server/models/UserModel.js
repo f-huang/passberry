@@ -37,14 +37,14 @@ const mapForDB = (data) => {
 
 exports.exists = (email) => {
 	return new Promise((resolve, reject) => {
-		const sql = "SELECT `_id` FROM `customer` WHERE `mail` = ?";
+		const sql = `SELECT \`_id\` FROM \`${TABLE_NAME}\` WHERE \`mail\` = ?`;
 		pool.query(sql, email,
 			(error, rows) => {
 				if (error) {
 					reject(error);
 					throw error;
 				}
-				resolve(rows.length === 1 ? rows[0] : undefined);
+				resolve(rows.length === 1);
 			}
 		);
 	});
@@ -57,6 +57,7 @@ exports.getUserTypes = () => EnumUserType;
 exports.getUser = (email, password, columns) => {
 	return new Promise((resolve, reject) => {
 		const columnsAsString = utils.getColumnsAsString(columns, ['_id', 'password']);
+
 		const sql = `SELECT ${columnsAsString} FROM \`${TABLE_NAME}\` WHERE \`mail\`=?`;
 
 		pool.query(sql, email,
@@ -74,7 +75,7 @@ exports.getUser = (email, password, columns) => {
 
 exports.getUserById = (id, columns) => {
 	return new Promise((resolve, reject) => {
-		const columnsAsString = utils.getColumnsAsString(columns, ['email']);
+		const columnsAsString = utils.getColumnsAsString(columns, ['mail']);
 		const sql = `SELECT ${columnsAsString} FROM \`${TABLE_NAME}\` WHERE \`_id\`=?`;
 
 		pool.query(sql, id,

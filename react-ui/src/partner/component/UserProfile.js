@@ -1,4 +1,5 @@
 import React from 'react'
+import UserProfilePicture from "./UserProfilePicture";
 
 import themes from '../../app/themes'
 
@@ -50,7 +51,7 @@ class UserProfile extends React.Component {
         return (
             <div className="UserProfile" style={styles.container}>
                 <div className="UserProfile-pic-age" style={styles.container2}>
-                    {/*<UserProfilePicture className="UserProfile-picture" style={styles.picture} picture={this.props.user.picture}/>*/}
+                    <UserProfilePicture className="UserProfile-picture" style={styles.picture} picture={this.props.user.picture}/>
                     <div className="UserProfile-age" style={styles.age}>{this.props.user.age}</div>
                 </div>
                 <div className="UserProfile-identity" style={styles.identity}>

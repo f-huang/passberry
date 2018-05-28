@@ -23,7 +23,6 @@ class QRView extends React.Component {
 					<QRCode className="QRView-code"
 					        value="https://google.fr"
 					        renderAs="canvas"
-					        fgColor="#F5AC34"
 					        size={QRSize}
 					        style={canvasStyle(20)}
 					/>

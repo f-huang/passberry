@@ -3,13 +3,13 @@ import UserProfile from './component/UserProfile';
 import EventInfo from './component/EventInfo';
 import Buttons from './component/ValidationButtons'
 
-// import profilePicture from '../image/profile_picture.jpg'
+import profilePicture from './image/profile_picture.jpg'
 import '../app/base.css'
 
 
 const user = {
     _id: "1234-abcd-5678",
-    // picture: profilePicture,
+    picture: profilePicture,
     firstName: "Fanny",
     lastName: "Huang",
     email: "fhuang@student.42.fr",

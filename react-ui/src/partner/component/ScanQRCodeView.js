@@ -57,7 +57,7 @@ class ScanQRCodeView extends React.Component {
                 <div className="ScanQRCodeView-camera" style={styles.camera}>
                     <QrReader className="ScanQRCodeView-camera-qr"
                               ref={(ref) => this.video = ref}
-                              delay={300}
+                              delay={100}
                               facingMode="environment"
                               onScan={this.onScan}
                               onError={this.onError}

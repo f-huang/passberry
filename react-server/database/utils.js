@@ -13,10 +13,7 @@ exports.getColumnsAliasesAsString = (columns, aliases) => {
 
 exports.getColumnsAsString = (columns, usual) => {
 	let ret = "";
-
-	if (columns.length === 0 || typeof columns === undefined) {
-		columns = usual;
-	}
+	columns = (columns !== undefined && columns.length > 0) ? [...new Set([...columns, ...usual])] : usual;
 	for (let i = 0; i < columns.length; i++) {
 		ret += `\`${columns[i]}\`` + (i + 1 === columns.length ? "" : ", ");
 	}
