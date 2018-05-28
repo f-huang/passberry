@@ -29,8 +29,8 @@ const mapForDB = (data) => {
 		'last_name': data.lastName,
 		'password': data.password,
 		'gender': data.gender,
-		'type': DEFAULT_USER_TYPE,
-		'address_id': 1
+		'type': data.type === undefined ? DEFAULT_USER_TYPE : data.type,
+		// 'address_id': 1
 	}
 };
 
@@ -107,20 +107,12 @@ exports.addUser = (user) => {
 
 
 exports.updateUser = (user) => {
+	if (user.id === undefined || user.id === null || user.id < 1 || typeof user.id !== "number")
+		throw ("user.id is either not defined or wrong");
 	return new Promise((resolve, reject) => {
-		const entries = mapForDB(user);
-		let sql = `UPDATE \`${TABLE_NAME}\` SET `;
-		let values = [];
-
-		for (let entry of entries) {
-			if (entry.value) {
-				sql += `\`${entry.tabIndex}\` = ?, `;
-				values.push(entry.value);
-			}
-		}
-		sql.slice(0, -2).concat(` WHERE \`_id\`= ?`);
-		values.push(user.id);
-		pool.query(sql, values, (error, rows) => {
+		let sql = `UPDATE \`${TABLE_NAME}\` SET ? WHERE \`_id\` = ${user.id}`;
+		delete user['id'];
+		pool.query(sql, user, (error, rows) => {
 			if (error) {
 				reject(error);
 				throw error;

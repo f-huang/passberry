@@ -200,4 +200,3 @@ LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/countries.csv'
 	LINES TERMINATED BY '\n'
 	IGNORE 1 LINES;
 
-INSERT INTO `user`(`mail`, `password`) VALUES('fhuang@student.42.fr', '1234567890');
