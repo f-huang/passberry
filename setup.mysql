@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS
         `mail` VARCHAR(255) NOT NULL UNIQUE,
         `first_name` VARCHAR(48),
         `last_name` VARCHAR(48),
+        `birthday` VARCHAR(10),
         `password` CHAR(128),
         `salt` VARCHAR(255),
         `gender` ENUM('M', 'F', 'O'),
@@ -199,3 +200,4 @@ LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/countries.csv'
 	LINES TERMINATED BY '\n'
 	IGNORE 1 LINES;
 
+INSERT INTO `user`(`mail`, `password`) VALUES('fhuang@student.42.fr', '1234567890');
