@@ -24,7 +24,7 @@ exports.getProducts = (filters) => {
 				reject(error);
 				throw error;
 			}
-			resolve(rows);
+			resolve(rows[0]);
 		})
 	});
 };

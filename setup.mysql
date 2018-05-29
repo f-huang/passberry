@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS
         `_id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
         `name` VARCHAR(128) NOT NULL,
         `description` TEXT,
-        `price` DECIMAL(5, 4) UNSIGNED NOT NULL,
+        `price` DECIMAL(8, 3) UNSIGNED NOT NULL,
         `address_id` INT UNSIGNED,
         `partner_id` INT UNSIGNED,
         `type` VARCHAR(48) DEFAULT NULL,

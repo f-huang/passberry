@@ -6,21 +6,21 @@ chai.use(require('chai-as-promised'));
 
 
 describe('User.addUser()', function () {
-	it('add fhuang in db', function (done) {
-		const user = {
-			email: "fhuang@student.42.fr",
-			firstName: "Fanny",
-			lastName: "Huang",
-			password: "1234567890",
-			gender: "F",
-			type: User.getUserTypes().Staff
-		};
-		const promiseAdd = User.addUser(user);
-		promiseAdd.then((insertId) => {
-			const promiseGet = User.getUserById(insertId);
-			expect(promiseGet).to.eventually.deep.equal({mail: user.email});
-		}).then(done, done);
-	});
+	// it('add fhuang in db', function (done) {
+	// 	const user = {
+	// 		email: "fhuang@student.42.fr",
+	// 		firstName: "Fanny",
+	// 		lastName: "Huang",
+	// 		password: "1234567890",
+	// 		gender: "F",
+	// 		type: User.getUserTypes().Staff
+	// 	};
+	// 	const promiseAdd = User.addUser(user);
+	// 	promiseAdd.then((insertId) => {
+	// 		const promiseGet = User.getUserById(insertId);
+	// 		expect(promiseGet).to.eventually.deep.equal({mail: user.email});
+	// 	}).then(done, done);
+	// });
 });
 
 
