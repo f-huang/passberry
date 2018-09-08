@@ -1,5 +1,5 @@
 import React from 'react'
-import themes from '../../app/themes'
+import theme from '../../app/theme'
 const styles = {
     container: {
         maxWidth: "400px",
@@ -34,7 +34,7 @@ const styles = {
     },
     seatingInfoLabel: {
         fontSize: "0.8em",
-        color: themes.textColor
+        color: theme.textColor
     }
 };
 

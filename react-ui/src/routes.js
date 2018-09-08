@@ -2,33 +2,46 @@ import React from "react"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 
 //COMPONENTS
-import App from "./views/App"
-import SignIn from "./customer/SignIn";
-import SignUp from "./customer/SignUp";
-import PageNotFound from "./views/PageNotFound";
-import Shop from "./customer/Shop";
-import QR from "./customer/QR";
-import Pass from "./customer/Pass";
-import Profile from "./customer/Profile";
-import PartnerScanPass from "./partner/PartnerScanPass";
-import PartnerSeeUser from "./partner/PartnerSeeUser";
-import AddProductDescription from "./admin/pass/AddProductDescription";
-
+import SignUp from "./customer/Credentials/SignUp/SignUp";
+import Login from "./customer/Credentials/Login";
+import CityCatalogPage from "./customer/CityCatalogPage";
+import CityHomePage from "./customer/CityHome/CityHomePage";
+import Pass from "./customer/Pass/Pass";
+import QRPage from "./customer/QRPage";
+import ProfilePage from "./customer/ProfilePage";
+import ParametersPage from "./customer/ParametersPage";
+import TripsPage from "./customer/TripsPage";
+import SelectionsPage from "./customer/SelectionsPage";
+import Error404 from "./Error404";
+import Attraction from "./customer/Attraction";
+import AttractionCreate from "./admin/attraction/create/AttractionCreate";
+import AttractionManage from "./admin/attraction/manage/AttractionManage";
 
 const routes = (
-    <BrowserRouter>
+    <BrowserRouter forceRefresh={true}>
 	    <Switch>
-		    <Route exact path="/" component={App}/>
-		    <Route exact path="/shop" component={Shop}/>
-		    <Route exact path="/qr" component={QR}/>
-		    <Route exact path="/qr-scan" component={PartnerScanPass}/>
-		    <Route exact path="/partner-see-customer" component={PartnerSeeUser}/>
-		    <Route exact path="/pass" component={Pass}/>
-		    <Route exact path="/profile" component={Profile}/>
-		    <Route exact path="/sign-in" component={SignIn}/>
+		    <Route exact path="/" component={CityCatalogPage}/>
+		    <Route exact path="/admin-add-activity" component={AttractionCreate}/>
+		    <Route exact path="/admin-manage-activity" component={AttractionManage}/>
+
+
+		    <Route exact path="/selections" component={SelectionsPage}/>
+		    <Route exact path="/profile" component={ProfilePage}/>
+		    <Route exact path="/parameters" component={ParametersPage}/>
+		    <Route exact path="/trips" component={TripsPage}/>
+		    <Route exact path="/qr" component={QRPage}/>
+		    <Route exact path="/login" component={Login}/>
 		    <Route exact path="/sign-up" component={SignUp}/>
-		    <Route exact path="/admin-add-activity" component={AddProductDescription}/>
-	        <Route exact path="*" component={PageNotFound}/>
+		    {/*<Route exact path="/qr-scan" component={PartnerScanPass}/>*/}
+		    {/*<Route exact path="/partner-see-customer" component={PartnerSeeUser}/>*/}
+		    <Route exact path="/:location" component={CityHomePage}/>
+		    <Route exact path="/:location/pass/:typeOfJourney(vuego-made|customize)" component={Pass}/>
+		    <Route exact path="/attraction/:id-:name" component={Attraction}/>
+		    {/*<Route exact path="/shopping-cart" component={ShoppingCart}/>*/}
+		    {/*<Route exact path="/pass" component={Pass}/>*/}
+		    {/*<Route exact path="/profile" component={Profile}/>*/}
+		    <Route component={Error404}/>
+		    {/*<Route exact path="*" component={PageNotFound}/>*/}
 	    </Switch>
     </BrowserRouter>
 );

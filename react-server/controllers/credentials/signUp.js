@@ -2,7 +2,7 @@
 
 const router = require('express').Router();
 
-const user = require('../../models/UserModel');
+const user = require('../../user/UserModel');
 const country = require('../../models/CountryModel');
 const address = require('../../models/AddressModel');
 

@@ -12,6 +12,40 @@ const styles = {
 };
 
 
+const api = '/graphql';
+
+
+const query = `
+	query QrRead($data: String) {
+		QrRead(data: $data) {
+			_id
+			first_name
+			last_name
+			mail
+		}
+	}
+`;
+
+
+
+const fetchInit = data => ({
+	mode: 'cors',
+	method: 'post',
+	json: true,
+	headers: {
+		'Accept': 'application/json',
+		'Content-Type': 'application/json'
+	},
+	body: JSON.stringify({
+		"query": query,
+		"variables": {
+			"touristData": data
+		},
+	})
+});
+
+
+
 class ScanQRCodeView extends React.Component {
     componentDidMount() {
         const constraints = { audio: false, video: {width: 800, height: 600 }};
@@ -37,7 +71,15 @@ class ScanQRCodeView extends React.Component {
 
     onScan = (result) => {
         if (result !== null) {
-            this.setState({scanned: true});
+        	fetch(api, fetchInit(result))
+		        .then(res => res.text())
+		        .then(out => {
+		        	const json = JSON.parse(out).touristData.QrRead;
+		        	console.log(json);
+		        	if (json.user)
+				        this.setState({ scanned: true });
+		        })
+		        .catch(e => console.log(e));
         }
     };
 

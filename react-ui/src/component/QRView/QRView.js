@@ -1,5 +1,7 @@
 import React from "react";
 import QRCode from "qrcode.react";
+import apiCall from "../../api";
+
 import "./QRView.css";
 
 const QRSize = 150;
@@ -15,17 +17,50 @@ const canvasStyle = (skew) => {
 		WebkitTransform: `skewY(${skew}deg)`,
 	}};
 
+const query = `
+	query QrGetValue($token: String) {
+		QrGetValue(token: $token)
+	}
+`;
+
+const variables = {
+	"token": sessionStorage.getItem("token"),
+};
+
+
 class QRView extends React.Component {
+	state = { url: "" };
+
+	constructor(props) {
+		super(props);
+		this.updateUrl = this.updateUrl.bind(this);
+	}
+
+
+	componentDidMount() {
+		this.updateUrl().catch(() => {this.setState({ url : "" })});
+	}
+
+	updateUrl = async () => {
+		const result = await apiCall(query, variables)
+			.then(out => JSON.parse(out).touristData.QrGetValue);
+		const url = await result ?
+			'localhost:3000/' + result :
+			'www.google.fr';
+		this.setState({url: url});
+		console.log('url', url);
+	};
+
 	render() {
 		return (
 			<div className="QRView">
 				<div className="QRView-background">
-					<QRCode className="QRView-code"
-					        value="https://google.fr"
+					{ this.state.url ?
+						<QRCode className="QRView-code"
+					        value={ this.state.url }
 					        renderAs="canvas"
-					        size={QRSize}
-					        style={canvasStyle(20)}
-					/>
+					        size={ QRSize }
+					        style={ canvasStyle(20) }/> : <p/> }
 				</div>
 			</div>
 		);

@@ -2,31 +2,11 @@ DROP DATABASE `dev_passberry`;
 CREATE DATABASE IF NOT EXISTS `dev_passberry` CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `dev_passberry`;
 
-CREATE TABLE IF NOT EXISTS
-    country(
-        `name` VARCHAR(48) NOT NULL UNIQUE,
-        `code` CHAR(2),
-        PRIMARY KEY(`code`)
-    ) ENGINE=InnoDB;
-
-
-CREATE TABLE IF NOT EXISTS
-    address(
-        `_id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
-        `street` VARCHAR(126),
-        `supplement` VARCHAR(126),
-        `city` VARCHAR(48),
-        `postcode` VARCHAR(12),
-        `country_code` CHAR(2),
-        FOREIGN KEY(`country_code`) REFERENCES country(`code`),
-        PRIMARY KEY (`_id`)
-    ) ENGINE=InnoDB;
-
 
 CREATE TABLE IF NOT EXISTS
     discount(
         `code` VARCHAR(32),
-        `amount` DECIMAL(5, 2) UNSIGNED NOT NULL,
+        `value` DECIMAL(8, 3) UNSIGNED NOT NULL,
         `type` ENUM('RAW', 'PERCENT'),
         PRIMARY KEY(`code`)
     ) ENGINE=InnoDB;
@@ -40,7 +20,6 @@ CREATE TABLE IF NOT EXISTS
 		`address_id` INT UNSIGNED,
 		`bank_api_key` VARCHAR(128),
 		`is_deleted` TINYINT(1) NOT NULL DEFAULT 0,
-		FOREIGN KEY (`address_id`) REFERENCES address(`_id`),
 		PRIMARY KEY(`_id`)
 	) ENGINE=InnoDB;
 
@@ -78,22 +57,32 @@ CREATE TABLE IF NOT EXISTS
         `mail` VARCHAR(255) NOT NULL UNIQUE,
         `first_name` VARCHAR(48),
         `last_name` VARCHAR(48),
-        `birthday` VARCHAR(10),
+        `birthdate` DATE,
         `password` CHAR(128),
         `salt` VARCHAR(255),
-        `gender` ENUM('M', 'F', 'O'),
+        `gender` ENUM('M', 'F', 'O') DEFAULT 'M',
 		`bank_api_key` VARCHAR(128),
         `registration_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        `type` ENUM('STAFF', 'MUNICIPALITY', 'PARTNER', 'TOURIST'),
+        `last_logon_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        `type` ENUM('STAFF', 'MUNICIPALITY', 'PARTNER', 'TOURIST') DEFAULT 'TOURIST',
         `newsletters` TINYINT(1) NOT NULL DEFAULT 0,
         `is_activated` TINYINT(1) NOT NULL  DEFAULT 0,
         `is_deleted` TINYINT(1) NOT NULL DEFAULT 0,
-        `address_id` INT UNSIGNED,
         `role_id` INT UNSIGNED,
         `partner_id` INT UNSIGNED,
-		FOREIGN KEY (`address_id`) REFERENCES address(`_id`),
         PRIMARY KEY(`_id`)
     ) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS
+	token(
+		`value` VARCHAR(256) NOT NULL,
+		`user_id` INT UNSIGNED NOT NULL,
+		`init_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		`expiration_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY(`user_id`) REFERENCES user(`_id`),
+		PRIMARY KEY(`value`)
+	) ENGINE=InnoDB;
 
 
 CREATE TABLE IF NOT EXISTS
@@ -118,10 +107,33 @@ CREATE TABLE IF NOT EXISTS
 
 
 CREATE TABLE IF NOT EXISTS
-    product_description(
+    country(
+        `name` VARCHAR(48) NOT NULL UNIQUE,
+        `code` CHAR(2),
+        PRIMARY KEY(`code`)
+    ) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS
+    address(
+        `_id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
+        `street` VARCHAR(126),
+        `supplement` VARCHAR(126),
+        `city` VARCHAR(48),
+        `postcode` VARCHAR(12),
+        `country_code` CHAR(2),
+        `user_id` INT UNSIGNED NOT NULL,
+		FOREIGN KEY (`user_id`) REFERENCES user(`_id`),
+        FOREIGN KEY(`country_code`) REFERENCES country(`code`),
+        PRIMARY KEY (`_id`)
+    ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS
+    attraction(
         `_id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
         `name` VARCHAR(128) NOT NULL,
         `description` TEXT,
+        `link` VARCHAR(256),
         `price` DECIMAL(8, 3) UNSIGNED NOT NULL,
         `address_id` INT UNSIGNED,
         `partner_id` INT UNSIGNED,
@@ -133,55 +145,85 @@ CREATE TABLE IF NOT EXISTS
 
 
 CREATE TABLE IF NOT EXISTS
-    product_description_image(
+    attraction_image(
         `path` VARCHAR(256) UNIQUE NOT NULL,
-        `description_id` INT UNSIGNED NOT NULL,
-        FOREIGN KEY (`description_id`) REFERENCES product_description(`_id`),
+        `attraction_id` INT UNSIGNED NOT NULL,
+        FOREIGN KEY (`attraction_id`) REFERENCES attraction(`_id`),
         PRIMARY KEY(`path`)
     ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS
+	cart(
+		`_id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+		`init_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		`last_modified_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+		`user_id` INT UNSIGNED,
+		`price` DECIMAL(8, 3) UNSIGNED NOT NULL DEFAULT 0,
+		FOREIGN KEY(`user_id`) REFERENCES user(`_id`),
+		PRIMARY KEY (`_id`)
+	) ENGINE=InnoDB;
 
 
 CREATE TABLE IF NOT EXISTS
     transaction(
         `_id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
-        `amount` DECIMAL(10, 4) UNSIGNED NOT NULL,
+        `amount` DECIMAL(8, 3) UNSIGNED NOT NULL,
         `discount_code` VARCHAR(32),
         `bought_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `user_id` INT UNSIGNED NOT NULL,
-        `state` ENUM('SUCCESS', 'CANCELED', 'FAILED'),
+        `cart_id` INT UNSIGNED NOT NULL,
+        `state` ENUM('SUCCESS', 'PENDING', 'CANCELED', 'FAILED'),
         FOREIGN KEY (`discount_code`) REFERENCES discount(`code`),
+        FOREIGN KEY (`cart_id`) REFERENCES cart(`_id`),
         FOREIGN KEY (`user_id`) REFERENCES user(`_id`),
         PRIMARY KEY(`_id`)
     ) ENGINE=InnoDB;
 
 
 CREATE TABLE IF NOT EXISTS
-    product(
+    pass(
         `_id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
-        `price` DECIMAL(5, 4) UNSIGNED NOT NULL DEFAULT 0,
+        `price` DECIMAL(8, 3) UNSIGNED NOT NULL DEFAULT 0,
         `init_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `expiration_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        `description_id` INT UNSIGNED,
         `transaction_id` INT UNSIGNED NOT NULL,
         `user_id` INT UNSIGNED NOT NULL,
-        `type` ENUM("PASS", "ACTIVITY"),
-        `pass_id` INT UNSIGNED DEFAULT NULL,
         `is_used` TINYINT(1) NOT NULL DEFAULT 0,
-        FOREIGN KEY (`description_id`) REFERENCES product_description(`_id`),
         FOREIGN KEY (`transaction_id`) REFERENCES transaction(`_id`),
         FOREIGN KEY (`user_id`) REFERENCES user(`_id`),
-        FOREIGN KEY (`pass_id`) REFERENCES product(`_id`),
         PRIMARY KEY(`_id`)
     ) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS
+	pass_to_attraction(
+		`pass_id` INT UNSIGNED NOT NULL,
+		`attraction_id` INT UNSIGNED NOT NULL,
+		`used_time` TIMESTAMP NULL DEFAULT NULL,
+		FOREIGN KEY (`pass_id`) REFERENCES pass(`_id`),
+		FOREIGN KEY (`attraction_id`) REFERENCES attraction(`_id`)
+	) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS
+	cart_to_pass(
+		`cart_id` INT UNSIGNED NOT NULL,
+		`pass_id` INT UNSIGNED NOT NULL,
+		FOREIGN KEY (`cart_id`) REFERENCES cart(`_id`),
+		FOREIGN KEY (`pass_id`) REFERENCES pass(`_id`)
+	) ENGINE=InnoDB;
 
 
 CREATE TABLE IF NOT EXISTS
     qr_code(
         `_id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
-        `data` VARCHAR(255),
-        `url` VARCHAR(255),
-        PRIMARY KEY(`_id`)
+        `user_id` INT UNSIGNED NOT NULL,
+        `value` VARCHAR(255),
+        `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (`user_id`) REFERENCES user(`_id`),
+        PRIMARY KEY (`_id`)
     ) ENGINE=InnoDB;
+
 
 CREATE TABLE IF NOT EXISTS
 	scan(
@@ -190,6 +232,8 @@ CREATE TABLE IF NOT EXISTS
 		`qr_code_id` INT UNSIGNED NOT NULL,
 		`user_id` INT UNSIGNED NOT NULL,
 		`state` ENUM("SUCCESS", "NOT_FOUND", "NOT_MATCH", "ERROR", "CANCELED", "REJECTED"),
+        FOREIGN KEY (`user_id`) REFERENCES user(`_id`),
+        FOREIGN KEY (`qr_code_id`) REFERENCES qr_code(`_id`),
 		PRIMARY KEY(`_id`)
 	) ENGINE=InnoDB;
 
@@ -199,4 +243,3 @@ LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/countries.csv'
 	OPTIONALLY ENCLOSED BY '"'
 	LINES TERMINATED BY '\n'
 	IGNORE 1 LINES;
-

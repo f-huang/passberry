@@ -1,0 +1,104 @@
+interface ResponseMutation {
+	message: String
+	code: Int!
+}
+
+
+type Attraction {
+  _id: ID!
+  name: String!
+  description: String
+  price: Float
+  type: String
+}
+
+input AttractionCreate {
+	name: String!
+	price: Float
+	type: String
+	description: String
+	link: String
+}
+
+input UserSigningIn {
+	mail: String!
+	password: String!
+}
+
+input UserSigningUp {
+	mail: String!
+	first_name: String
+	last_name: String
+	password: String!
+	gender: Gender
+	birthdate: Date
+}
+
+type UserCredentials implements ResponseMutation {
+	message: String
+	code: Int!
+	token: String
+}
+
+type UserTokenToId implements ResponseMutation {
+	message: String
+	code: Int!
+	id: ID
+}
+
+type AttractionInserted implements ResponseMutation {
+	message: String,
+	code: Int!,
+	id: ID
+}
+
+type User {
+  _id: ID!
+  mail: String!
+  first_name: String
+  last_name: String
+  birthdate: Date
+  gender: Gender
+  type: UserType
+}
+
+type QrGenerator {
+  value: String
+}
+
+enum Gender {
+  M
+  F
+  O
+}
+
+enum UserType {
+  STAFF
+  MUNICIPALITY
+  PARTNER
+  TOURIST
+}
+
+type Query {
+    AttractionGet(id: ID!): Attraction
+    AttractionGetAll(limit: Int, sortField: String, sortOrder: String): [Attraction]
+
+    UserGet(id: ID!): User
+    UserGetAll(limit: Int, sortField: String, sortOrder: String): [User]
+
+    QrGetValue(token: String): String
+    QrRead(data: String): User
+
+	TokenConvertToId(token: String): UserTokenToId
+}
+
+type Mutation {
+   signIn(user: UserSigningIn): UserCredentials
+   signUp(user: UserSigningUp): UserCredentials
+
+   attractionCreate(attraction: AttractionCreate): AttractionInserted
+   qrGenerate(userId: String): QrGenerator
+
+}
+
+scalar Date

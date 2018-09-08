@@ -1,0 +1,10 @@
+.AttractionPreviewGrid {
+	display: table;
+	width: 100%;
+	border-spacing: 3vw;
+}
+
+.AttractionPreview-row {
+	display: table-row;
+	height: 140px;
+}

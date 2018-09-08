@@ -1,5 +1,5 @@
 import React from 'react'
-import themes from '../../app/themes';
+import themes from '../../app/theme';
 import Button from './Button'
 import { withRouter } from 'react-router-dom'
 

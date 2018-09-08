@@ -1,7 +1,7 @@
 import React from 'react'
 import UserProfilePicture from "./UserProfilePicture";
 
-import themes from '../../app/themes'
+import theme from '../../app/theme'
 
 const styles = {
     container: {
@@ -20,7 +20,7 @@ const styles = {
         padding: "8px 10px",
         borderRadius: "50%",
         border: "0.09em solid white",
-        backgroundColor: themes.colorPrimary
+        backgroundColor: theme.colorPrimary
     },
     picture: {
         margin: "0 auto",
@@ -35,12 +35,12 @@ const styles = {
     },
     email: {
         fontSize: "1em",
-        color: themes.lightGrey,
+        color: theme.lightGrey,
         margin: "8px 0 0 0"
     },
     id: {
         fontSize: "1em",
-        color: themes.lightGrey,
+        color: theme.lightGrey,
         marginTop: "8px",
         fontStyle: "italic"
     }

@@ -5,7 +5,7 @@ import ScanQRCodeView from './component/ScanQRCodeView';
 import '../app/base.css'
 import AppBar from "../component/AppBar/AppBar";
 
-const title = "Scan pass";
+const title = "Scan attraction";
 const to = "/partner-see-customer";
 const onSuccess = () => {
 	return <Redirect to={to} push={true}/>

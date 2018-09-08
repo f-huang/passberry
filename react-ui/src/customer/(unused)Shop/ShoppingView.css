@@ -1,0 +1,10 @@
+.ShoppingView {
+	padding-bottom: 6rem;
+}
+
+.ShoppingView-button {
+	position: fixed;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 10vh;
+}
