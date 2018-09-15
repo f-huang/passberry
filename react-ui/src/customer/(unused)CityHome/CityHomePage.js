@@ -55,7 +55,7 @@ class CityHomePage extends React.Component {
 			{text: "Séjour planifié", onClick: this.onClickJourneyPlanned},
 			{text: "Séjour personnalisé", onClick: this.onClickJourneyCustomize}
 		];
-		this.location = this.props.match.params.location.toLocaleLowerCase();
+		this.location = this.props.match.params.city.toLocaleLowerCase();
 	}
 
 
