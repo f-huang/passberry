@@ -4,6 +4,7 @@ import TravelersForm from "./components/TravelersForm";
 import ScreenSubtitle from "../ScreenSubtitle";
 import { DESTINATION } from "../localStorageKeys";
 import { withRouter } from "react-router-dom";
+import BackActionBar from "../BackActionBar/BackActionBar";
 
 const style = {
 	backgroundColor: theme.colorPrimary,
@@ -18,6 +19,7 @@ const TravelersView = (props) => {
 	if (destination)
 		return (
 			<div style={style}>
+				<BackActionBar to={'/'}/>
 				<ScreenSubtitle>{"Les Vuego voyageurs"}</ScreenSubtitle>
 				<TravelersForm/>
 			</div>
