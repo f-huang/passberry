@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from "redux";
+import { Provider as ReduxProvider} from "react-redux";
 import { CookiesProvider } from 'react-cookie';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
+import { reducer } from "./reducers";
 import "./app/base.css";
 import routes from './routes'
 import registerServiceWorker from './registerServiceWorker';
+
 
 const client = new ApolloClient({
 	// By default, this client will send queries to the
@@ -18,10 +22,15 @@ const client = new ApolloClient({
 	link: new HttpLink(),
 	cache: new InMemoryCache(),
 });
+
+const store = createStore(reducer);
+
 const root =
 	<ApolloProvider client={ client }>
-		<CookiesProvider>{ routes }</CookiesProvider>
+		<ReduxProvider store={ store }>
+			<CookiesProvider>{ routes }</CookiesProvider>
+		</ReduxProvider>
 	</ApolloProvider>;
-
+// store.subscribe(() => console.log(store.getState()));
 ReactDOM.render(root, document.getElementById('root'));
 registerServiceWorker();
