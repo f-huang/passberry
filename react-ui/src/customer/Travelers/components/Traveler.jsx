@@ -33,7 +33,7 @@ const Traveler = ({traveler, removable, onClick, onChange}) => (
 	<Container>
 		<InputContainer>
 			<TextInput
-				style={{	width: '85%'}}
+				style={{width: '85%'}}
 				name={"travelers"}
 				placeholder={"Prénom"}
 				value={traveler ? traveler.name || "" : ""}
