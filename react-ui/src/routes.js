@@ -16,6 +16,7 @@ import AttractionCreate from "./admin/attraction/create/AttractionCreate";
 import AttractionManage from "./admin/attraction/manage/AttractionManage";
 import TravelView from "./customer/Travel/TravelView";
 import TravelersView from "./customer/Travelers/TravelersView";
+import DestinationOffers from "./customer/DestinationOffers/DestinationOffers";
 
 const routes = (
     <BrowserRouter forceRefresh={true}>
@@ -34,8 +35,8 @@ const routes = (
 		    <Route exact path="/sign-up" component={SignUp}/>
 		    {/*<Route exact path="/qr-scan" component={PartnerScanPass}/>*/}
 		    {/*<Route exact path="/partner-see-customer" component={PartnerSeeUser}/>*/}
-		    {/*<Route exact path="/:city" component={}/>*/}
-		    <Route exact path="/:city/pass/:typeOfJourney(vuego-made|customize)" component={Pass}/>
+		    <Route exact path="/:destination" component={DestinationOffers}/>
+		    {/*<Route exact path="/:city/pass/:typeOfJourney(vuego-made|customize)" component={Pass}/>*/}
 		    <Route exact path="/attraction/:id-:name" component={Attraction}/>
 		    {/*<Route exact path="/shopping-cart" component={ShoppingCart}/>*/}
 		    {/*<Route exact path="/pass" component={Pass}/>*/}
