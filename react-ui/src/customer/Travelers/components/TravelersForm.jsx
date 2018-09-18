@@ -9,8 +9,15 @@ import { addTraveler, editTraveler, removeTraveler } from "../travelersActions";
 import Traveler from "./Traveler";
 import Button from "../../../component/Button/Button";
 import ButtonSubmit from "../../../component/Button/ButtonSubmit/ButtonSubmit";
+import theme from "../../../app/theme";
 
-const Container = styled.div``;
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	padding: 16px;
+	justify-content: space-around;
+`;
+
 
 class TravelersForm extends React.Component {
 
@@ -39,6 +46,11 @@ class TravelersForm extends React.Component {
 		this.props.onChangeEditTraveler({name: e.target.value, index: index})
 	};
 
+	onClickAddTraveler = e => {
+		e.preventDefault();
+		this.props.onClickAddTraveler();
+	};
+
 	render() {
 		const travelersInputs = [];
 		for (let index = 0; index < this.state.nTravelers; index++) {
@@ -53,10 +65,11 @@ class TravelersForm extends React.Component {
 		return (
 			<Container>
 				{travelersInputs}
-				<Button value={"+"} onClick={e => {
-					e.preventDefault();
-					this.props.onClickAddTraveler();
-				}}/>
+				<Button
+					value={"+"}
+					style={{backgroundColor: theme.colorTertiary}}
+					onClick={this.onClickAddTraveler}
+				/>
 				<NavLink to={'/' + this.destination}>
 					<ButtonSubmit value={"Next"}/>
 				</NavLink>
