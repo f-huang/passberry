@@ -1,6 +1,6 @@
 import React from "react";
 import theme from "../../app/theme";
-import TravelersForm from "./components/TravelersForm";
+import TravelersForm from "./components/TravelersForm.jsx";
 import ScreenSubtitle from "../ScreenSubtitle";
 import { DESTINATION } from "../localStorageKeys";
 import { withRouter } from "react-router-dom";
