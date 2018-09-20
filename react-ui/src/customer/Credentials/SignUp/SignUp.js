@@ -35,7 +35,7 @@ class SignUp extends Component {
 	onSubmit = event => {
 		const date = moment(this.state.birthdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
 		const user =  {
-			"mail": this.state.email,
+			"email": this.state.email,
 			"first_name": this.state.firstName,
 			"last_name": this.state.lastName,
 			"password": this.state.password,

@@ -20,7 +20,7 @@ exports.generate = (user, id) => {
 	return jwt.sign(
 		{
 			id: id,
-			email: user.mail,
+			email: user.email,
 		},
 		JWT_SECRET,
 		{ expiresIn: '1y' }

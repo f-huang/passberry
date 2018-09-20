@@ -21,7 +21,7 @@ const query = `
 			_id
 			first_name
 			last_name
-			mail
+			email
 		}
 	}
 `;

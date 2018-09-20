@@ -56,7 +56,7 @@ export default class Authentication {
 			}
 		`;
 		const user = {
-			"mail": email,
+			"email": email,
 			"password": password
 		};
 		return apiCall(querySignIn, { "user": user })

@@ -21,17 +21,46 @@ input AttractionCreate {
 }
 
 input UserSigningIn {
-	mail: String!
+	email: String!
 	password: String!
 }
 
 input UserSigningUp {
-	mail: String!
+	email: String!
 	first_name: String
 	last_name: String
 	password: String!
 	gender: Gender
 	birthdate: Date
+}
+
+input BasketChoice {
+	attraction_id: ID
+	user_id: ID
+	quantity: Int
+}
+
+input BasketValidate {
+	basket_id: ID
+	user_id: ID
+	state: String
+}
+
+input BasketUpdate {
+    last_update_time: Date
+    choices: [BasketChoice]
+}
+
+input BasketCreate {
+	init_time: Date
+	last_update_time: Date
+	user_id: ID
+	choices: [BasketChoice]
+}
+
+input PaymentCreate {
+	amount: Float
+
 }
 
 type UserCredentials implements ResponseMutation {
@@ -46,7 +75,7 @@ type UserTokenToId implements ResponseMutation {
 	id: ID
 }
 
-type AttractionInserted implements ResponseMutation {
+type ResponseForCreate implements ResponseMutation {
 	message: String,
 	code: Int!,
 	id: ID
@@ -54,7 +83,7 @@ type AttractionInserted implements ResponseMutation {
 
 type User {
   _id: ID!
-  mail: String!
+  email: String!
   first_name: String
   last_name: String
   birthdate: Date
@@ -96,9 +125,14 @@ type Mutation {
    signIn(user: UserSigningIn): UserCredentials
    signUp(user: UserSigningUp): UserCredentials
 
-   attractionCreate(attraction: AttractionCreate): AttractionInserted
+   attractionCreate(attraction: AttractionCreate): ResponseForCreate
    qrGenerate(userId: String): QrGenerator
 
+	basketCreate(basket: BasketCreate): ResponseForCreate
+	basketUpdate(basket: BasketUpdate): ResponseForCreate
+	basketValidate(payment: BasketValidate): ResponseForCreate
+
+	paymentCreate(payment: PaymentCreate): ResponseForCreate
 }
 
 scalar Date

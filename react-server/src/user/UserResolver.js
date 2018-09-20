@@ -15,7 +15,7 @@ const resolver = {
 	},
 	Mutation: {
 		signIn: (_, { user }, context) => {
-			return User.connect(user.mail, user.password)
+			return User.connect(user.email, user.password)
 				.then(ret => {
 					try {
 						const token = Token.generate(user,ret._id);

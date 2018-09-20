@@ -23,7 +23,7 @@ const DEFAULT_USER_TYPE = EnumUserType.Tourist;
 
 
 exports.connect = (email, password) => new Promise((resolve, reject) => {
-	this.get({ mail: email })
+	this.get({ email: email })
 		.then(rows => {
 			if (!rows) {
 				reject("No user found");
@@ -45,7 +45,7 @@ exports.connect = (email, password) => new Promise((resolve, reject) => {
 
 
 exports.exists = (email) => new Promise((resolve, reject) => {
-	const sql = `SELECT \`_id\` FROM \`${TABLE_NAME}\` WHERE \`mail\` = ?`;
+	const sql = `SELECT \`_id\` FROM \`${TABLE_NAME}\` WHERE \`email\` = ?`;
 	pool.query(sql, email,
 		(error, rows) => {
 			if (error) {

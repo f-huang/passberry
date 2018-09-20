@@ -112,12 +112,12 @@ describe('User.getUserById()', function () {
 	it('check if a user is returned', function () {
 		const email = "fhuang@student.42.fr";
 		const ret = User.getUserById(1);
-		return expect(ret).to.eventually.deep.equal({ mail: email });
+		return expect(ret).to.eventually.deep.equal({ email: email });
 	});
 
 	it('check if a user is returned with custom columns', function () {
 		const expected = {
-			mail: "fhuang@student.42.fr",
+			email: "fhuang@student.42.fr",
 			first_name: "Fanny",
 			last_name: "Huang"
 		};

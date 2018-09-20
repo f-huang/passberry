@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS
 CREATE TABLE IF NOT EXISTS
     user(
         `_id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
-        `mail` VARCHAR(255) NOT NULL UNIQUE,
+        `email` VARCHAR(255) UNIQUE,
         `first_name` VARCHAR(48),
         `last_name` VARCHAR(48),
         `birthdate` DATE,
@@ -129,15 +129,25 @@ CREATE TABLE IF NOT EXISTS
     ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS
+    attraction_price(
+        `_id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
+        `adult` DECIMAL(8, 3) UNSIGNED NOT NULL DEFAULT 0.0,
+        `child` DECIMAL(8, 3) UNSIGNED DEFAULT NULL,
+        `max_age_for_child` INT UNSIGNED DEFAULT NULL,
+        PRIMARY KEY (`_id`)
+    ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS
     attraction(
         `_id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
         `name` VARCHAR(128) NOT NULL,
         `description` TEXT,
         `link` VARCHAR(256),
-        `price` DECIMAL(8, 3) UNSIGNED NOT NULL,
+        `price_id` INT UNSIGNED,
         `address_id` INT UNSIGNED,
         `partner_id` INT UNSIGNED,
         `type` VARCHAR(48) DEFAULT NULL,
+        FOREIGN KEY (`price_id`) REFERENCES attraction_price(`_id`),
         FOREIGN KEY (`address_id`) REFERENCES address(`_id`),
         FOREIGN KEY(`partner_id`) REFERENCES partner(`_id`),
         PRIMARY KEY (`_id`)
@@ -156,9 +166,11 @@ CREATE TABLE IF NOT EXISTS
 	cart(
 		`_id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
 		`init_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		`last_modified_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+		`last_update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 		`user_id` INT UNSIGNED,
 		`price` DECIMAL(8, 3) UNSIGNED NOT NULL DEFAULT 0,
+		`choices` TEXT,
+		`state` ENUM('PENDING', 'SUCCESS') DEFAULT 'PENDING',
 		FOREIGN KEY(`user_id`) REFERENCES user(`_id`),
 		PRIMARY KEY (`_id`)
 	) ENGINE=InnoDB;
@@ -172,7 +184,9 @@ CREATE TABLE IF NOT EXISTS
         `bought_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `user_id` INT UNSIGNED NOT NULL,
         `cart_id` INT UNSIGNED NOT NULL,
-        `state` ENUM('SUCCESS', 'PENDING', 'CANCELED', 'FAILED'),
+        `state` ENUM('SUCCESS', 'PENDING', 'CANCELED', 'FAILED') DEFAULT 'PENDING',
+        `api_key` VARCHAR(256),
+        `api_name` VARCHAR(128),
         FOREIGN KEY (`discount_code`) REFERENCES discount(`code`),
         FOREIGN KEY (`cart_id`) REFERENCES cart(`_id`),
         FOREIGN KEY (`user_id`) REFERENCES user(`_id`),
@@ -183,13 +197,14 @@ CREATE TABLE IF NOT EXISTS
 CREATE TABLE IF NOT EXISTS
     pass(
         `_id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
-        `price` DECIMAL(8, 3) UNSIGNED NOT NULL DEFAULT 0,
         `init_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `expiration_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `transaction_id` INT UNSIGNED NOT NULL,
+        `cart_id` INT UNSIGNED NOT NULL,
         `user_id` INT UNSIGNED NOT NULL,
         `is_used` TINYINT(1) NOT NULL DEFAULT 0,
         FOREIGN KEY (`transaction_id`) REFERENCES transaction(`_id`),
+        FOREIGN KEY (`cart_id`) REFERENCES cart(`_id`),
         FOREIGN KEY (`user_id`) REFERENCES user(`_id`),
         PRIMARY KEY(`_id`)
     ) ENGINE=InnoDB;
@@ -197,11 +212,13 @@ CREATE TABLE IF NOT EXISTS
 
 CREATE TABLE IF NOT EXISTS
 	pass_to_attraction(
+		`_id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
 		`pass_id` INT UNSIGNED NOT NULL,
 		`attraction_id` INT UNSIGNED NOT NULL,
 		`used_time` TIMESTAMP NULL DEFAULT NULL,
 		FOREIGN KEY (`pass_id`) REFERENCES pass(`_id`),
-		FOREIGN KEY (`attraction_id`) REFERENCES attraction(`_id`)
+		FOREIGN KEY (`attraction_id`) REFERENCES attraction(`_id`),
+        PRIMARY KEY(`_id`)
 	) ENGINE=InnoDB;
 
 
