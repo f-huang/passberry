@@ -2,12 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import BackSearchActionBar from "../../component/ActionBar/BackSearchActionBar";
-
-const TravelRecapContainer = styled.div`
-	position: fixed;
-	height: 7vh;
-`;
-
+import TravelRecap from "./components/TravelRecap.jsx";
+import OffersByType from "./components/OffersByType";
 
 class DestinationOffers extends React.Component {
 
@@ -40,10 +36,8 @@ class DestinationOffers extends React.Component {
 		return (
 			<div>
 				<BackSearchActionBar to={'/'} onSearch={() => console.log("to")}/>
-				<TravelRecapContainer>
-					{this.state.nTravelers}
-					{this.state.travelers.map(traveler => traveler.name)}
-				</TravelRecapContainer>
+				<TravelRecap/>
+				<OffersByType type={"Visites"} attractions={[{id: 1, name: "test"}]}/>
 
 			</div>
 		);
@@ -51,11 +45,10 @@ class DestinationOffers extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	console.log(state);
 	return ({
 		basket: state.destinationOffers.basket,
-		nTravelers: state.destinationOffers.nTravelers,
-		travelers: state.destinationOffers.travelers
+		travelers: state.destinationOffers.travelers,
+		nTravelers: state.destinationOffers.travelers.length,
 	})
 };
 

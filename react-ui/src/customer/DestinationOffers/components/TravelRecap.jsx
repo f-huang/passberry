@@ -1,0 +1,51 @@
+import React from "react";
+import styled from "styled-components";
+import { connect } from "react-redux";
+
+const Container = styled.div`
+	position: fixed;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`;
+
+const NumberContainer = styled.div`
+	font-size: 0.6em;
+	font-weight: bold;
+`;
+
+const Name = styled.div`
+	font-size: 0.4em;
+	font-weight: lighter;
+`;
+
+
+class TravelRecap extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			nTravelers: props.nTravelers || 1,
+			travelers: props.travelers || [],
+		}
+	}
+
+	render() {
+		return (
+			<Container>
+				<NumberContainer>{this.state.nTravelers}{" people coming :"}</NumberContainer>
+				<Name>{this.state.travelers.map((traveler, index) => traveler.name + (index + 1 === this.state.travelers.length ? '' : ', '))}</Name>
+			</Container>
+		);
+	}
+}
+
+const mapStateToProps = (state) => {
+	return ({
+		travelers: state.destinationOffers.travelers,
+		nTravelers: state.destinationOffers.travelers.length,
+	});
+};
+
+export default connect(mapStateToProps)(TravelRecap);

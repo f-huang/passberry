@@ -46,9 +46,9 @@ const Traveler = ({traveler, removable, onClick, onChange}) => (
 	</Container>
 );
 
-const mapStateToProps = (state, {id}) => {
+const mapStateToProps = (state, {index}) => {
 	return {
-		traveler: state.travelers.travelers[id]
+		traveler: state.travelers.travelers[index]
 	};
 };
 
