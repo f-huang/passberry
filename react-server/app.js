@@ -7,7 +7,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const graphqlHTTP = require('express-graphql');
 const session = require("express-session");
-const schema = require('./schema');
+const schema = require('./src/schema');
 const jwt = require('express-jwt');
 
 const JWT_SECRET = "temporarySecret";

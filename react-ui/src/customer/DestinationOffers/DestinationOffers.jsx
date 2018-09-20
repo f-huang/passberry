@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { connect } from "react-redux";
 import BackSearchActionBar from "../../component/ActionBar/BackSearchActionBar";
 import TravelRecap from "./components/TravelRecap.jsx";
@@ -9,7 +8,7 @@ class DestinationOffers extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.destination = this.props.match.params.destination.toLocaleLowerCase();
+		// this.destination = this.props.match.params.destination.toLocaleLowerCase();
 		this.state = {
 			basket: props.basket || [],
 			nTravelers: props.nTravelers || 1,

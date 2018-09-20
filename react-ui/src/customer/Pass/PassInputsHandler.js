@@ -74,7 +74,7 @@ export default class PassInputsHandler {
 	getVuegoPassNumberOfDays = () => {
 		let nDays = getCookie(KEY_VUEGO_NUMBER_OF_DAYS);
 		if (nDays)
-			nDays = parseInt(nDays);
+			nDays = parseInt(nDays, 10);
 		return nDays;
 	}
 

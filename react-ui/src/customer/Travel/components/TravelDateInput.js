@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import TravelInput from "./TravelInput";
 import PropTypes from "prop-types";
-import theme from "../../../app/theme";
 
 const Container = styled.div`
 	display: flex;

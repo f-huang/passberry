@@ -1,4 +1,3 @@
-import { combineReducers } from "redux";
 import {
 	SUBMIT,
 	SET_DESTINATION,
@@ -15,7 +14,7 @@ const nTravelers = localStorage.getItem(N_TRAVELERS);
 
 const initialState = {
 	destination: destination ? destination : "",
-	nTravelers: nTravelers ? parseInt(nTravelers) : 1
+	nTravelers: nTravelers ? parseInt(nTravelers, 10) : 1
 };
 
 const setInput = (key, value) => {

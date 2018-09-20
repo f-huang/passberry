@@ -1,11 +1,8 @@
 import React from "react";
-import "./AttractionCreate.css";
 import TextInput from "../../../component/TextInput/TextInput";
 import AddressInput from "../../../component/AddressInput/AddressInput";
 import ButtonSubmit from "../../../component/Button/ButtonSubmit/ButtonSubmit";
 import apiCall from "../../../api";
-
-const api = '/graphql';
 
 const query = `
 	mutation attractionCreate($attraction: AttractionCreate) {
@@ -43,7 +40,7 @@ class AttractionCreate extends React.Component {
 		event.preventDefault();
 		apiCall(query, { "attraction": attraction })
 			.then(out => {
-				const json = JSON.parse(out).data.attractionCreate;
+				// const json = JSON.parse(out).data.attractionCreate;
 				// if (json.ids.length > 0) {
 					//save images
 				// }

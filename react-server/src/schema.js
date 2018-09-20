@@ -20,11 +20,9 @@ const mergeResolvers = (resolvers) => {
 const userResolver = require("./user/UserResolver");
 const attractionResolver = require("./attraction/AttractionResolver");
 const qrResolver = require("./qr/QrResolver");
-const responseResolver = require("./ResponseResolver");
 const tokenResolver = require("./token/TokenResolver");
 
 const resolvers = mergeResolvers([
-	responseResolver,
 	userResolver,
 	attractionResolver,
 	qrResolver,

@@ -1,6 +1,6 @@
 const chai = require('chai');
 const expect = chai.expect;
-const ProductDescription = require('../attraction/AttractionModel');
+const ProductDescription = require('../src/attraction/AttractionModel');
 
 chai.use(require('chai-as-promised'));
 

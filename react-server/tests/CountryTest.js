@@ -1,6 +1,6 @@
 const chai = require('chai');
 const expect = chai.expect;
-const Country = require('../models/CountryModel');
+const Country = require('../src/address/CountryModel');
 
 chai.use(require('chai-as-promised'));
 

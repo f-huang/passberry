@@ -25,11 +25,11 @@ const Offer = ({offer, onClick}) => {
 		</Container>
 	);
 };
-
-const mapStateToProps = (state, { index }) => {
-	return ({
-		// offer: state.destinationOffers.attractions[index]
-	});
-};
+//
+// const mapStateToProps = (state, { index }) => {
+// 	return ({
+// 		// offer: state.destinationOffers.attractions[index]
+// 	});
+// };
 
 export default Offer;

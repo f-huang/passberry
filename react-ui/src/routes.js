@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom"
 //COMPONENTS
 import SignUp from "./customer/Credentials/SignUp/SignUp";
 import Login from "./customer/Credentials/Login";
-import Pass from "./customer/Pass/Pass";
 import QRPage from "./customer/QRPage";
 import ProfilePage from "./customer/ProfilePage";
 import ParametersPage from "./customer/ParametersPage";

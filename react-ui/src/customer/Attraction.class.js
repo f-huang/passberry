@@ -7,7 +7,7 @@ export default class Attraction {
 		// 		}
 		// 	}
 		// `;
-		numberOfDays = parseInt(numberOfDays);
+		numberOfDays = parseInt(numberOfDays, 10);
 		if (numberOfDays <= 0 || numberOfDays > 2)
 			return undefined;
 		else if (numberOfDays === 1) {

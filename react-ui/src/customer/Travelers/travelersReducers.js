@@ -14,7 +14,7 @@ import {
 const nTravelers = localStorage.getItem(N_TRAVELERS);
 const travelers = localStorage.getItem(TRAVELERS);
 const initialState = {
-	nTravelers: nTravelers ? parseInt(nTravelers) : 1,
+	nTravelers: nTravelers ? parseInt(nTravelers, 10) : 1,
 	travelers: travelers ? JSON.parse(travelers) : [],
 };
 
