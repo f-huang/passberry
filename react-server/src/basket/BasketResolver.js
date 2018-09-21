@@ -2,30 +2,30 @@ const Basket = require('./BasketModel');
 
 const resolver = {
 	Mutation: {
-		basketCreate: (_, { basket }) => {
-			console.log("Creating basket :", basket);
-			basket.choices = JSON.stringify(basket.choices);
-			return Basket.create(basket)
+		createBasket: (_, { input }) => {
+			console.log("Creating basket :", input);
+			input.choices = JSON.stringify(input.choices);
+			return Basket.create(input)
 				.then(insertId => {
 					return {id: insertId, code: 0, message: 'OK'};
 				})
 				.catch(e => ({id: -1, code: -1, message: e}));
 		},
-		basketUpdate: (_, { basket }) => {
-			console.log("Updating basket :", basket);
-			basket.choices = JSON.stringify(basket.choices);
-			return Basket.update(basket)
+		updateBasket: (_, { input }) => {
+			console.log("Updating basket :", input);
+			input.choices = JSON.stringify(input.choices);
+			return Basket.update(input)
 				.then(insertId => {
 					return {id: insertId, code: 0, message: 'OK'};
 				})
 				.catch(e => ({id: -1, code: -1, message: e}));
 		},
-		basketValidate: (_, { payment }) => {
+		validateBasket: (_, { input }) => {
 			// update basket state and userId
-			console.log("Updating basket :", payment);
-			return Basket.validate(payment.state, payment.user_id, payment.basket_id)
+			console.log("Updating basket :", input);
+			return Basket.validate(input.state, input.user_id, input.basket_id)
 				.then(insertId => {
-					return {id: payment.basket_id, code: 0, message: 'OK'};
+					return {id: input.basket_id, code: 0, message: 'OK'};
 				})
 				.catch(e => ({id: -1, code: -1, message: e}));
 		}

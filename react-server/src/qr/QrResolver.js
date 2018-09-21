@@ -3,7 +3,7 @@ const Token = require("../token/TokenModel");
 
 const resolver = {
 	Query: {
-		QrGetValue: (_, { token }, context) => {
+		getQrValue: (_, { token }, context) => {
 			const userId = Token.toId(token);
 			// console.log(context.user);
 			return Qr.getForUser(userId)
@@ -14,15 +14,15 @@ const resolver = {
 				})
 		},
 
-		QrRead: (_, { data }) => {
+		readQr: (_, { data }) => {
 			return Qr.findUser(data)
 				.then(ret => ret)
 				.catch(e => null)
 		}
 	},
 	Mutation: {
-		qrGenerate: (_, { userId }) => {
-			return Qr.generate(userId)
+		generateQr: (_, { input }) => {
+			return Qr.generate(input)
 				.then(ret =>{
 					console.log(ret);
 					return ({ value: ret });

@@ -28,7 +28,7 @@ class AttractionManage extends React.Component {
 
 	updateData = async () => {
 		const result =  await apiCall(query, null)
-			.then(out => JSON.parse(out).data.AttractionGetAll);
+			.then(out => JSON.parse(out).data.getAllAttractions);
 		this.setState({ attractions: await result });
 	};
 

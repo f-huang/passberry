@@ -1,7 +1,9 @@
+const Payment = require('./PaymentModel');
+
 const resolver = {
 	Mutation: {
-		paymentCreate: (_, { payment }) => {
-			return payment.create(payment)
+		createPayment: (_, { input }) => {
+			return Payment.create(input)
 				.then(insertId => {
 					return ({id: insertId, code: 0, message: 'OK'});
 				})

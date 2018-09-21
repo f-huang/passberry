@@ -43,7 +43,7 @@ class QRView extends React.Component {
 
 	updateUrl = async () => {
 		const result = await apiCall(query, variables)
-			.then(out => JSON.parse(out).touristData.QrGetValue);
+			.then(out => JSON.parse(out).touristData.getQrValue);
 		const url = await result ?
 			'localhost:3000/' + result :
 			'www.google.fr';

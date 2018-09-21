@@ -12,7 +12,7 @@ type Attraction {
   type: String
 }
 
-input AttractionCreate {
+input CreateAttractionInput {
 	name: String!
 	price: Float
 	type: String
@@ -20,12 +20,12 @@ input AttractionCreate {
 	link: String
 }
 
-input UserSigningIn {
+input SignInInput {
 	email: String!
 	password: String!
 }
 
-input UserSigningUp {
+input SignUpInput {
 	email: String!
 	first_name: String
 	last_name: String
@@ -40,27 +40,39 @@ input BasketChoice {
 	quantity: Int
 }
 
-input BasketValidate {
+input ValidateBasketInput {
 	basket_id: ID
 	user_id: ID
 	state: String
 }
 
-input BasketUpdate {
+input UpdateBasketInput {
     last_update_time: Date
     choices: [BasketChoice]
 }
 
-input BasketCreate {
-	init_time: Date
-	last_update_time: Date
+input CreateBasketInput {
+	_id: ID
 	user_id: ID
 	choices: [BasketChoice]
 }
 
-input PaymentCreate {
-	amount: Float
+input CreateTravelersPassesInput {
+	_id: ID
+	user_id: ID
+	start_date: Date
+	end_date: Date
+	choices: [BasketChoice]
+}
 
+input BurnAttractionTicketInput {
+	timestamp: Date,
+	attraction_id: ID
+	pass_id: ID
+}
+
+input CreatePaymentInput {
+	amount: Float
 }
 
 type UserCredentials implements ResponseMutation {
@@ -109,30 +121,33 @@ enum UserType {
 }
 
 type Query {
-    AttractionGet(id: ID!): Attraction
-    AttractionGetAll(limit: Int, sortField: String, sortOrder: String): [Attraction]
+    getAttractionById(id: ID!): Attraction
+    getAllAttractions(limit: Int, sortField: String, sortOrder: String): [Attraction]
 
-    UserGet(id: ID!): User
-    UserGetAll(limit: Int, sortField: String, sortOrder: String): [User]
+    getUserById(id: ID!): User
+    getAllUsers(limit: Int, sortField: String, sortOrder: String): [User]
 
-    QrGetValue(token: String): String
-    QrRead(data: String): User
+    getQrValue(token: String): String
+    readQr(data: String): User
 
-	TokenConvertToId(token: String): UserTokenToId
+	convertTokenToId(token: String): UserTokenToId
 }
 
 type Mutation {
-   signIn(user: UserSigningIn): UserCredentials
-   signUp(user: UserSigningUp): UserCredentials
+	signIn(input: SignInInput!): UserCredentials
+	signUp(input: SignUpInput!): UserCredentials
 
-   attractionCreate(attraction: AttractionCreate): ResponseForCreate
-   qrGenerate(userId: String): QrGenerator
+	createAttraction(input: CreateAttractionInput!): ResponseForCreate
+    generateQr(input: ID!): QrGenerator
 
-	basketCreate(basket: BasketCreate): ResponseForCreate
-	basketUpdate(basket: BasketUpdate): ResponseForCreate
-	basketValidate(payment: BasketValidate): ResponseForCreate
+	createBasket(input: CreateBasketInput!): ResponseForCreate
+	updateBasket(input: UpdateBasketInput!): ResponseForCreate
+	validateBasket(input: ValidateBasketInput!): ResponseForCreate
 
-	paymentCreate(payment: PaymentCreate): ResponseForCreate
+	createPayment(input: CreatePaymentInput!): ResponseForCreate
+
+	createTravelersPasses(input: CreateTravelersPassesInput!): ResponseForCreate
+	burnAttractionTicket(input: BurnAttractionTicketInput!): ResponseForCreate
 }
 
 scalar Date

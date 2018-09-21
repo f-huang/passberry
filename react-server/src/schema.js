@@ -23,6 +23,7 @@ const qrResolver = require("./qr/QrResolver");
 const tokenResolver = require("./token/TokenResolver");
 const basketResolver = require("./basket/BasketResolver");
 const paymentResolver = require("./payment/PaymentResolver");
+const passResolver = require("./pass/PassResolver");
 
 const resolvers = mergeResolvers([
 	userResolver,
@@ -30,7 +31,8 @@ const resolvers = mergeResolvers([
 	qrResolver,
 	tokenResolver,
 	basketResolver,
-	paymentResolver
+	paymentResolver,
+	passResolver
 ]);
 
 const typeDefs = [ fs.readFileSync(path.join(__dirname, 'schema.graphql'), 'utf8') ];

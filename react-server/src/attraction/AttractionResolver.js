@@ -2,18 +2,18 @@ const Attraction = require("./AttractionModel");
 
 const resolver = {
 	Query: {
-		AttractionGet: (_, { id }) => {
+		getAttractionById: (_, { id }) => {
 			return Attraction.get({ _id: id }).then(rows => {
 				return rows[0];
 			});
 		},
-		AttractionGetAll: (_, { limit = 0, sortField = "", sortOrder = "" }) => {
+		getAllAttractions: (_, { limit = 0, sortField = "", sortOrder = "" }) => {
 			return Attraction.getAll().then(rows => rows);
 		}
 	},
 	Mutation: {
-		attractionCreate: (_, { attraction }) => {
-			return Attraction.create(attraction)
+		createAttraction: (_, { input }) => {
+			return Attraction.create(input)
 				.then(ret => {
 					console.log(ret);
 					return { id: ret, code: 0, message: "OK"};

@@ -6,19 +6,19 @@ const Qr = require("../qr/QrModel");
 
 const resolver = {
 	Query: {
-		UserGet: (_, { id }) => {
+		getUserById: (_, { id }) => {
 			return User.getById(id).then(rows => rows[0])
 		},
-		UserGetAll: (_, { limit = 0, sortField = "", sortOrder = "" }) => {
+		getAllUsers: (_, { limit = 0, sortField = "", sortOrder = "" }) => {
 			return User.getAll().then(rows => rows)
 		}
 	},
 	Mutation: {
-		signIn: (_, { user }, context) => {
-			return User.connect(user.email, user.password)
+		signIn: (_, { input }, context) => {
+			return User.connect(input.email, input.password)
 				.then(ret => {
 					try {
-						const token = Token.generate(user,ret._id);
+						const token = Token.generate(input, ret._id);
 						return { message: "OK", code: "0", token: token };
 					} catch (e) {
 						console.error(e);
@@ -26,8 +26,8 @@ const resolver = {
 				})
 				.catch(e => ({ message: e, code: "-1", token: null }));
 		},
-		signUp: (_, { user }, context) => {
-			return User.create(user)
+		signUp: (_, { input }, context) => {
+			return User.create(input)
 				.then(userId => {
 					Qr.generate(userId);
 					const token = Token.generate(user, userId);

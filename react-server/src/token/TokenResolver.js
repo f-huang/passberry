@@ -7,7 +7,7 @@ const JWT_SECRET = "temporarySecret";
 
 const resolver = {
 	Query:{
-		TokenConvertToId: async (_, { token }, context) => {
+		convertTokenToId: async (_, { token }, context) => {
 			return Token.toId(token);
 		}
 	}

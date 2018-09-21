@@ -40,7 +40,7 @@ class AttractionCreate extends React.Component {
 		event.preventDefault();
 		apiCall(query, { "attraction": attraction })
 			.then(out => {
-				// const json = JSON.parse(out).data.attractionCreate;
+				// const json = JSON.parse(out).data.createAttraction;
 				// if (json.ids.length > 0) {
 					//save images
 				// }

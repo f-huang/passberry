@@ -30,7 +30,7 @@ export default class Authentication {
 			const decodedToken = jwt.decode(token);
 			return apiCall(queryUser, {"id": decodedToken.id})
 				.then (out => {
-					const json = JSON.parse(out).data.UserGet;
+					const json = JSON.parse(out).data.getUserById;
 					return {
 						email: decodedToken.email,
 						id: decodedToken.id,

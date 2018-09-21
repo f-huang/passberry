@@ -73,7 +73,7 @@ class ShoppingView extends React.Component {
 	updateData = async () => {
 		const result = await fetch(api, fetchInit())
 			.then(res => res.text())
-			.then(out => JSON.parse(out).touristData.AttractionGetAll);
+			.then(out => JSON.parse(out).touristData.getAllAttractions);
 		const finalAttractions = await result.map(attraction => {
 			const r = Object.assign({}, attraction);
 			r.selected = false;

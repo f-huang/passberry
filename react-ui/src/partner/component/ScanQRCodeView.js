@@ -74,7 +74,7 @@ class ScanQRCodeView extends React.Component {
         	fetch(api, fetchInit(result))
 		        .then(res => res.text())
 		        .then(out => {
-		        	const json = JSON.parse(out).touristData.QrRead;
+		        	const json = JSON.parse(out).touristData.readQr;
 		        	console.log(json);
 		        	if (json.user)
 				        this.setState({ scanned: true });

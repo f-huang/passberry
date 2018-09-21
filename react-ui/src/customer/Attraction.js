@@ -88,7 +88,7 @@ class Attraction extends Component {
 	setAttraction = (id) => {
 		apiCall(query, {"id": id})
 			.then(out => {
-				const json = JSON.parse(out).data.AttractionGet;
+				const json = JSON.parse(out).data.getAttractionById;
 				if (json)
 					this.setState({ attraction: json });
 			});
