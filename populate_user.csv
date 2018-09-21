@@ -1,0 +1,11 @@
+_id, email,first_name,last_name,birthdate,password,salt,gender,bank_api_key,registration_time,last_logon_time,type,newsletters,is_activated,is_deleted,role_id,partner_id, address_id
+1,"huangfanny44@gmail.com","Fanny","Huang","1997-11-13","$2b$12$dGEIRlGB8dWTkv1phNXZOOFxNyT9PzMJ8AczIjzFv4jvxRdSznY8a", NULL,"F", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+2,"tom@test.com","Tom","Hardy","1967-09-29","$2b$12$dGEIRlGB8dWTkv1phNXZOOFxNyT9PzMJ8AczIjzFv4jvxRdSznY8a", NULL,"M", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+3,"Alice@test.com","Alice","De Nice","1989-09-29","$2b$12$dGEIRlGB8dWTkv1phNXZOOFxNyT9PzMJ8AczIjzFv4jvxRdSznY8a", NULL,"F", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+4,"brice@test.com","Brice","De Nice","1977-09-29","$2b$12$dGEIRlGB8dWTkv1phNXZOOFxNyT9PzMJ8AczIjzFv4jvxRdSznY8a", NULL,"M", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+5,"hercule@test.com","Hercule","Poirot","1947-09-29","$2b$12$dGEIRlGB8dWTkv1phNXZOOFxNyT9PzMJ8AczIjzFv4jvxRdSznY8a", NULL,"M", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+6,"Olive@test.com","Olive","Et tom","1947-09-29","$2b$12$dGEIRlGB8dWTkv1phNXZOOFxNyT9PzMJ8AczIjzFv4jvxRdSznY8a", NULL,"M", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+7,"artur@test.com","Artur","Et son roi","1967-09-29","$2b$12$dGEIRlGB8dWTkv1phNXZOOFxNyT9PzMJ8AczIjzFv4jvxRdSznY8a", NULL,"M", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+8,"monica@test.com","Monica","Friends","1967-09-29","$2b$12$dGEIRlGB8dWTkv1phNXZOOFxNyT9PzMJ8AczIjzFv4jvxRdSznY8a", NULL,"F", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+9,"chandler@test.com","Chandler","Friends","1967-09-29","$2b$12$dGEIRlGB8dWTkv1phNXZOOFxNyT9PzMJ8AczIjzFv4jvxRdSznY8a", NULL,"M", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+10,"rachel@test.com","Rachel","Friends","1967-09-29","$2b$12$dGEIRlGB8dWTkv1phNXZOOFxNyT9PzMJ8AczIjzFv4jvxRdSznY8a", NULL,"F", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL

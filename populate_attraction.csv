@@ -1,0 +1,7 @@
+_id,name,description,link,price_id,address_id,partner_id,type
+1,"Musée Océanographique","Musée de Monaco","oceano.mc",\N,1,1,"MUSEUM",
+2,"Jardin Exotique","Jardin de Monaco",\N,\N,2,2,"GARDEN",
+3,"La Brasserie de Monaco",\N,"brasseriedemonaco.com",\N,4,3,"RESTAURANT",
+4,"La marée","Restaurant de fruits de mer",\N,\N,5,4,"RESTAURANT",
+5,"L'orangerie","Breuveries à base d'orange","orangerie.mc",\N,6,5,"DEGUSTATION",
+6,"Palais Princier","Palais de Monaco","palais.mc",\N,3,2,"PALACE",
