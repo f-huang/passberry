@@ -161,7 +161,7 @@ CREATE TABLE IF NOT EXISTS
     ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS
-	cart(
+	basket(
 		`_id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
 		`init_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 		`last_update_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -181,12 +181,12 @@ CREATE TABLE IF NOT EXISTS
         `discount_code` VARCHAR(32),
         `bought_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `user_id` INT UNSIGNED NOT NULL,
-        `cart_id` INT UNSIGNED NOT NULL,
+        `basket_id` INT UNSIGNED NOT NULL,
         `state` ENUM('SUCCESS', 'PENDING', 'CANCELED', 'FAILED') DEFAULT 'PENDING',
         `api_key` VARCHAR(256),
         `api_name` VARCHAR(128),
         FOREIGN KEY (`discount_code`) REFERENCES discount(`code`),
-        FOREIGN KEY (`cart_id`) REFERENCES cart(`_id`),
+        FOREIGN KEY (`basket_id`) REFERENCES basket(`_id`),
         FOREIGN KEY (`user_id`) REFERENCES user(`_id`),
         PRIMARY KEY(`_id`)
     ) ENGINE=InnoDB;
@@ -197,14 +197,17 @@ CREATE TABLE IF NOT EXISTS
         `_id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
         `init_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `expiration_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        `transaction_id` INT UNSIGNED NOT NULL,
-        `cart_id` INT UNSIGNED NOT NULL,
+        `transaction_id` INT UNSIGNED,
+        `basket_id` INT UNSIGNED NOT NULL,
         `user_id` INT UNSIGNED NOT NULL,
+        `start_date` DATE,
+        `end_date` DATE,
         `traveler_id` INT UNSIGNED NOT NULL,
         `is_used` TINYINT(1) NOT NULL DEFAULT 0,
         FOREIGN KEY (`transaction_id`) REFERENCES transaction(`_id`),
-        FOREIGN KEY (`cart_id`) REFERENCES cart(`_id`),
+        FOREIGN KEY (`basket_id`) REFERENCES basket(`_id`),
         FOREIGN KEY (`user_id`) REFERENCES user(`_id`),
+        FOREIGN KEY (`traveler_id`) REFERENCES user(`_id`),
         PRIMARY KEY(`_id`)
     ) ENGINE=InnoDB;
 
@@ -222,10 +225,10 @@ CREATE TABLE IF NOT EXISTS
 
 
 CREATE TABLE IF NOT EXISTS
-	cart_to_pass(
-		`cart_id` INT UNSIGNED NOT NULL,
+	basket_to_pass(
+		`basket_id` INT UNSIGNED NOT NULL,
 		`pass_id` INT UNSIGNED NOT NULL,
-		FOREIGN KEY (`cart_id`) REFERENCES cart(`_id`),
+		FOREIGN KEY (`basket_id`) REFERENCES basket(`_id`),
 		FOREIGN KEY (`pass_id`) REFERENCES pass(`_id`)
 	) ENGINE=InnoDB;
 

@@ -2,7 +2,7 @@
 
 const pool = require('../database/pool');
 
-const TABLE_NAME = 'cart';
+const TABLE_NAME = 'basket';
 
 exports.create = (basket) => new Promise((resolve, reject) => {
 	const sql = `INSERT INTO ${TABLE_NAME} SET ?`;
