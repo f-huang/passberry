@@ -14,7 +14,7 @@ const resolver = {
 				const pass = {
 					"user_id": input.user_id,
 					"traveler_id": travelerId,
-					"basket_id": input._id,
+					"basket_id": input.id,
 					// "start_date": startDate,
 					// "end_date": endDate
 				};
@@ -25,7 +25,7 @@ const resolver = {
 							for (let i = 0; i < attraction.quantity; i++) {
 								PassToAttraction.create({
 									"pass_id": insertId,
-									"attraction_id": attraction._id
+									"attraction_id": attraction.id
 								}).catch(e => console.error(e))
 							}
 						}
@@ -37,11 +37,11 @@ const resolver = {
 		},
 		burnAttractionTicket: (_, { input }) => {
 			return PassToAttraction.update({
-				'_id': input.attraction_id,
+				'id': input.attraction_id,
 				'used_time': input.timestamp
 			}).then(result => {
 				Pass.update({
-					'_id': input.pass_id,
+					'id': input.pass_id,
 					'init_time': input.timestamp,
 					'expiration_time': moment(input.timestamp).add(EXPIRE_INS, 'days')
 				}).then(result => {

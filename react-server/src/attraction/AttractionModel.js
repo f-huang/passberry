@@ -50,7 +50,7 @@ exports.create = (attraction) => new Promise((resolve, reject) => {
 
 
 exports.update = (attraction) => new Promise((resolve, reject) => {
-	let sql = `UPDATE \`${TABLE_NAME}\` SET ? WHERE \`_id\`=${attraction._id}`;
+	let sql = `UPDATE \`${TABLE_NAME}\` SET ? WHERE \`id\`=${attraction.id}`;
 	pool.query(sql, attraction, (error, rows) => {
 		if (error) {
 			console.error(error);

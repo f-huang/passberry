@@ -47,7 +47,7 @@ class AttractionPreview extends Component {
 	};
 
 	onPressRelease = () => {
-		const to = `attraction/${this.props.attraction._id}/${this.props.attraction.name.replace(/\s+/g, '-').toLowerCase()}`;
+		const to = `attraction/${this.props.attraction.id}/${this.props.attraction.name.replace(/\s+/g, '-').toLowerCase()}`;
 
 		clearTimeout(this.timer);
 		if (!this.props.attraction.wanted)

@@ -13,7 +13,7 @@ import whiteHeart from "../assets/icons/heart_white.svg";
 const query = `
 	query AttractionGet($id: ID!) {
 		AttractionGet(id: $id) {
-			_id
+			id
 			name
 			description
 			price

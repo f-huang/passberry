@@ -5,7 +5,7 @@ import apiCall from "../../../api";
 const query = `
 	query AttractionGetAll {
 		AttractionGetAll {
-			_id
+			id
 			name
 			description
 			price

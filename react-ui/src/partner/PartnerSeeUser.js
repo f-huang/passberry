@@ -8,7 +8,7 @@ import '../app/base.css'
 
 
 const user = {
-    _id: "1234-abcd-5678",
+    id: "1234-abcd-5678",
     picture: profilePicture,
     firstName: "Fanny",
     lastName: "Huang",
@@ -17,7 +17,7 @@ const user = {
 };
 
 const event = {
-    _id: "0987-dcba-6543",
+    id: "0987-dcba-6543",
     partner: "Association sportive de Monaco football club",
     partnerShort: "AS Monaco",
     type: "Soccer Game",

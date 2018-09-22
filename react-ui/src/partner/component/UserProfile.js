@@ -57,7 +57,7 @@ class UserProfile extends React.Component {
                 <div className="UserProfile-identity" style={styles.identity}>
                     <p className="UserProfile-identity-details" style={styles.names}>{this.props.user.lastName} {this.props.user.firstName}</p>
                     <p className="UserProfile-identity-details" style={styles.email}>{this.props.user.email}</p>
-                    <p className="UserProfile-identity-details" style={styles.id}>{this.props.user._id}</p>
+                    <p className="UserProfile-identity-details" style={styles.id}>{this.props.user.id}</p>
                 </div>
             </div>
         );

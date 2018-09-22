@@ -23,7 +23,7 @@ const aliases = [
 exports.getAddressById = (id) => {
 	return new Promise((resolve, reject) => {
 		const columns = utils.getColumnsAliasesAsString(DBColumns, aliases);
-		const sql = `SELECT ${columns} FROM \`address\` WHERE \`_id\` = ?`;
+		const sql = `SELECT ${columns} FROM \`address\` WHERE \`id\` = ?`;
 
 		pool.query(sql, id, (error, rows) => {
 			if (error) {

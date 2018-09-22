@@ -1,4 +1,4 @@
-_id,street,supplement,city,postcode,country_code
+id,street,supplement,city,postcode,country_code
 1,"Avenue Saint-Martin",NULL,"Monaco","98000","MC",
 2,"Boulevard du Jardin Exotique",NULL,"Monaco","98000","MC",
 3,"PCJ9+HW",NULL,"Monaco","98015","MC",

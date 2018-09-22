@@ -78,7 +78,7 @@ exports.create = (qr) => new Promise((resolve, reject) => {
 exports.findUser = (data) => new Promise((resolve, reject) => {
 	const sql = `SELECT * FROM \`qr_code\`
 	    INNER JOIN \`user\` ON 
-	    \`qr_code\`.\`user_id\` = \`user\`.\`_id\`
+	    \`qr_code\`.\`user_id\` = \`user\`.\`id\`
 	    WHERE \`value\` = ?
 	`;
 	if (!data) {

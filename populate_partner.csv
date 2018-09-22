@@ -1,4 +1,4 @@
-_id,name,address_id,bank_api_key,is_deleted
+id,name,address_id,bank_api_key,is_deleted
 1,"Monaco musée",1,NULL,false,
 2,"Direction du Tourisme de Monaco",2,NULL,false,
 3,"SARL Brasserie",4,NULL,false,

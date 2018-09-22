@@ -1,4 +1,4 @@
-_id,name,description,link,price_id,address_id,partner_id,type
+id,name,description,link,price_id,address_id,partner_id,type
 1,"Musée Océanographique","Musée de Monaco","oceano.mc",\N,1,1,"MUSEUM",
 2,"Jardin Exotique","Jardin de Monaco",\N,\N,2,2,"GARDEN",
 3,"La Brasserie de Monaco",\N,"brasseriedemonaco.com",\N,4,3,"RESTAURANT",

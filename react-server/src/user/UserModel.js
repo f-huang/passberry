@@ -45,7 +45,7 @@ exports.connect = (email, password) => new Promise((resolve, reject) => {
 
 
 exports.exists = (email) => new Promise((resolve, reject) => {
-	const sql = `SELECT \`_id\` FROM \`${TABLE_NAME}\` WHERE \`email\` = ?`;
+	const sql = `SELECT \`id\` FROM \`${TABLE_NAME}\` WHERE \`email\` = ?`;
 	pool.query(sql, email,
 		(error, rows) => {
 			if (error) {
@@ -94,7 +94,7 @@ exports.getAll = () => new Promise((resolve, reject) => {
 
 
 exports.getById = (id, columns) => new Promise((resolve, reject) => {
-	const sql = `SELECT * FROM \`${TABLE_NAME}\` WHERE \`_id\`=?`;
+	const sql = `SELECT * FROM \`${TABLE_NAME}\` WHERE \`id\`=?`;
 	pool.query(sql, id,
 		(error, rows) => {
 			if (error) {
@@ -131,7 +131,7 @@ exports.update = (user) => new Promise((resolve, reject) => {
 	if (user.id === undefined || user.id === null || user.id < 1 || typeof user.id !== "number") {
 		reject("user.id is either not defined or wrong");
 	}
-	let sql = `UPDATE \`${TABLE_NAME}\` SET ? WHERE \`_id\` = ${user.id}`;
+	let sql = `UPDATE \`${TABLE_NAME}\` SET ? WHERE \`id\` = ${user.id}`;
 	delete user['id'];
 	pool.query(sql, user, (error, rows) => {
 		if (error) {

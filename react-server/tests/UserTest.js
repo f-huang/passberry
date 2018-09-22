@@ -74,7 +74,7 @@ describe('User.getUserTypes()', function () {
 describe('User.getUser()', function () {
 	it('check if a user is returned with default columns', function () {
 		const expected = {
-			_id: 1,
+			id: 1,
 			password: '1234567890'
 		};
 		const ret = User.getUser('fhuang@student.42.fr', '1234567890');
@@ -83,7 +83,7 @@ describe('User.getUser()', function () {
 
 	it('check if a user is returned with custom columns', function () {
 		const expected = {
-			_id: 1,
+			id: 1,
 			password: '1234567890',
 			birthday: null
 		};

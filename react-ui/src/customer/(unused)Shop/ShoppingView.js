@@ -10,7 +10,7 @@ const api = '/graphql';
 const query = `
 	query AttractionGetAll {
 		AttractionGetAll {
-			_id
+			id
 			name
 			description
 			price

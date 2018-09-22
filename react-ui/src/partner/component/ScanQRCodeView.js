@@ -18,7 +18,7 @@ const api = '/graphql';
 const query = `
 	query QrRead($data: String) {
 		QrRead(data: $data) {
-			_id
+			id
 			first_name
 			last_name
 			email

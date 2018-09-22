@@ -17,7 +17,7 @@ exports.create = (basket) => new Promise((resolve, reject) => {
 });
 
 exports.update = (basket) => new Promise((resolve, reject) => {
-	const sql = `UPDATE FROM ${TABLE_NAME} WHERE _id=${basket._id}`;
+	const sql = `UPDATE ${TABLE_NAME} SET ? WHERE id=${basket.id}`;
 	pool.query(sql, basket, (error, row) => {
 		if (error) {
 			console.error(error);
@@ -30,7 +30,7 @@ exports.update = (basket) => new Promise((resolve, reject) => {
 
 
 exports.validate = (state, userId, basketId) => new Promise((resolve, reject) => {
-	const sql = `UPDATE ${TABLE_NAME} SET ? WHERE _id=${basketId}`;
+	const sql = `UPDATE ${TABLE_NAME} SET ? WHERE id=${basketId}`;
 	const params = {
 		'user_id': userId,
 		'state': state

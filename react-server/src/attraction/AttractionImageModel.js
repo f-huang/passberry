@@ -15,7 +15,7 @@ const mapForDb = (data) => {
 
 exports.getById = (id) => {
 	return new Promise((resolve, reject) => {
-		const sql = `SELECT * from \`${TABLE_NAME}\` WHERE \`_id\`= ?`;
+		const sql = `SELECT * from \`${TABLE_NAME}\` WHERE \`id\`= ?`;
 		pool.query(sql, id, (error, rows) => {
 			if (error) {
 				reject(error);
@@ -50,7 +50,7 @@ exports.create = (id, files) => {
 
 exports.delete = (id) => {
 	return new Promise((resolve, reject) => {
-		let sql = `DELETE FROM \`${TABLE_NAME}\` WHERE \`_id\`= ?`;
+		let sql = `DELETE FROM \`${TABLE_NAME}\` WHERE \`id\`= ?`;
 		pool.query(sql, id, (error, rows) => {
 			if (error) {
 				reject(error);

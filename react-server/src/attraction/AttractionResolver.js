@@ -1,9 +1,10 @@
 const Attraction = require("./AttractionModel");
+const { getStatus, StatusCodeEnum } = require("../status");
 
 const resolver = {
 	Query: {
 		getAttractionById: (_, { id }) => {
-			return Attraction.get({ _id: id }).then(rows => {
+			return Attraction.get({ id: id }).then(rows => {
 				return rows[0];
 			});
 		},
@@ -12,13 +13,19 @@ const resolver = {
 		}
 	},
 	Mutation: {
-		createAttraction: (_, { input }) => {
+		createAttraction: (_, {input}) => {
 			return Attraction.create(input)
-				.then(ret => {
-					console.log(ret);
-					return { id: ret, code: 0, message: "OK"};
+				.then(insertId => {
+					input.id = insertId;
+					return {
+						status: getStatus(StatusCodeEnum.success, 'OK'),
+						attraction: input
+					};
 				})
-				.catch(e => ({ id: - 1, code: -1, message: e }));
+				.catch(e => ({
+					status: getStatus(StatusCodeEnum.serverSideError, e),
+					attraction: input
+				}));
 		}
 	}
 };
