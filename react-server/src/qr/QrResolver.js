@@ -1,6 +1,8 @@
 const Qr = require("./QrModel");
 const Token = require("../token/TokenModel");
 
+const {getStatus, StatusCodeEnum} = require('../status');
+
 const resolver = {
 	Query: {
 		getQrValue: (_, { token }, context) => {
@@ -23,11 +25,18 @@ const resolver = {
 	Mutation: {
 		generateQr: (_, { input }) => {
 			return Qr.generate(input)
-				.then(ret =>{
-					console.log(ret);
-					return ({ value: ret });
+				.then(insertId =>{
+					return ({
+						status: getStatus(StatusCodeEnum.success, 'OK'),
+						qrId: insertId,
+						userId: input
+					});
 				})
-				.catch(e => ({ value: e }))
+				.catch(e => ({
+					status: getStatus(StatusCodeEnum.serverSideError, 'OK'),
+					value: null,
+					userId: input
+				}))
 		}
 	}
 };

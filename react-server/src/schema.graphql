@@ -1,124 +1,106 @@
-interface ResponseMutation {
-	message: String
-	code: Int!
-}
+scalar Date
 
-
-type Attraction {
-  _id: ID!
-  name: String!
-  description: String
-  price: Float
-  type: String
-}
-
-input CreateAttractionInput {
-	name: String!
-	price: Float
-	type: String
-	description: String
-	link: String
-}
-
-input SignInInput {
-	email: String!
-	password: String!
-}
-
-input SignUpInput {
-	email: String!
-	first_name: String
-	last_name: String
-	password: String!
-	gender: Gender
-	birthdate: Date
-}
-
-input BasketChoice {
-	attraction_id: ID
-	user_id: ID
-	quantity: Int
-}
-
-input ValidateBasketInput {
-	basket_id: ID
-	user_id: ID
-	state: String
-}
-
-input UpdateBasketInput {
-    last_update_time: Date
-    choices: [BasketChoice]
-}
-
-input CreateBasketInput {
-	_id: ID
-	user_id: ID
-	choices: [BasketChoice]
-}
-
-input CreateTravelersPassesInput {
-	_id: ID
-	user_id: ID
-	start_date: Date
-	end_date: Date
-	choices: [BasketChoice]
-}
-
-input BurnAttractionTicketInput {
-	timestamp: Date,
-	attraction_id: ID
-	pass_id: ID
-}
-
-input CreatePaymentInput {
-	amount: Float
-}
-
-type UserCredentials implements ResponseMutation {
-	message: String
-	code: Int!
-	token: String
-}
-
-type UserTokenToId implements ResponseMutation {
-	message: String
-	code: Int!
-	id: ID
-}
-
-type ResponseForCreate implements ResponseMutation {
-	message: String,
-	code: Int!,
-	id: ID
-}
-
-type User {
-  _id: ID!
-  email: String!
-  first_name: String
-  last_name: String
-  birthdate: Date
-  gender: Gender
-  type: UserType
-}
-
-type QrGenerator {
-  value: String
-}
+# --------------------------------------------------------
+# --------------------------------------------------------
+# --------------------------------------------------------
 
 enum Gender {
-  M
-  F
-  O
+	M
+	F
+	O
 }
 
 enum UserType {
-  STAFF
-  MUNICIPALITY
-  PARTNER
-  TOURIST
+	STAFF
+	MUNICIPALITY
+	PARTNER
+	TOURIST
 }
+
+enum StatusCode {
+	SUCCESS
+	SERVER_SIDE_ERROR
+	CLIENT_SIDE_ERROR
+}
+
+# --------------------------------------------------------
+# --------------------------------------------------------
+# --------------------------------------------------------
+
+type Status {
+	code: StatusCode!
+	message: String
+}
+
+# --------------------------------------------------------
+# --------------------------------------------------------
+# --------------------------------------------------------
+
+type AttractionPrice {
+	adult: Float!
+	child: Float
+	maxAgeForChild: Int
+}
+
+type Attraction {
+	id: ID!
+	name: String!
+	description: String
+	price: AttractionPrice
+	type: String
+}
+
+type User {
+	id: ID!
+	email: String!
+	firstName: String
+	lastName: String
+	birthdate: Date
+	gender: Gender
+	type: UserType
+}
+
+type BasketItem {
+	attractionId: ID!
+	userId: ID!
+	quantity: Int!
+}
+
+type Basket {
+	id: ID!
+	userId: ID
+	choices: [BasketItem]!
+}
+
+type Payment {
+	id: ID!
+	amount: Float!
+	state: String!
+	userId: ID!
+	basketID: ID!
+}
+
+type AttractionTicket {
+	attractionId: ID!
+	usedTime: Date
+}
+
+type Pass {
+	id: ID!
+	userId: ID
+	travelerID: ID
+	attractions: [AttractionTicket]
+}
+
+type TokenToId {
+	status: Status!
+	id: ID
+	token: String!
+}
+
+# --------------------------------------------------------
+# --------------------------------------------------------
+# --------------------------------------------------------
 
 type Query {
     getAttractionById(id: ID!): Attraction
@@ -130,24 +112,153 @@ type Query {
     getQrValue(token: String): String
     readQr(data: String): User
 
-	convertTokenToId(token: String): UserTokenToId
+	convertTokenToId(token: String): TokenToId
 }
+
+# --------------------------------------------------------
+# --------------------------------------------------------
+# --------------------------------------------------------
+
+input SignInInput {
+	email: String!
+	password: String!
+}
+
+input SignUpInput {
+	email: String!
+	firstName: String
+	lastName: String
+	password: String!
+	gender: Gender
+	birthdate: Date
+}
+
+input CreateAttractionPrice {
+	adult: Float!
+	child: Float
+	maxAgeForChild: Int
+}
+
+input CreateAttractionInput {
+	name: String!
+	price: CreateAttractionPrice
+	type: String
+	description: String
+	link: String
+}
+
+input BasketChoice {
+	attractionId: ID!
+	userId: ID!
+	quantity: Int!
+}
+
+input CreateBasketInput {
+	userId: ID
+	choices: [BasketChoice]!
+}
+
+input UpdateBasketInput {
+	basketId: ID
+    lastUpdateTime: Date
+    choices: [BasketChoice]
+}
+
+input ValidateBasketInput {
+	basketId: ID
+	userId: ID
+	state: String
+}
+
+input CreateTravelersPassesInput {
+	userId: ID!
+	startDate: Date
+	endDate: Date
+	choices: [BasketChoice]!
+}
+
+input BurnAttractionTicketInput {
+	timestamp: Date,
+	attractionId: ID
+	passId: ID
+}
+
+input CreatePaymentInput {
+	amount: Float
+}
+
+
+# --------------------------------------------------------
+# --------------------------------------------------------
+# --------------------------------------------------------
+
+type UserCredentials {
+	status: Status!
+	token: String
+	errorMessage: String
+}
+
+type CreateAttractionPayload {
+	status: Status!
+	attraction: Attraction
+}
+
+type GenerateQrPayload {
+	status: Status!
+	qrId: ID
+	userId: ID!
+}
+
+type CreateBasketPayload {
+	status: Status!
+	basket: Basket!
+}
+
+type UpdateBasketPayload {
+	status: Status!
+	basket: Basket!
+}
+
+type ValidateBasketPayload {
+	status: Status!
+	basketId: ID!
+	userId: ID!
+}
+
+type CreatePaymentPayload {
+	status: Status!
+	payment: Payment!
+}
+
+type CreateTravelersPassesPayload {
+	status: Status!
+	userId: ID!
+	passes: [Pass]!
+}
+
+type BurnAttractionTicketPayload {
+	status: Status!
+	pass: Pass
+}
+
+# --------------------------------------------------------
+# --------------------------------------------------------
+# --------------------------------------------------------
 
 type Mutation {
 	signIn(input: SignInInput!): UserCredentials
 	signUp(input: SignUpInput!): UserCredentials
 
-	createAttraction(input: CreateAttractionInput!): ResponseForCreate
-    generateQr(input: ID!): QrGenerator
+	createAttraction(input: CreateAttractionInput!): CreateAttractionPayload
+    
+    generateQr(input: ID!): GenerateQrPayload
 
-	createBasket(input: CreateBasketInput!): ResponseForCreate
-	updateBasket(input: UpdateBasketInput!): ResponseForCreate
-	validateBasket(input: ValidateBasketInput!): ResponseForCreate
+	createBasket(input: CreateBasketInput!): CreateBasketPayload
+	updateBasket(input: UpdateBasketInput!): UpdateBasketPayload
+	validateBasket(input: ValidateBasketInput!): ValidateBasketPayload
 
-	createPayment(input: CreatePaymentInput!): ResponseForCreate
+	createPayment(input: CreatePaymentInput!): CreatePaymentPayload
 
-	createTravelersPasses(input: CreateTravelersPassesInput!): ResponseForCreate
-	burnAttractionTicket(input: BurnAttractionTicketInput!): ResponseForCreate
+	createTravelersPasses(input: CreateTravelersPassesInput!): CreateTravelersPassesPayload
+	burnAttractionTicket(input: BurnAttractionTicketInput!): BurnAttractionTicketPayload
 }
-
-scalar Date

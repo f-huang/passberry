@@ -4,6 +4,17 @@ const User = require("./UserModel");
 const Token = require("../token/TokenModel");
 const Qr = require("../qr/QrModel");
 
+const { getStatus, StatusCodeEnum } = require("../status");
+
+const user = (input) => ({
+	"email": input.email,
+	"first_name": input.first_name,
+	"last_name": input.lastName,
+	"password": input.password,
+	"gender": input.gender,
+	"birthdate": input.birthdate,
+});
+
 const resolver = {
 	Query: {
 		getUserById: (_, { id }) => {
@@ -15,25 +26,29 @@ const resolver = {
 	},
 	Mutation: {
 		signIn: (_, { input }, context) => {
+			if (!input.email || !input.password)
+				return { status: getStatus(StatusCodeEnum.clientSideError, "Wrong input"), token: null};
 			return User.connect(input.email, input.password)
 				.then(ret => {
 					try {
-						const token = Token.generate(input, ret._id);
-						return { message: "OK", code: "0", token: token };
+						const token = Token.generate(input, ret.id);
+						return { status: getStatus(StatusCodeEnum.success, 'OK'), token: token };
 					} catch (e) {
 						console.error(e);
 					}
 				})
-				.catch(e => ({ message: e, code: "-1", token: null }));
+				.catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e), token: null }));
 		},
 		signUp: (_, { input }, context) => {
-			return User.create(input)
+			if (!input.email || !input.password)
+				return { status: getStatus(StatusCodeEnum.clientSideError, "Wrong input"), token: null};
+			return User.create(user(input))
 				.then(userId => {
 					Qr.generate(userId);
 					const token = Token.generate(user, userId);
-					return { message: "OK", code: "0", token: token };
+					return { status: getStatus(StatusCodeEnum.success, 'OK'), token: token };
 				})
-				.catch(e => ({ message: e, code: "-1", token: null }));
+				.catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e), token: null }));
 		}
 	}
 };

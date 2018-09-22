@@ -1,13 +1,20 @@
 const Payment = require('./PaymentModel');
+const { getStatus, StatusCodeEnum } = require("../status");
 
 const resolver = {
 	Mutation: {
 		createPayment: (_, { input }) => {
 			return Payment.create(input)
 				.then(insertId => {
-					return ({id: insertId, code: 0, message: 'OK'});
+					return {
+						status: getStatus(StatusCodeEnum.success, 'OK'),
+						payment: input
+					};
 				})
-				.catch(e => ({id: -1, code: -1, message: e}));
+				.catch(e => ({
+					status: getStatus(StatusCodeEnum.serverSideError, e),
+					payment: input
+				}));
 		}
 	}
 };
