@@ -46,8 +46,9 @@ type Attraction {
 	id: ID!
 	name: String!
 	description: String
-	price: AttractionPrice
-	type: String
+	price: AttractionPrice!
+	link: String
+	type: String!
 }
 
 type User {
@@ -81,21 +82,28 @@ type Payment {
 }
 
 type AttractionTicket {
+	id: ID!
 	attractionId: ID!
 	usedTime: Date
 }
 
 type Pass {
 	id: ID!
-	userId: ID
-	travelerID: ID
-	attractions: [AttractionTicket]
+	userId: ID!
+	travelerId: ID!
+	attractions: [AttractionTicket]!
 }
 
 type TokenToId {
 	status: Status!
 	id: ID
 	token: String!
+}
+
+
+type GetPassPayload {
+	status: Status!
+	pass: Pass!
 }
 
 # --------------------------------------------------------
@@ -113,6 +121,8 @@ type Query {
     readQr(data: String): User
 
 	convertTokenToId(token: String): TokenToId
+	getPassByUserId(input: GetPassByUserIdInput!): GetPassPayload!
+	getPassByTravelerId(input: GetPassByTravelerIdInput!): GetPassPayload!
 }
 
 # --------------------------------------------------------
@@ -141,50 +151,87 @@ input CreateAttractionPrice {
 
 input CreateAttractionInput {
 	name: String!
-	price: CreateAttractionPrice
-	type: String
+	price: CreateAttractionPrice!
+	type: String!
 	description: String
 	link: String
 }
 
-input BasketChoice {
+input BasketChoiceInput {
 	attractionId: ID!
 	userId: ID!
 	quantity: Int!
 }
 
-input CreateBasketInput {
+input BasketInput {
+	id: ID
 	userId: ID
-	choices: [BasketChoice]!
+	initTime: Date
+	lastUpdateTime: Date
+	choices: [BasketChoiceInput]!
+}
+
+input CreateBasketInput {
+	initTime: Date!
+	lastUpdateTime: Date!
+	userId: ID
+	choices: [BasketChoiceInput]!
 }
 
 input UpdateBasketInput {
-	basketId: ID
-    lastUpdateTime: Date
-    choices: [BasketChoice]
+	basketId: ID!
+    lastUpdateTime: Date!
+    userId: ID
+    choices: [BasketChoiceInput]!
 }
 
 input ValidateBasketInput {
-	basketId: ID
-	userId: ID
-	state: String
+	basketId: ID!
+	userId: ID!
+	state: String!
+}
+
+input PassTicketInput {
+	attractionId: ID!
+	quantity: Int!
+}
+
+input PassInput {
+	userId: ID!
+	travelerId: ID!
+	tickets: [PassTicketInput]!
+}
+
+input CreatePassInput {
+	basketId: ID!
+	startDate: Date!
+	endDate: Date!
+	pass: PassInput
 }
 
 input CreateTravelersPassesInput {
 	userId: ID!
-	startDate: Date
-	endDate: Date
-	choices: [BasketChoice]!
+	startDate: Date!
+	endDate: Date!
+	basket: BasketInput!
 }
 
 input BurnAttractionTicketInput {
-	timestamp: Date,
-	attractionId: ID
-	passId: ID
+	timestamp: Date!
+	ticketId: ID!
+	passId: ID!
 }
 
 input CreatePaymentInput {
-	amount: Float
+	amount: Float!
+}
+
+input GetPassByUserIdInput {
+	userId: ID!
+}
+
+input GetPassByTravelerIdInput {
+	travelerId: ID!
 }
 
 
@@ -230,35 +277,35 @@ type CreatePaymentPayload {
 	payment: Payment!
 }
 
-type CreateTravelersPassesPayload {
+type CreatePassPayload {
 	status: Status!
-	userId: ID!
-	passes: [Pass]!
+	pass: Pass!
 }
 
 type BurnAttractionTicketPayload {
 	status: Status!
-	pass: Pass
+	pass: Pass!
 }
+
 
 # --------------------------------------------------------
 # --------------------------------------------------------
 # --------------------------------------------------------
 
 type Mutation {
-	signIn(input: SignInInput!): UserCredentials
-	signUp(input: SignUpInput!): UserCredentials
+	signIn(input: SignInInput!): UserCredentials!
+	signUp(input: SignUpInput!): UserCredentials!
 
-	createAttraction(input: CreateAttractionInput!): CreateAttractionPayload
+	createAttraction(input: CreateAttractionInput!): CreateAttractionPayload!
     
-    generateQr(input: ID!): GenerateQrPayload
+    generateQr(input: ID!): GenerateQrPayload!
 
-	createBasket(input: CreateBasketInput!): CreateBasketPayload
-	updateBasket(input: UpdateBasketInput!): UpdateBasketPayload
-	validateBasket(input: ValidateBasketInput!): ValidateBasketPayload
+	createBasket(input: CreateBasketInput!): CreateBasketPayload!
+	updateBasket(input: UpdateBasketInput!): UpdateBasketPayload!
+	validateBasket(input: ValidateBasketInput!): ValidateBasketPayload!
 
-	createPayment(input: CreatePaymentInput!): CreatePaymentPayload
+	createPayment(input: CreatePaymentInput!): CreatePaymentPayload!
 
-	createTravelersPasses(input: CreateTravelersPassesInput!): CreateTravelersPassesPayload
-	burnAttractionTicket(input: BurnAttractionTicketInput!): BurnAttractionTicketPayload
+	createPass(input: CreatePassInput!): CreatePassPayload!
+	burnAttractionTicket(input: BurnAttractionTicketInput!): BurnAttractionTicketPayload!
 }

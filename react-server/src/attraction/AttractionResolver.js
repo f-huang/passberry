@@ -1,6 +1,16 @@
 const Attraction = require("./AttractionModel");
 const { getStatus, StatusCodeEnum } = require("../status");
 
+const attraction = (input) => ({
+	"name": input.name,
+	...(input.description ? {"description": input.description} : {}),
+	...(input.link ? {"link": input.link} : {}),
+	"price_adult": input.price.adult,
+	...(input.price.child ? {"price_child": input.price.child} : {}),
+	...(input.price.maxAgeForChild ? {"price_max_age_for_child": input.price.maxAgeForChild} : {}),
+	"type": input.type
+});
+
 const resolver = {
 	Query: {
 		getAttractionById: (_, { id }) => {
@@ -14,7 +24,7 @@ const resolver = {
 	},
 	Mutation: {
 		createAttraction: (_, {input}) => {
-			return Attraction.create(input)
+			return Attraction.create(attraction(input))
 				.then(insertId => {
 					input.id = insertId;
 					return {

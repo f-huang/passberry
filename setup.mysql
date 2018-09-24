@@ -127,25 +127,17 @@ CREATE TABLE IF NOT EXISTS
     ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS
-    attraction_price(
-        `id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
-        `adult` DECIMAL(8, 3) UNSIGNED NOT NULL DEFAULT 0.0,
-        `child` DECIMAL(8, 3) UNSIGNED DEFAULT NULL,
-        `max_age_for_child` INT UNSIGNED DEFAULT NULL,
-        PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS
     attraction(
         `id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
         `name` VARCHAR(128) NOT NULL,
         `description` TEXT,
         `link` VARCHAR(256),
-        `price_id` INT UNSIGNED,
+        `price_adult` DECIMAL(8, 3) UNSIGNED NOT NULL DEFAULT 0.0,
+        `price_child` DECIMAL(8, 3) UNSIGNED DEFAULT NULL,
+        `price_max_age_for_child` INT UNSIGNED DEFAULT NULL,
         `address_id` INT UNSIGNED,
         `partner_id` INT UNSIGNED,
         `type` VARCHAR(48) DEFAULT NULL,
-        FOREIGN KEY (`price_id`) REFERENCES attraction_price(`id`),
         FOREIGN KEY (`address_id`) REFERENCES address(`id`),
         FOREIGN KEY(`partner_id`) REFERENCES partner(`id`),
         PRIMARY KEY (`id`)
@@ -195,8 +187,8 @@ CREATE TABLE IF NOT EXISTS
 CREATE TABLE IF NOT EXISTS
     pass(
         `id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
-        `init_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        `expiration_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        `init_time` TIMESTAMP NULL DEFAULT NULL,
+        `expiration_time` TIMESTAMP NULL DEFAULT NULL,
         `transaction_id` INT UNSIGNED,
         `basket_id` INT UNSIGNED NOT NULL,
         `user_id` INT UNSIGNED NOT NULL,
