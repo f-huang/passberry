@@ -3,13 +3,15 @@ const Basket = require('./BasketModel');
 const { getStatus, StatusCodeEnum } = require("../status");
 
 const basketForCreate = (input) => ({
-	"user_id": input.userId,
+	"init_time": input.initTime,
+	"last_update_time": input.lastUpdateTime,
+	...(input.userId ? {"user_id": input.userId} : {}),
 	"choices": input.choices
 });
 
 const basketForUpdate = (input) => ({
+	...(input.userId ? {"user_id": input.userId} : {}),
 	"id": input.basketId,
-	"user_id": input.userId,
 	"last_update_time": input.lastUpdateTime
 });
 
@@ -49,13 +51,20 @@ const resolver = {
 			newInput.choices = JSON.stringify(newInput.choices);
 			return Basket.update(basketForUpdate(newInput))
 				.then(ret => {
-					return {
-						status: getStatus(StatusCodeEnum.success, 'OK'),
-						basket: {
-							id: input.basketId,
-							choices: input.choices
-						}
-					};
+					return Basket.getUserIdById(input.basketId).then(userId => {
+						console.log(
+							"userId : ", userId
+						);
+						return (
+							{
+								status: getStatus(StatusCodeEnum.success, 'OK'),
+								basket: {
+									id: input.basketId,
+									userId: userId,
+									choices: input.choices
+								}
+							});
+					})
 				})
 				.catch(e => ({
 					status: getStatus(StatusCodeEnum.serverSideError, e),

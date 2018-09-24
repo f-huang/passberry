@@ -34,7 +34,7 @@ exports.init = (pass) => new Promise((resolve, reject) => {
 		\`expiration_time\` = CASE WHEN \`expiration_time\` IS NULL THEN ? ELSE \`expiration_time\`
 		WHERE id = ? 
 	`;
-	pool.query(sql, [pass.init_time, pass.expiration_time, pass.id], (error, result) => {
+	pool.query(sql, [pass.initTime, pass.expirationTime, pass.id], (error, result) => {
 		if (error) {
 			console.error(error);
 			reject(error);
@@ -43,3 +43,48 @@ exports.init = (pass) => new Promise((resolve, reject) => {
 		resolve(result);
 	});
 });
+
+exports.getById = (id) => new Promise((resolve, reject) => {
+	const sql = `SELECT
+		\`id\`, \`user_id\` AS \`userId\`, \`traveler_id\` AS \`travelerId\`
+		FROM ${TABLE_NAME} WHERE id=?`;
+	pool.query(sql, id, (error, row) => {
+		if (error) {
+			console.error(error);
+			reject(error);
+			return null;
+		}
+		resolve(row.insertId);
+	});
+});
+
+exports.getByUserId = (userId) => new Promise((resolve, reject) => {
+	const sql = `SELECT 
+	\`id\`, \`user_id\` AS \`userId\`, \`traveler_id\` AS \`travelerId\`,
+	\`init_time\` AS \`initTime\`, \`expiration_time\` AS \`expirationTime\` 
+	FROM ${TABLE_NAME} WHERE \'user_id\'=?`;
+	pool.query(sql, userId, (error, rows) => {
+		if (error) {
+			console.error(error);
+			reject(error);
+			return null;
+		}
+		resolve(rows ? rows[0] : {});
+	});
+});
+
+exports.getByTravelerId = (userId) => new Promise((resolve, reject) => {
+	const sql = `SELECT 
+	\`id\`, \`user_id\` AS \`userId\`, \`traveler_id\` AS \`travelerId\`,
+	\`init_time\` AS \`initTime\`, \`expiration_time\` AS \`expirationTime\` 
+	FROM ${TABLE_NAME} WHERE \`traveler_id\`=?`;
+	pool.query(sql, userId, (error, rows) => {
+		if (error) {
+			console.error(error);
+			reject(error);
+			return null;
+		}
+		resolve(rows ? rows[0] : {});
+	});
+});
+

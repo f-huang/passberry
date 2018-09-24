@@ -16,6 +16,19 @@ exports.create = (basket) => new Promise((resolve, reject) => {
 	});
 });
 
+exports.getUserIdById = (basketId) => new Promise((resolve, reject) => {
+	const sql = `SELECT user_id as 'userId' FROM ${TABLE_NAME} WHERE id=?`;
+	pool.query(sql, basketId, (error, rows) => {
+		if (error) {
+			console.error(error);
+			reject(error);
+			return null;
+		}
+		console.log(rows[0]);
+		resolve(rows[0].userId);
+	});
+});
+
 exports.update = (basket) => new Promise((resolve, reject) => {
 	const sql = `UPDATE ${TABLE_NAME} SET ? WHERE id=${basket.id}`;
 	pool.query(sql, basket, (error, row) => {
