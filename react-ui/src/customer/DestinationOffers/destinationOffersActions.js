@@ -12,8 +12,8 @@ export const seeAttraction = (attractionId) => ({
 	type: SEE_ATTRACTION, attractionId
 });
 
-export const addToBasket = (attractions) => ({
-	type: ADD_TO_BASKET, attractions
+export const addToBasket = (item) => ({
+	type: ADD_TO_BASKET, item
 });
 
 export const removeFromBasket = (item) => ({

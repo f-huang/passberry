@@ -44,7 +44,9 @@ class OffersByType extends React.Component {
 
 	render() {
 		const attractions = this.props.attractions.map(attraction => (
-			<Offer offer={attraction} onClick={() => console.log("click")}/>
+			<Offer key={attraction.id}
+			       offer={attraction}
+			       onClick={() => console.log("click")}/>
 		));
 		return (
 			<Container>

@@ -79,7 +79,6 @@ function destinationReducer(state = destination, action) {
 		key = Object.keys(action.pair)[0];
 	switch (action.type) {
 		case SET_DESTINATION:
-			console.log("set", action.pair);
 			localStorage.setItem(DESTINATION, action.pair[key]);
 			return action.pair[key];
 		default:

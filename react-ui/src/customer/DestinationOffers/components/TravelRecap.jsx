@@ -43,8 +43,7 @@ class TravelRecap extends React.Component {
 
 const mapStateToProps = (state) => {
 	return ({
-		travelers: state.destinationOffers.travelers,
-		nTravelers: state.destinationOffers.travelers.length,
+		travelers: state.travelDetails.travelers,
 	});
 };
 

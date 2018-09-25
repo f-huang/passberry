@@ -5,44 +5,37 @@ import {
 	ADD_TO_BASKET,
 	REMOVE_FROM_BASKET
 } from "./destinationOffersActions";
-import {BASKET, N_TRAVELERS, TRAVELERS} from "../localStorageKeys";
+import { combineReducers } from "redux";
+import {BASKET, TRAVELERS} from "../localStorageKeys";
+import apiCall from "../../Api";
 
 
-const basket = localStorage.getItem(BASKET);
-const nTravelers = localStorage.getItem(N_TRAVELERS);
-const travelers = localStorage.getItem(TRAVELERS);
-// const startDate = localStorage.getItem(START_DATE);
-// const endDate = localStorage.getItem(END_DATE);
+let basket = localStorage.getItem(BASKET);
+basket = basket ? JSON.parse(basket) : [];
+let travelers = localStorage.getItem(TRAVELERS);
+travelers = travelers ? JSON.parse(travelers) : [];
 
-const initialState = {
-	basket: basket ? JSON.parse(basket) : [],
-	destination: {id: 0, name: ''},
-	nTravelers: nTravelers,
-	travelers: travelers ? JSON.parse(travelers) : []
-};
+// let attractions = apiCall(Attra)
 
 //ADD TO BASKET - REMOVE_FROM_BASKET:
 //basket = [attractions] = [{attractionId:, quantity:, travelerId:,}, ...]
 
 
-function basketHandler(state = initialState, action) {
+function basketReducer(state = basket, action) {
+	let newBasket;
 	switch (action.type) {
 		case ADD_TO_BASKET:
-			const tmp = state.basket.concat(action.attractions);
-			return Object.assign({}, state,
-				{ basket: tmp }
-			);
+			newBasket = [...state, action.item];
+			localStorage.setItem(BASKET, JSON.stringify(newBasket));
+			return newBasket;
 		case REMOVE_FROM_BASKET:
-			const index = state.basket.findIndex(item =>
+			const index = state.findIndex(item =>
 				item.attractionId === action.item.id && item.travelerId === action.item.travelerId);
-			if (index >= 0 && index < state.basket.length) {
-				let basket = state.basket;
-				if (basket[index].quantity > 0)
-					basket[index].quantity--;
-				return Object.assign({}, state,
-					{ basket: basket }
-				);
-
+			if (index >= 0 && index < state.length) {
+				newBasket = state.slide(0);
+				if (newBasket[index].quantity > 0)
+					newBasket[index].quantity--;
+				return newBasket;
 			}
 			else
 				return state;
@@ -51,15 +44,12 @@ function basketHandler(state = initialState, action) {
 	}
 }
 
-function destinationOffersPage(state = initialState, action) {
-	switch (action.type) {
-		case ADD_TO_BASKET:
-			return basketHandler(state, action);
-		case REMOVE_FROM_BASKET:
-			return basketHandler(state, action);
-		default:
-			return state;
-	}
+function attractions(state = [], action) {
+
 }
+
+const destinationOffersPage = {
+	basket: basketReducer
+};
 
 export default destinationOffersPage;
