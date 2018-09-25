@@ -1,46 +1,76 @@
 import {
 	SUBMIT,
 	SET_DESTINATION,
-	SET_NUMBER_OF_TRAVELERS
+	ADD_TRAVELER,
+	EDIT_TRAVELER,
+	REMOVE_TRAVELER
 } from './travelActions';
 
 import {
 	DESTINATION,
-	N_TRAVELERS
+	N_TRAVELERS, TRAVELERS
 } from "../localStorageKeys";
 
-const destination = localStorage.getItem(DESTINATION);
-const nTravelers = localStorage.getItem(N_TRAVELERS);
+import {combineReducers} from "redux";
 
-const initialState = {
-	destination: destination ? destination : "",
-	nTravelers: nTravelers ? parseInt(nTravelers, 10) : 1
-};
+const destination = localStorage.getItem(DESTINATION);
+let nTravelers = localStorage.getItem(N_TRAVELERS);
+nTravelers = nTravelers ? parseInt(nTravelers, 10) : 1;
+let travelers = localStorage.getItem(TRAVELERS);
+travelers = travelers ? JSON.parse(travelers) : [""];
 
 const setInput = (key, value) => {
 	localStorage.setItem(key, value);
 };
 
-const getNewState = (state, action) => Object.assign({}, state, action.pair);
 
-function reducers(state = initialState, action) {
-	let key;
-	if (action.pair)
-		key = Object.keys(action.pair)[0];
+function travelerReducers (state = travelers, action) {
 	switch (action.type) {
-		case SET_NUMBER_OF_TRAVELERS:
-			setInput(N_TRAVELERS, action.pair[key]);
-			return getNewState(state, action);
-		case SET_DESTINATION:
-			setInput(DESTINATION, action.pair[key]);
-			return getNewState(state, action);
-		case SUBMIT:
-			return action.form;
+		case ADD_TRAVELER:
+			const newTravelers = [...state, ""];
+			localStorage.setItem(TRAVELERS, JSON.stringify(newTravelers));
+			return newTravelers;
+
+		case EDIT_TRAVELER:
+			const travelers = state.slice(0);
+			travelers[action.traveler.index] = {name: action.traveler.name};
+			localStorage.setItem(TRAVELERS, JSON.stringify(travelers));
+			return travelers;
+
+		case REMOVE_TRAVELER:
+			if (state.length > 1) {
+				let tmp;
+				if ((state[action.index] !== null && state[action.index] !== undefined) || action.index === undefined) {
+					tmp = state.slice(0);
+					tmp.splice(action.index !== undefined ? action.index : -1 , 1);
+					console.log(tmp);
+					localStorage.setItem(TRAVELERS, JSON.stringify(tmp));
+				}
+				return tmp || state;
+			}
+			return state;
 		default:
 			return state;
 	}
 }
 
-const travelPage = reducers;
+function destinationReducer(state = destination, action) {
+	let key;
+	if (action.pair)
+		key = Object.keys(action.pair)[0];
+	switch (action.type) {
+		case SET_DESTINATION:
+			console.log("set", action.pair);
+			setInput(DESTINATION, action.pair[key]);
+			return action.pair[key];
+		default:
+			return state;
+	}
+}
+
+const travelPage = combineReducers({
+	destination: destinationReducer,
+	travelers: travelerReducers
+});
 
 export default travelPage;

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import TextInput from "../../../component/TextInput/TextInput";
 import Button from "../../../component/Button/Button";
+import TravelInput from "./TravelInput";
 
 
 const Container = styled.div`
@@ -23,6 +24,7 @@ const buttonStyle = {
 	height: '24px',
 	borderRadius: '50%',
 	padding: 0,
+	zIndex: 2
 };
 
 const InputContainer = styled.div`
@@ -32,8 +34,7 @@ const InputContainer = styled.div`
 const Traveler = ({traveler, removable, onClick, onChange}) => (
 	<Container>
 		<InputContainer>
-			<TextInput
-				style={{width: '85%'}}
+			<TravelInput
 				name={"travelers"}
 				placeholder={"Prénom"}
 				value={traveler ? traveler.name || "" : ""}
@@ -46,9 +47,9 @@ const Traveler = ({traveler, removable, onClick, onChange}) => (
 	</Container>
 );
 
-const mapStateToProps = (state, {index}) => {
+const mapStateToProps = (state, {id}) => {
 	return {
-		traveler: state.travelers.travelers[index]
+		traveler: state.travelDetails.travelers[id]
 	};
 };
 

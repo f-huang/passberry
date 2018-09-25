@@ -8,15 +8,10 @@ import TravelInput from "./TravelInput";
 import TravelNumberTravelersInput from "./TravelNumberTravelersInput";
 import TravelDateInput from "./TravelDateInput";
 import theme from "../../../app/theme";
-import {NavLink} from "react-router-dom";
 
 const Container = styled.div`
 	background-color: ${theme.colorPrimary};
 	width: 100%;
-`;
-
-const Form = styled.form`
-	padding: 8px;
 `;
 
 const FormContainer = styled.div`
@@ -85,9 +80,8 @@ class TravelForm extends React.Component {
 	render() {
 		return (
 			<Container>
-				<Form>
-					<FormContainer>
-						<TopContainer>
+				<FormContainer>
+					<TopContainer>
 						<TravelInput
 							name="destination"
 							placeholder={"Trouver une destination..."}
@@ -95,19 +89,15 @@ class TravelForm extends React.Component {
 							style={destStyle}
 							value={this.state.destination}
 						/>
-						</TopContainer>
-						<BottomContainer>
-							<TravelDateInput/>
-							<TravelNumberTravelersInput
-								name={"nTravelers"}
-								value={this.state.nTravelers}
-							/>
-						</BottomContainer>
-						<NavLink to={'/whoscoming'}>
-							<ButtonSubmit isFormValid={this.state.isFormValid} value={"Go !"}/>
-						</NavLink>
-					</FormContainer>
-				</Form>
+					</TopContainer>
+					<BottomContainer>
+						<TravelDateInput/>
+						<TravelNumberTravelersInput
+							name={"nTravelers"}
+							value={this.state.nTravelers}
+						/>
+					</BottomContainer>
+				</FormContainer>
 			</Container>
 		);
 	}
@@ -115,12 +105,13 @@ class TravelForm extends React.Component {
 
 const mapStateToProps = state => {
 	return ({
-		nTravelers: state.travel.nTravelers,
-		destination: state.travel.destination
+		nTravelers: state.travelDetails.travelers.length,
+		destination: state.travelDetails.destination
 	})
 };
 
 const mapDispatchToProps = dispatch => {
+	console.log("dispatch");
 	return ({
 		onChangeDestination: (name, value) => dispatch(setDestination({[name]: value}))
 	});

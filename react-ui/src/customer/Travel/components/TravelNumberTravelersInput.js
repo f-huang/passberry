@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import TravelInput from "./TravelInput";
 import theme from "../../../app/theme";
-import { setNumberOfTravelers} from "../travelActions";
+import {addTraveler, removeTraveler, setNumberOfTravelers} from "../travelActions";
 import { connect } from "react-redux";
 
 const Container = styled.div`
@@ -37,6 +37,15 @@ const inputStyle = {
 };
 
 class TravelNumberTravelersInput extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { nTravelers: props.nTravelers || 1 }
+	}
+
+	componentWillReceiveProps(props) {
+		this.setState({ nTravelers: props.nTravelers || this.state.nTravelers })
+	}
+
 	render() {
 		return (
 			<Container>
@@ -48,6 +57,7 @@ class TravelNumberTravelersInput extends React.Component {
 					style={inputStyle}
 					readOnly
 					{...this.props}
+					value={this.state.nTravelers}
 				/>
 				<MinusPlusButton onClick={e => {
 					e.preventDefault();
@@ -60,7 +70,7 @@ class TravelNumberTravelersInput extends React.Component {
 
 const mapStateToProps = state => {
 	return ({
-		nTravelers: state.nTravelers,
+		nTravelers: state.travelDetails.travelers.length
 	})
 };
 
@@ -68,10 +78,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		onClickMinus: currentValue => {
 			if (currentValue > 1)
-				return dispatch(setNumberOfTravelers({ [ownProps.name]: currentValue - 1 }));
+				return dispatch(removeTraveler());
 		},
 		onClickPlus: currentValue => {
-			return dispatch(setNumberOfTravelers({ [ownProps.name]: currentValue + 1 }));
+			console.log("click_plus", ownProps.name);
+			return dispatch(addTraveler());
 		}
 	}
 };

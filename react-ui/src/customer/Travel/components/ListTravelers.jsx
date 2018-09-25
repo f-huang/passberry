@@ -4,35 +4,32 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import { DESTINATION } from "../../localStorageKeys";
-import { addTraveler, editTraveler, removeTraveler } from "../travelersActions";
 
 import Traveler from "./Traveler";
 import Button from "../../../component/Button/Button";
 import ButtonSubmit from "../../../component/Button/ButtonSubmit/ButtonSubmit";
 import theme from "../../../app/theme";
+import {addTraveler, removeTraveler, editTraveler} from "../travelActions";
 
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: 16px;
+	width: 100%;
 	justify-content: space-around;
 `;
 
 
-class TravelersForm extends React.Component {
+class ListTravelers extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			travelers: props.travelers || [],
-			nTravelers: props.nTravelers || 1,
 		};
-		this.destination = localStorage.getItem(DESTINATION) || "";
 	}
 
 	componentWillReceiveProps(props) {
 		this.setState({
-			nTravelers: props.nTravelers || this.state.nTravelers,
 			travelers: props.travelers || this.state.travelers
 		})
 	}
@@ -53,15 +50,14 @@ class TravelersForm extends React.Component {
 
 	render() {
 		const travelersInputs = [];
-		for (let index = 0; index < this.state.nTravelers; index++) {
+		this.state.travelers.map((traveler, index) =>
 			travelersInputs.push(
 				<Traveler
 					key={index} id={index} removable={index !== 0}
 					onClick={e => this.onChangeRemoveTraveler(e, index)}
 					onChange={e => this.onChangeEditTraveler(e, index)}
 				/>
-			)
-		}
+			));
 		return (
 			<Container>
 				{travelersInputs}
@@ -70,9 +66,6 @@ class TravelersForm extends React.Component {
 					style={{backgroundColor: theme.colorTertiary}}
 					onClick={this.onClickAddTraveler}
 				/>
-				<NavLink to={'/' + this.destination}>
-					<ButtonSubmit value={"Next"}/>
-				</NavLink>
 			</Container>
 		);
 	}
@@ -80,8 +73,7 @@ class TravelersForm extends React.Component {
 
 const mapStateToProps = state => {
 	return ({
-		nTravelers: state.travelers.nTravelers,
-		travelers: state.travelers.travelers,
+		travelers: state.travelDetails.travelers,
 	})
 };
 
@@ -93,4 +85,4 @@ const mapDispatchToProps = dispatch => {
 	})
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TravelersForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ListTravelers);

@@ -14,7 +14,6 @@ import Attraction from "./customer/Attraction";
 import AttractionCreate from "./admin/attraction/create/AttractionCreate";
 import AttractionManage from "./admin/attraction/manage/AttractionManage";
 import TravelView from "./customer/Travel/TravelView";
-import TravelersView from "./customer/Travelers/TravelersView";
 import DestinationOffers from "./customer/DestinationOffers/DestinationOffers";
 
 const routes = (
@@ -22,7 +21,6 @@ const routes = (
 	    <Switch>
 		    {/*<Route exact path="/" component={CityCatalogPage}/>*/}
 		    <Route exact path="/" component={TravelView}/>
-		    <Route exact path="/whoscoming" component={TravelersView}/>
 		    <Route exact path="/admin-add-activity" component={AttractionCreate}/>
 		    <Route exact path="/admin-manage-activity" component={AttractionManage}/>
 		    <Route exact path="/selections" component={SelectionsPage}/>

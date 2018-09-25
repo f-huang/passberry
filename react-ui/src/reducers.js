@@ -1,11 +1,14 @@
 import { combineReducers } from "redux";
+import reduceReducers from "reduce-reducers";
 
 import travelPage from "./customer/Travel/travelReducers";
-import travelersPage from "./customer/Travelers/travelersReducers";
 import destinationOffersPage from "./customer/DestinationOffers/destinationOffersReducers";
 
+const travelReducer = reduceReducers({
+	travelPage, destinationOffersPage
+});
+
+
 export const reducer = combineReducers({
-	travel: travelPage,
-	travelers: travelersPage,
-	destinationOffers: destinationOffersPage
+	travelDetails: travelPage
 });
