@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import apiCall from "./api";
+import apiCall from "./Api";
 
 const KEY_TOKEN = "token";
 

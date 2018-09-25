@@ -5,7 +5,7 @@ import {withRouter} from "react-router-dom";
 import App from "../App";
 import BottomNavigationBar from "../component/BottomNavigationBar/BottomNavigationBar";
 import Carousel from "../component/Carousel/Carousel";
-import apiCall from "../api";
+import apiCall from "../Api";
 import theme from "../app/theme";
 
 import whiteHeart from "../assets/icons/heart_white.svg";

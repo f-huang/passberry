@@ -1,6 +1,6 @@
 import React from "react";
 import QRCode from "qrcode.react";
-import apiCall from "../../api";
+import apiCall from "../../Api";
 
 import "./QRView.css";
 

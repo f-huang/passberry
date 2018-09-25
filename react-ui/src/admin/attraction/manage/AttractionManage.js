@@ -1,5 +1,5 @@
 import React from "react";
-import apiCall from "../../../api";
+import apiCall from "../../../Api";
 
 
 const query = `

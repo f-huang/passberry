@@ -2,7 +2,7 @@ import React from "react";
 import TextInput from "../../../component/TextInput/TextInput";
 import AddressInput from "../../../component/AddressInput/AddressInput";
 import ButtonSubmit from "../../../component/Button/ButtonSubmit/ButtonSubmit";
-import apiCall from "../../../api";
+import apiCall from "../../../Api";
 
 const query = `
 	mutation attractionCreate($attraction: AttractionCreate) {
