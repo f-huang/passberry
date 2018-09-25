@@ -5,6 +5,9 @@ import ScreenSubtitle from "../ScreenSubtitle";
 import theme from "../../app/theme";
 import ListTravelers from "./components/ListTravelers";
 import styled from "styled-components";
+import ButtonSubmit from "../../component/Button/ButtonSubmit/ButtonSubmit";
+import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
 
 const style = {
 	backgroundColor: theme.colorPrimary,
@@ -22,11 +25,17 @@ const TravelView = (props) => (
 		<ScreenTitle>Vuego</ScreenTitle>
 		<ScreenSubtitle>{"Où allons-nous ?"}</ScreenSubtitle>
 		<Form>
-		<TravelForm/>
-		<ListTravelers/>
+			<TravelForm/>
+			<ListTravelers/>
+			<NavLink to={'/' + props.destination}>
+				<ButtonSubmit value={"Go !"}/>
+			</NavLink>
 		</Form>
 	</div>
 );
 
+const mapStateToProps = state => ({
+	destination: state.travelDetails.destination || ""
+});
 
-export default TravelView;
+export default connect(mapStateToProps)(TravelView);
