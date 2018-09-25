@@ -1,28 +1,47 @@
 import {
 	SUBMIT,
 	SET_DESTINATION,
+	EDIT_DATES,
+	EDIT_START_DATE,
+	EDIT_END_DATE,
 	ADD_TRAVELER,
 	EDIT_TRAVELER,
 	REMOVE_TRAVELER
 } from './travelActions';
 
 import {
-	DESTINATION,
-	N_TRAVELERS, TRAVELERS
+	DESTINATION, END_DATE,
+	N_TRAVELERS, START_DATE, TRAVELERS
 } from "../localStorageKeys";
 
 import {combineReducers} from "redux";
+import moment from "moment";
 
 const destination = localStorage.getItem(DESTINATION);
 let nTravelers = localStorage.getItem(N_TRAVELERS);
 nTravelers = nTravelers ? parseInt(nTravelers, 10) : 1;
 let travelers = localStorage.getItem(TRAVELERS);
 travelers = travelers ? JSON.parse(travelers) : [""];
+const startDate = localStorage.getItem(START_DATE);
+const endDate = localStorage.getItem(END_DATE);
 
-const setInput = (key, value) => {
-	localStorage.setItem(key, value);
+const travelDates = {
+	startDate: startDate ? moment(JSON.parse(startDate)) : null,
+	endDate: endDate ? moment(JSON.parse(endDate)) : null
 };
 
+
+function travelDatesReducer(state = travelDates, action) {
+	switch (action.type) {
+		case EDIT_DATES:
+			localStorage.setItem(START_DATE, JSON.stringify(action.dates.startDate));
+			localStorage.setItem(END_DATE, JSON.stringify(action.dates.endDate));
+			return action.dates;
+
+		default:
+			return state;
+	}
+}
 
 function travelerReducers (state = travelers, action) {
 	switch (action.type) {
@@ -61,7 +80,7 @@ function destinationReducer(state = destination, action) {
 	switch (action.type) {
 		case SET_DESTINATION:
 			console.log("set", action.pair);
-			setInput(DESTINATION, action.pair[key]);
+			localStorage.setItem(DESTINATION, action.pair[key]);
 			return action.pair[key];
 		default:
 			return state;
@@ -70,7 +89,8 @@ function destinationReducer(state = destination, action) {
 
 const travelPage = combineReducers({
 	destination: destinationReducer,
-	travelers: travelerReducers
+	travelers: travelerReducers,
+	travelDates: travelDatesReducer
 });
 
 export default travelPage;

@@ -1,7 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import TravelInput from "./TravelInput";
-import PropTypes from "prop-types";
+import "react-dates/initialize";
+import 'react-dates/lib/css/_datepicker.css';
+
+
+import {editDates, editEndDate, editStartDate} from "../travelActions";
+import { connect } from "react-redux";
+import { DateRangePicker } from "react-dates";
 
 const Container = styled.div`
 	display: flex;
@@ -15,23 +20,14 @@ const inputStyle = {
 };
 
 class TravelDateInput extends React.Component {
-	static defaultProps = {
-		startDate: 1,
-		endDate: 1
-	};
-
-	static propTypes = {
-		nTravelers: PropTypes.number
-	};
-
 	constructor(props) {
 		super(props);
-		if (props.startDate || props.endDate)
-			this.state = {
-				startDate: props.startDate || this.state.startDate,
-				endDate: props.startDate || this.state.endDate
-			};
+		this.state = {
+			startDate: props.startDate || null,
+			endDate: props.endDate || null
+		};
 	}
+
 
 	componentWillReceiveProps(props) {
 		if (props.startDate || props.endDate)
@@ -44,10 +40,37 @@ class TravelDateInput extends React.Component {
 	render() {
 		return (
 			<Container>
-				<TravelInput style={inputStyle} />
+				<DateRangePicker
+					startDate={this.state.startDate}
+					startDateId={"startDateId"}
+					endDate={this.state.endDate}
+					endDateId={"endDateId"}
+					onDatesChange={this.props.onChangeDates}
+					orientation={ "vertical" }
+					withPortal={true}
+					focusedInput={this.state.focusedInput}
+					onFocusChange={focusedInput => {
+						this.setState({ focusedInput })
+					}}
+				/>
 			</Container>
 		);
 	}
 }
 
-export default TravelDateInput;
+const mapStateToProps = (state) => {
+	return ({
+		startDate: state.travelDetails.travelDates.startDate,
+		endDate: state.travelDetails.travelDates.endDate,
+	})
+} ;
+
+const mapDispatchToProps = (dispatch) => {
+	return ({
+		onChangeStartDate: (value) => dispatch(editStartDate(value)),
+		onChangeEndDate: (value) => dispatch(editEndDate(value)),
+		onChangeDates: (dates) => dispatch(editDates(dates))
+	})
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TravelDateInput);

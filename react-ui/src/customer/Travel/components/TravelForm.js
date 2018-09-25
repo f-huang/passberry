@@ -91,11 +91,11 @@ class TravelForm extends React.Component {
 						/>
 					</TopContainer>
 					<BottomContainer>
-						<TravelDateInput/>
 						<TravelNumberTravelersInput
 							name={"nTravelers"}
 							value={this.state.nTravelers}
 						/>
+						<TravelDateInput/>
 					</BottomContainer>
 				</FormContainer>
 			</Container>

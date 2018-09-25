@@ -24,7 +24,6 @@ const buttonStyle = {
 	height: '24px',
 	borderRadius: '50%',
 	padding: 0,
-	zIndex: 2
 };
 
 const InputContainer = styled.div`
