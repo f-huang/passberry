@@ -23,7 +23,7 @@ const Label = styled.label`
 class RadioInput extends React.Component {
 	static propTypes = {
 		name: PropTypes.string.isRequired,
-		choices: PropTypes.arrayOf(PropTypes.shape({
+		items: PropTypes.arrayOf(PropTypes.shape({
 			id: PropTypes.string.isRequired,
 			value: PropTypes.string.isRequired,
 			isChecked: PropTypes.bool
@@ -33,17 +33,17 @@ class RadioInput extends React.Component {
 
 	render() {
 		const radioInputs =
-			this.props.choices.map(choice =>
-				<Label key={choice.id} isChecked={choice.isChecked}>
+			this.props.items.map(item =>
+				<Label key={item.id} isChecked={item.isChecked}>
 					<Radio
-						key={choice}
+						key={item}
 						name={this.props.name}
 						type="radio"
-						value={choice.value}
-						id={choice.id}
-						onClick={ () => this.props.onSelect(choice.id)}
+						value={item.value}
+						id={item.id}
+						onClick={ () => this.props.onSelect(item.id)}
 					/>
-					{choice.value}
+					{item.value}
 				</Label>
 			);
 

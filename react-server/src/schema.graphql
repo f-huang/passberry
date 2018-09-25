@@ -17,6 +17,13 @@ enum UserType {
 	TOURIST
 }
 
+enum ItemType {
+	PASS
+	ATTRACTION
+	RESTAURANT
+	TASTING_SESSION
+}
+
 enum StatusCode {
 	SUCCESS
 	SERVER_SIDE_ERROR
@@ -62,7 +69,8 @@ type User {
 }
 
 type BasketItem {
-	attractionId: ID!
+	itemId: ID!
+	type: ItemType!
 	userId: ID!
 	quantity: Int!
 }
@@ -70,7 +78,7 @@ type BasketItem {
 type Basket {
 	id: ID!
 	userId: ID
-	choices: [BasketItem]!
+	items: [BasketItem]!
 }
 
 type Payment {
@@ -157,8 +165,9 @@ input CreateAttractionInput {
 	link: String
 }
 
-input BasketChoiceInput {
-	attractionId: ID!
+input BasketItemInput {
+	itemId: ID!
+	type: ItemType!
 	userId: ID!
 	quantity: Int!
 }
@@ -168,21 +177,21 @@ input BasketInput {
 	userId: ID
 	initTime: Date
 	lastUpdateTime: Date
-	choices: [BasketChoiceInput]!
+	items: [BasketItemInput]!
 }
 
 input CreateBasketInput {
 	initTime: Date!
 	lastUpdateTime: Date!
 	userId: ID
-	choices: [BasketChoiceInput]!
+	items: [BasketItemInput]!
 }
 
 input UpdateBasketInput {
 	basketId: ID!
     lastUpdateTime: Date!
     userId: ID
-    choices: [BasketChoiceInput]!
+    items: [BasketItemInput]!
 }
 
 input ValidateBasketInput {

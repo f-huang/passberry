@@ -42,7 +42,7 @@ class PassVuegoMade extends React.Component {
 		super(props);
 		this.passHandler = new PassInputsHandler();
 		this.state = {
-			choices: [
+			items: [
 				{id: this.passHandler.vuegoPassNumberOfDays[0].id, value: "1 jour", isChecked: true},
 				{id: this.passHandler.vuegoPassNumberOfDays[1].id, value: "2 jours"}
 			],

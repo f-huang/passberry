@@ -6,7 +6,7 @@ const basketForCreate = (input) => ({
 	"init_time": input.initTime,
 	"last_update_time": input.lastUpdateTime,
 	...(input.userId ? {"user_id": input.userId} : {}),
-	"choices": input.choices
+	"items": input.items
 });
 
 const basketForUpdate = (input) => ({
@@ -27,7 +27,7 @@ const resolver = {
 		createBasket: (_, { input }) => {
 			console.log("Creating basket :", input);
 			const newInput = {...input};
-			newInput.choices = JSON.stringify(newInput.choices);
+			newInput.items = JSON.stringify(newInput.items);
 			return Basket.create(basketForCreate(newInput))
 				.then(insertId => {
 					return {
@@ -35,7 +35,7 @@ const resolver = {
 						basket: {
 							id: insertId,
 							userId: input.userId,
-							choices: input.choices
+							items: input.items
 						}
 					};
 				})
@@ -48,7 +48,7 @@ const resolver = {
 		updateBasket: (_, { input }) => {
 			console.log("Updating basket :", input);
 			const newInput = {...input};
-			newInput.choices = JSON.stringify(newInput.choices);
+			newInput.items = JSON.stringify(newInput.items);
 			return Basket.update(basketForUpdate(newInput))
 				.then(ret => {
 					return Basket.getUserIdById(input.basketId).then(userId => {
@@ -61,7 +61,7 @@ const resolver = {
 								basket: {
 									id: input.basketId,
 									userId: userId,
-									choices: input.choices
+									items: input.items
 								}
 							});
 					})
