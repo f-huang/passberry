@@ -1,25 +1,19 @@
 import {
-	SUBMIT,
 	SET_DESTINATION,
 	EDIT_DATES,
-	EDIT_START_DATE,
-	EDIT_END_DATE,
 	ADD_TRAVELER,
 	EDIT_TRAVELER,
 	REMOVE_TRAVELER
 } from './travelActions';
 
 import {
-	DESTINATION, END_DATE,
-	N_TRAVELERS, START_DATE, TRAVELERS
+	DESTINATION, END_DATE, START_DATE, TRAVELERS
 } from "../localStorageKeys";
 
 import {combineReducers} from "redux";
 import moment from "moment";
 
 const destination = localStorage.getItem(DESTINATION);
-let nTravelers = localStorage.getItem(N_TRAVELERS);
-nTravelers = nTravelers ? parseInt(nTravelers, 10) : 1;
 let travelers = localStorage.getItem(TRAVELERS);
 travelers = travelers ? JSON.parse(travelers) : [""];
 const startDate = localStorage.getItem(START_DATE);
@@ -37,7 +31,6 @@ function travelDatesReducer(state = travelDates, action) {
 			localStorage.setItem(START_DATE, JSON.stringify(action.dates.startDate));
 			localStorage.setItem(END_DATE, JSON.stringify(action.dates.endDate));
 			return action.dates;
-
 		default:
 			return state;
 	}

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import TravelInput from "./TravelInput";
 import theme from "../../../app/theme";
-import {addTraveler, removeTraveler, setNumberOfTravelers} from "../travelActions";
+import { addTraveler, removeTraveler } from "../travelActions";
 import { connect } from "react-redux";
 
 const Container = styled.div`
@@ -74,16 +74,13 @@ const mapStateToProps = state => {
 	})
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
 	return {
 		onClickMinus: currentValue => {
 			if (currentValue > 1)
 				return dispatch(removeTraveler());
 		},
-		onClickPlus: currentValue => {
-			console.log("click_plus", ownProps.name);
-			return dispatch(addTraveler());
-		}
+		onClickPlus: () => { return dispatch(addTraveler()); }
 	}
 };
 

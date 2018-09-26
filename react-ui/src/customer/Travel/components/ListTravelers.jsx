@@ -1,13 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
-
-import { DESTINATION } from "../../localStorageKeys";
 
 import Traveler from "./Traveler";
 import Button from "../../../component/Button/Button";
-import ButtonSubmit from "../../../component/Button/ButtonSubmit/ButtonSubmit";
 import theme from "../../../app/theme";
 import {addTraveler, removeTraveler, editTraveler} from "../travelActions";
 

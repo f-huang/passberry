@@ -1,19 +1,15 @@
 import {
-	FILTER_ATTRACTIONS,
-	SEE_ATTRACTION,
-	SEE_MORE,
+	// FILTER_ATTRACTIONS,
+	// SEE_ATTRACTION,
+	// SEE_MORE,
 	ADD_TO_BASKET,
 	REMOVE_FROM_BASKET
 } from "./destinationOffersActions";
-import { combineReducers } from "redux";
-import {BASKET, TRAVELERS} from "../localStorageKeys";
-import apiCall from "../../Api";
+import { BASKET } from "../localStorageKeys";
 import { createApolloFetch } from 'apollo-fetch';
 
 let basket = localStorage.getItem(BASKET);
 basket = basket ? JSON.parse(basket) : [];
-let travelers = localStorage.getItem(TRAVELERS);
-travelers = travelers ? JSON.parse(travelers) : [];
 
 const fetch = createApolloFetch();
 // let attractions = apiCall(Attra)

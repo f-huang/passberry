@@ -4,7 +4,7 @@ import "react-dates/initialize";
 import 'react-dates/lib/css/_datepicker.css';
 
 
-import {editDates, editEndDate, editStartDate} from "../travelActions";
+import { editDates } from "../travelActions";
 import { connect } from "react-redux";
 import { DateRangePicker } from "react-dates";
 
@@ -13,11 +13,6 @@ const Container = styled.div`
 	flex-direction: row;
 	justify-content: center;
 `;
-
-
-const inputStyle = {
-	textAlign: 'center'
-};
 
 class TravelDateInput extends React.Component {
 	constructor(props) {
@@ -67,8 +62,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return ({
-		onChangeStartDate: (value) => dispatch(editStartDate(value)),
-		onChangeEndDate: (value) => dispatch(editEndDate(value)),
 		onChangeDates: (dates) => dispatch(editDates(dates))
 	})
 };

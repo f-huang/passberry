@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from "redux";
+import { createStore } from "redux";
 import { Provider as ReduxProvider} from "react-redux";
 import { CookiesProvider } from 'react-cookie';
 import { ApolloProvider } from 'react-apollo';

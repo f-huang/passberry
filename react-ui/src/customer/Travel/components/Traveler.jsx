@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
-import TextInput from "../../../component/TextInput/TextInput";
 import Button from "../../../component/Button/Button";
 import TravelInput from "./TravelInput";
 

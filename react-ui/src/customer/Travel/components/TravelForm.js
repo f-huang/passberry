@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { setDestination } from "../travelActions";
 
-import ButtonSubmit from "../../../component/Button/ButtonSubmit/ButtonSubmit";
 import TravelInput from "./TravelInput";
 import TravelNumberTravelersInput from "./TravelNumberTravelersInput";
 import TravelDateInput from "./TravelDateInput";

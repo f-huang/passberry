@@ -32,7 +32,7 @@ class OffersByType extends React.Component {
 	static propTypes = {
 		type: PropTypes.string.isRequired,
 		attractions: PropTypes.arrayOf(PropTypes.shape({
-			id: PropTypes.number.isRequired,
+			id: PropTypes.string.isRequired,
 			name: PropTypes.string.isRequired,
 		}))
 	};
