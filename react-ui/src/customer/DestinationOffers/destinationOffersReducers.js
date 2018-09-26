@@ -8,18 +8,34 @@ import {
 import { combineReducers } from "redux";
 import {BASKET, TRAVELERS} from "../localStorageKeys";
 import apiCall from "../../Api";
-
+import { createApolloFetch } from 'apollo-fetch';
 
 let basket = localStorage.getItem(BASKET);
 basket = basket ? JSON.parse(basket) : [];
 let travelers = localStorage.getItem(TRAVELERS);
 travelers = travelers ? JSON.parse(travelers) : [];
 
+const fetch = createApolloFetch();
 // let attractions = apiCall(Attra)
 
 //ADD TO BASKET - REMOVE_FROM_BASKET:
 //basket = [attractions] = [{attractionId:, quantity:, travelerId:,}, ...]
-
+function attractionsReducer(state = [], action) {
+	return fetch({
+		query: `query getAllAttractions($limit: Int) {
+		    getAllAttractions(limit: $limit) {
+		      id
+		      name
+		      type
+		      link
+		      description
+		    }
+		  }`,
+	}).then(res => {
+		console.log(res.data);
+		return res.data.getAllAttractions;
+	}).catch(e => state)
+}
 
 function basketReducer(state = basket, action) {
 	let newBasket;
@@ -44,12 +60,10 @@ function basketReducer(state = basket, action) {
 	}
 }
 
-function attractions(state = [], action) {
-
-}
 
 const destinationOffersPage = {
-	basket: basketReducer
+	basket: basketReducer,
+	attractions: attractionsReducer
 };
 
 export default destinationOffersPage;

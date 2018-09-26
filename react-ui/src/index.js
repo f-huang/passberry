@@ -10,6 +10,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { reducer } from "./reducers";
 import createSagaMiddleware from 'redux-saga'
 import registerServiceWorker from './registerServiceWorker';
+import gql from "graphql-tag";
 
 import "./app/base.css";
 import { rootSagas } from "./sagas";
@@ -40,3 +41,13 @@ sagaMiddleware.run(rootSagas);
 // store.subscribe(() => console.log(store.getState()));
 ReactDOM.render(root, document.getElementById('root'));
 registerServiceWorker();
+
+client.query({query: gql`
+      {
+        getUserById(id: 1) {
+          id
+          email
+        }
+      }
+    `
+	}).then(result => console.log(result));

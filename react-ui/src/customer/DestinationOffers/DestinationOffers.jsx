@@ -4,17 +4,35 @@ import BackSearchActionBar from "../../component/ActionBar/BackSearchActionBar";
 import TravelRecap from "./components/TravelRecap.jsx";
 import OffersByType from "./components/OffersByType";
 import {addToBasket, removeFromBasket} from "./destinationOffersActions";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
+
+const getAttractionsByTypeQL = gql`
+	query getAttractionByType($type: String!) {
+	  getAttractionByType(type: $type) {
+	    id
+	    name
+	    link
+	    description
+	    price {
+	      adult
+	      child
+	      maxAgeForChild
+	    }
+	    type
+	  }
+	}
+`;
 
 class DestinationOffers extends React.Component {
 
 	constructor(props) {
 		super(props);
-		// this.destination = this.props.match.params.destination.toLocaleLowerCase();
 		this.state = {
 			basket: props.basket || [],
 			travelers: props.travelers || [],
 			startDate: props.startDate || 0,
-			endDate: props.endDate || 0
+			endDate: props.endDate || 0,
 		}
 		//TODO:
 		// if destination doesnt match
@@ -35,7 +53,20 @@ class DestinationOffers extends React.Component {
 			<div>
 				<BackSearchActionBar to={'/'} onSearch={() => console.log("to")}/>
 				<TravelRecap/>
-				<OffersByType type={"Visites"} attractions={[{id: 1, name: "test"}]}/>
+				<Query query={getAttractionsByTypeQL} variables={{type: "ATTRACTION"}}>
+					{({loading, error, data}) => {
+						if (loading) return <p> Loading </p>;
+						if (error) return <p> Error : </p>;
+						return <OffersByType type={"Visites"} attractions={data.getAttractionByType}/>;
+					}}
+				</Query>
+				<Query query={getAttractionsByTypeQL} variables={{type: "RESTAURANT"}}>
+					{({loading, error, data}) => {
+						if (loading) return <p> Loading </p>;
+						if (error) return <p> Error : </p>;
+						return <OffersByType type={"Restaurants"} attractions={data.getAttractionByType}/>;
+					}}
+				</Query>
 
 			</div>
 		);
