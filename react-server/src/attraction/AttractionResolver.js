@@ -11,41 +11,34 @@ const attraction = (input) => ({
 	"type": input.type
 });
 
+const formatAttraction = (attraction) => {
+	attraction.price = {
+		adult: parseFloat(attraction.priceAdult),
+		child: attraction.priceChild,
+		maxAgeForChild: attraction.priceMaxAgeForChild
+	};
+	parseInt(attraction.id, 10);
+	delete attraction['priceChild'];
+	delete attraction['priceAdult'];
+	delete attraction['maxAgeForChild'];
+	return attraction;
+};
+
 const resolver = {
 	Query: {
 		getAttractionById: (_, { id }) => {
 			return Attraction.get({ id: id }).then(rows => {
-				return rows[0];
+				return rows[0] ? formatAttraction(rows[0]) : null;
 			});
 		},
 		getAttractionByType: (_, { type }) => {
 			return Attraction.get({ type: type }).then(rows =>
-				rows.map(row => {
-					row.price = {
-						adult: row.priceAdult,
-						child: row.priceChild,
-						maxAgeForChild: row.priceMaxAgeForChild
-					};
-					delete row['priceChild'];
-					delete row['priceAdult'];
-					delete row['maxAgeForChild'];
-					return row;
-				})
+				rows.map(row => formatAttraction(row))
 			);
 		},
 		getAllAttractions: (_, { limit = 0, sortField = "", sortOrder = "" }) => {
 			return Attraction.getAll().then(rows =>
-				rows.map(row => {
-					row.price = {
-						adult: row.priceAdult,
-						child: row.priceChild,
-						maxAgeForChild: row.priceMaxAgeForChild
-					};
-					delete row['priceChild'];
-					delete row['priceAdult'];
-					delete row['maxAgeForChild'];
-					return row;
-				})
+				rows.map(row => formatAttraction(row))
 			);
 		}
 	},
