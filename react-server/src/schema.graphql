@@ -120,6 +120,7 @@ type GetPassPayload {
 
 type Query {
     getAttractionById(id: ID!): Attraction
+    getAttractionByType(type: String!): [Attraction]
     getAllAttractions(limit: Int, sortField: String, sortOrder: String): [Attraction]
 
     getUserById(id: ID!): User

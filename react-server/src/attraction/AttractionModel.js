@@ -6,7 +6,10 @@ const TABLE_NAME = "attraction";
 
 
 exports.get = (filters) => new Promise((resolve, reject) => {
-	const sql = `SELECT * from \`${TABLE_NAME}\` ${filters ? "WHERE ?" : ""}`;
+	const sql = `SELECT \`id\`, \`name\`, \`link\`, \`description\`, \`type\`,
+		\`price_adult\` AS \`priceAdult\`, \`price_child\` AS \`priceChild\`,
+		\`price_max_age_for_child\` AS \`priceMaxAgeForChild\`   
+		FROM \`${TABLE_NAME}\` ${filters ? "WHERE ?" : ""}`;
 	console.log(sql, filters);
 	pool.query(sql, filters, (error, rows) => {
 		if (error) {

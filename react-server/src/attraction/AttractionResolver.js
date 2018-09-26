@@ -18,6 +18,21 @@ const resolver = {
 				return rows[0];
 			});
 		},
+		getAttractionByType: (_, { type }) => {
+			return Attraction.get({ type: type }).then(rows =>
+				rows.map(row => {
+					row.price = {
+						adult: row.priceAdult,
+						child: row.priceChild,
+						maxAgeForChild: row.priceMaxAgeForChild
+					};
+					delete row['priceChild'];
+					delete row['priceAdult'];
+					delete row['maxAgeForChild'];
+					return row;
+				})
+			);
+		},
 		getAllAttractions: (_, { limit = 0, sortField = "", sortOrder = "" }) => {
 			return Attraction.getAll().then(rows =>
 				rows.map(row => {
