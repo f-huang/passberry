@@ -26,7 +26,6 @@ class TravelRecap extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			nTravelers: props.nTravelers || 1,
 			travelers: props.travelers || [],
 		}
 	}
@@ -34,7 +33,7 @@ class TravelRecap extends React.Component {
 	render() {
 		return (
 			<Container>
-				<NumberContainer>{this.state.nTravelers}{" people coming :"}</NumberContainer>
+				<NumberContainer>{this.state.travelers.length}{" people coming :"}</NumberContainer>
 				<Name>{this.state.travelers.map((traveler, index) => traveler.name + (index + 1 === this.state.travelers.length ? '' : ', '))}</Name>
 			</Container>
 		);
