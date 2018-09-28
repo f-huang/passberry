@@ -12,6 +12,7 @@ const Bar = styled.div`
 const Container = styled.div`
 	position: relative;
 	display: flex;
+	flex-direction: row;
 	align-items: center;
 	padding: 12px;
 `;
@@ -20,6 +21,10 @@ const Icon = styled.img`
 	width: 24px;
 	height: 24px;
 `;
+const Title = styled.h1`
+	font-size: 4vmin;
+	margin: 0 16px;
+`;
 
 const BackActionBar = (props) =>
 	<Bar>
@@ -27,12 +32,14 @@ const BackActionBar = (props) =>
 			<NavLink to={props.to}>
 				<Icon src={backIcon} alt="back-arrow"/>
 			</NavLink>
+			<Title>{props.title}</Title>
 		</Container>
 	</Bar>;
 
 
 BackActionBar.propTypes = {
-	to: PropTypes.string.isRequired
+	to: PropTypes.string.isRequired,
+	title: PropTypes.string
 };
 
 export default BackActionBar;
