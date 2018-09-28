@@ -3,36 +3,12 @@ import {
 	// SEE_ATTRACTION,
 	// SEE_MORE,
 	ADD_TO_BASKET,
-	REMOVE_FROM_BASKET
+	REMOVE_FROM_BASKET, SET_BASKET_ID
 } from "./destinationOffersActions";
 import { BASKET } from "../localStorageKeys";
-import { createApolloFetch } from 'apollo-fetch';
-import moment from "moment";
 
 let basket = localStorage.getItem(BASKET);
 basket = basket ? JSON.parse(basket) : {};
-
-const fetch = createApolloFetch();
-// let attractions = apiCall(Attra)
-
-//ADD TO BASKET - REMOVE_FROM_BASKET:
-//basket = [attractions] = [{attractionId:, quantity:, travelerId:,}, ...]
-function attractionsReducer(state = [], action) {
-	return fetch({
-		query: `query getAllAttractions($limit: Int) {
-		    getAllAttractions(limit: $limit) {
-		      id
-		      name
-		      type
-		      link
-		      description
-		    }
-		  }`,
-	}).then(res => {
-		console.log(res.data);
-		return res.data.getAllAttractions;
-	}).catch(e => state)
-}
 
 function basketReducer(state = basket, action) {
 	let newBasket;
@@ -74,15 +50,19 @@ function basketReducer(state = basket, action) {
 			}
 			else
 				return state;
+
+		case SET_BASKET_ID:
+			return Object.assign({}, state, action.id);
+
 		default:
 			return state;
+
 	}
 }
 
 
 const destinationOffersPage = {
 	basket: basketReducer,
-	attractions: attractionsReducer
 };
 
 export default destinationOffersPage;

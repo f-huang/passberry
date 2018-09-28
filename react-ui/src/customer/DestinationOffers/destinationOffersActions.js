@@ -2,6 +2,7 @@ export const FILTER_ATTRACTIONS = 'FILTER_ATTRACTIONS';
 export const SEE_ATTRACTION = 'SEE_ATTRACTION';
 export const ADD_TO_BASKET = 'ADD_TO_BASKET';
 export const REMOVE_FROM_BASKET = 'REMOVE_FROM_BASKET';
+export const SET_BASKET_ID = 'SET_BASKET_ID';
 export const SEE_MORE = 'SEE_MORE';
 
 export const filterAttractions = (attractionName) => ({
@@ -19,6 +20,11 @@ export const addToBasket = (item) => ({
 export const removeFromBasket = (item) => ({
 	type: REMOVE_FROM_BASKET, item
 });
+
+export const setBasketId = (id) => ({
+	type: SET_BASKET_ID, id
+});
+
 
 export const seeMore = (attractionType) => ({
 	type: SEE_MORE, attractionType
