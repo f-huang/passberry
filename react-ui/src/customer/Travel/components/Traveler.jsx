@@ -29,12 +29,12 @@ const InputContainer = styled.div`
 	flex: 5;
 `;
 
-const Traveler = ({traveler, removable, onClick, onChange}) => (
+const Traveler = ({traveler, removable, index, onClick, onChange}) => (
 	<Container>
 		<InputContainer>
 			<TravelInput
 				name={"travelers"}
-				placeholder={"Prénom"}
+				placeholder={"Visiteur " + (index + 1)}
 				value={traveler ? traveler.name || "" : ""}
 				onChange={onChange}
 			/>
@@ -45,9 +45,9 @@ const Traveler = ({traveler, removable, onClick, onChange}) => (
 	</Container>
 );
 
-const mapStateToProps = (state, {id}) => {
+const mapStateToProps = (state, {index}) => {
 	return {
-		traveler: state.travelDetails.travelers[id]
+		traveler: state.travelDetails.travelers[index]
 	};
 };
 

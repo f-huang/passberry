@@ -49,7 +49,7 @@ class ListTravelers extends React.Component {
 		this.state.travelers.map((traveler, index) =>
 			travelersInputs.push(
 				<Traveler
-					key={index} id={index} removable={index !== 0}
+					key={index} index={index} removable={index !== 0}
 					onClick={e => this.onChangeRemoveTraveler(e, index)}
 					onChange={e => this.onChangeEditTraveler(e, index)}
 				/>
