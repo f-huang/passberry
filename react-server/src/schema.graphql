@@ -58,6 +58,15 @@ type Attraction {
 	type: String!
 }
 
+type Address {
+	id: ID!
+	street: String!
+	supplement: String
+	city: String!
+	postcode: String!
+	countryCode: String
+}
+
 type User {
 	id: ID!
 	email: String!
@@ -119,6 +128,7 @@ type GetPassPayload {
 # --------------------------------------------------------
 
 type Query {
+    getAddressById(id: ID!): Address
     getAttractionById(id: ID!): Attraction
     getAttractionByType(type: String!): [Attraction]
     getAllAttractions(limit: Int, sortField: String, sortOrder: String): [Attraction]
