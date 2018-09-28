@@ -1,26 +1,47 @@
 import React, { Component } from "react";
+import gql from "graphql-tag";
 import styled from "styled-components";
 import {withRouter} from "react-router-dom";
+import { Query } from "react-apollo";
 
 import App from "../App";
 import BottomNavigationBar from "../component/BottomNavigationBar/BottomNavigationBar";
-import Carousel from "../component/Carousel/Carousel";
-import apiCall from "../Api";
 import theme from "../app/theme";
 
 import whiteHeart from "../assets/icons/heart_white.svg";
+import Button from "../component/Button/Button";
+import TicketQuantity from "./TicketQuantity/TicketQuantity";
 
-const query = `
-	query AttractionGet($id: ID!) {
-		AttractionGet(id: $id) {
+const attractionQL = gql`
+	query getAttractionById($id: ID!) {
+		getAttractionById(id: $id) {
 			id
 			name
 			description
-			price
+			link
+			price {
+				adult
+				child
+				maxAgeForChild
+			}
 			type
 		}
 	}
 `;
+
+const addressQL = gql`
+	query getAddressById($id: ID!) {
+	    getAddressById(id:$id) {
+			id
+			street
+			supplement
+			city
+			postcode
+			countryCode
+		}
+	}
+`;
+
 
 const TopContainer = styled.div`
 	position: relative;
@@ -64,54 +85,66 @@ const HeartButton = styled.button`
 	font-size: 1em;
 `;
 
+const Description = styled.p`
+	font-size: 3vmin;
+`;
+
 class Attraction extends Component {
 	state = { attraction: {} };
 
 	constructor(props) {
 		super(props);
-		this.setAttraction = this.setAttraction.bind(this);
 		this.state = {
 			attraction: {
 				name: "",
 				price: 0,
 				description: "",
 				type: "Unknown"
-			}
+			},
+			isDialogShowing: false
 		}
 	}
 
-	componentWillMount() {
-		this.setAttraction(this.props.match.params.id);
-	}
-
-
-	setAttraction = (id) => {
-		apiCall(query, {"id": id})
-			.then(out => {
-				const json = JSON.parse(out).data.getAttractionById;
-				if (json)
-					this.setState({ attraction: json });
-			});
-	};
-
-
 	render() {
-		const title = (this.state.attraction ? this.state.attraction.name : this.props.match.params.name);
+		const id = this.props.match.params.id;
 		return (
-			<App title={title} itemSelected={BottomNavigationBar.items.currentTrip} backBtn homeBtn>
-				<TopContainer>
-					<Carousel/>
-					<AddButton>+</AddButton>
-					<HeartButton/>
-				</TopContainer>
-				<Title>{title}</Title>
-				<Category>{"Tarifs"}</Category>
-				<Category>{"Temps de visite"}</Category>
-				<Category>{"Horaires"}</Category>
-				<Category>{"Adresse"}</Category>
-			</App>
+			<Query query={attractionQL} variables={{id: id}}>
+				{({loading, error, data }) => {
+					if (loading) return <p> Loading </p>;
+					if (error) return <p> Error </p>;
+					const attraction = data.getAttractionById;
+					return (
+						<App title={attraction.name} itemSelected={BottomNavigationBar.items.currentTrip} backBtn homeBtn>
+							<div>
+								<Title>{attraction.name}</Title>
+								<Description>
+									{attraction.description}
+								</Description>
+								<Category>{`Tarifs : ${attraction.price.adult} - ${attraction.price.child}` } </Category>
+								<a href={'http://www.'+attraction.link}>{attraction.link}</a>
+								<Query query={addressQL} variables={{id: attraction.id}}>
+									{({loading, error, data }) => {
+										if (loading) return <p> Loading </p>;
+										if (error) return <p> Error </p>;
+										const address = data.getAddressById;
+										return (
+											<p>{address.street}, {address.postcode}{address.city}</p>
+										)
+									}}
+								</Query>
+								<TicketQuantity product={attraction} isShowing={this.state.isDialogShowing}/>
+								<Button value={"Ajouter dans le panier"}  onClick={(e) =>
+									this.setState({isDialogShowing: !this.state.isDialogShowing})
+								        }
+								/>
+							</div>
+						</App>
+					);
+				}}
+			</Query>
 		);
 	}
 }
+
 
 export default withRouter(Attraction);
