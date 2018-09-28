@@ -15,7 +15,7 @@ import moment from "moment";
 
 const destination = localStorage.getItem(DESTINATION);
 let travelers = localStorage.getItem(TRAVELERS);
-travelers = travelers ? JSON.parse(travelers) : [""];
+travelers = travelers ? JSON.parse(travelers) : [{name: "", id: 1}];
 const startDate = localStorage.getItem(START_DATE);
 const endDate = localStorage.getItem(END_DATE);
 
@@ -39,13 +39,13 @@ function travelDatesReducer(state = travelDates, action) {
 function travelerReducers (state = travelers, action) {
 	switch (action.type) {
 		case ADD_TRAVELER:
-			const newTravelers = [...state, ""];
+			const newTravelers = [...state, {name: "", id: state[state.length - 1].id + 1}];
 			localStorage.setItem(TRAVELERS, JSON.stringify(newTravelers));
 			return newTravelers;
 
 		case EDIT_TRAVELER:
 			const travelers = state.slice(0);
-			travelers[action.traveler.index] = {name: action.traveler.name};
+			travelers[action.traveler.index] = {id: state[action.traveler.index].id, name: action.traveler.name};
 			localStorage.setItem(TRAVELERS, JSON.stringify(travelers));
 			return travelers;
 
