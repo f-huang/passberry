@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from "redux";
-import { Provider as ReduxProvider} from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
 import { CookiesProvider } from 'react-cookie';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
@@ -13,7 +13,6 @@ import gql from "graphql-tag";
 
 import "./app/base.css";
 import routes from './routes'
-
 
 const client = new ApolloClient({
 	// By default, this client will send queries to the
@@ -46,4 +45,4 @@ client.query({query: gql`
         }
       }
     `
-	}).then(result => console.log(result));
+}).then(result => console.log(result));
