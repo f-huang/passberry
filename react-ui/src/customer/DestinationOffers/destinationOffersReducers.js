@@ -2,7 +2,7 @@ import {
 	// FILTER_ATTRACTIONS,
 	// SEE_ATTRACTION,
 	// SEE_MORE,
-	ADD_TO_BASKET,
+	ADD_TO_BASKET, EMPTY_BASKET,
 	REMOVE_FROM_BASKET, SET_BASKET_ID
 } from "./destinationOffersActions";
 import { BASKET } from "../localStorageKeys";
@@ -52,7 +52,14 @@ function basketReducer(state = basket, action) {
 				return state;
 
 		case SET_BASKET_ID:
-			return Object.assign({}, state, action.id);
+			const basketWithId = Object.assign({}, state, action.id);
+			console.log("setting basket Id: ", basketWithId);
+			localStorage.setItem(BASKET, JSON.stringify(basketWithId));
+			return basketWithId;
+
+		case EMPTY_BASKET:
+			localStorage.setItem(BASKET, JSON.stringify({}));
+			return {};
 
 		default:
 			return state;
