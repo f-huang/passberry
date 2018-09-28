@@ -4,31 +4,13 @@ import gql from "graphql-tag";
 import { Mutation} from "react-apollo";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { CREATE_BASKET } from "../../queries";
 import { setBasketId } from "../DestinationOffers/destinationOffersActions";
 
 import BackActionBar from "../../component/ActionBar/BackActionBar";
 import Button from "../../component/Button/Button";
 import moment from "moment";
 
-const createBasketQL = gql`
-mutation createBasket($input: CreateBasketInput!) {
-	createBasket(input: $input) {
-		status{
-			code
-			message
-		}
-		basket{
-			id
-			userId
-			items {
-				userId
-				quantity
-				itemId
-			}
-		}
-	}
-}
-`;
 class BasketView extends React.Component {
 	render() {
 		console.log("basket: ", this.props.basket);
@@ -57,7 +39,7 @@ class BasketView extends React.Component {
 					<p>{item.quantity}</p>
 				</div>
 			)}
-				<Mutation mutation={createBasketQL}
+				<Mutation mutation={CREATE_BASKET}
 				          update={(cache, { data: { createBasket } }) => {
 				          	console.log(createBasket);
 				          	this.props.onMutateSuccess(createBasket.basket.id);
