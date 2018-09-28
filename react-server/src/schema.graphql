@@ -17,6 +17,11 @@ enum UserType {
 	TOURIST
 }
 
+enum ProductType {
+	ATTRACTION
+	RESTAURANT
+}
+
 enum ItemType {
 	PASS
 	ATTRACTION
@@ -130,7 +135,7 @@ type GetPassPayload {
 type Query {
     getAddressById(id: ID!): Address
     getAttractionById(id: ID!): Attraction
-    getAttractionByType(type: String!): [Attraction]
+    getAttractionByType(type: ProductType!): [Attraction]
     getAllAttractions(limit: Int, sortField: String, sortOrder: String): [Attraction]
 
     getUserById(id: ID!): User
@@ -171,7 +176,7 @@ input CreateAttractionPrice {
 input CreateAttractionInput {
 	name: String!
 	price: CreateAttractionPrice!
-	type: String!
+	type: ProductType!
 	description: String
 	link: String
 }
@@ -227,13 +232,6 @@ input CreatePassInput {
 	startDate: Date!
 	endDate: Date!
 	pass: PassInput
-}
-
-input CreateTravelersPassesInput {
-	userId: ID!
-	startDate: Date!
-	endDate: Date!
-	basket: BasketInput!
 }
 
 input BurnAttractionTicketInput {
