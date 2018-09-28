@@ -16,6 +16,7 @@ import AttractionManage from "./admin/attraction/manage/AttractionManage";
 import TravelView from "./customer/Travel/TravelView";
 import DestinationOffers from "./customer/DestinationOffers/DestinationOffers";
 import BasketView from "./customer/Basket/BasketView";
+import PaymentView from "./customer/Payment/PaymentView";
 
 const routes = (
     <BrowserRouter forceRefresh={true}>
@@ -31,6 +32,7 @@ const routes = (
 		    <Route exact path="/login" component={Login}/>
 		    <Route exact path="/sign-up" component={SignUp}/>
 		    <Route exact path="/basket" component={BasketView}/>
+		    <Route exact path="/payment" component={PaymentView}/>
 		    {/*<Route exact path="/qr-scan" component={PartnerScanPass}/>*/}
 		    {/*<Route exact path="/partner-see-customer" component={PartnerSeeUser}/>*/}
 		    <Route exact path="/:destination" component={DestinationOffers}/>
