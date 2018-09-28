@@ -1,11 +1,16 @@
 import React from "react";
+import styled from "styled-components";
+import gql from "graphql-tag";
+
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { Query } from "react-apollo";
+import { addToBasket, removeFromBasket } from "./destinationOffersActions";
+
 import BackSearchActionBar from "../../component/ActionBar/BackSearchActionBar";
 import TravelRecap from "./components/TravelRecap.jsx";
 import OffersByType from "./components/OffersByType";
-import {addToBasket, removeFromBasket} from "./destinationOffersActions";
-import { Query } from "react-apollo";
-import gql from "graphql-tag";
+import Button from "../../component/Button/Button";
 
 const getAttractionsByTypeQL = gql`
 	query getAttractionByType($type: String!) {
@@ -22,6 +27,14 @@ const getAttractionsByTypeQL = gql`
 	    type
 	  }
 	}
+`;
+
+const View = styled.div`
+	width: 100%;
+`;
+
+const Container = styled.div`
+	padding: 8px;
 `;
 
 class DestinationOffers extends React.Component {
@@ -50,7 +63,8 @@ class DestinationOffers extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<View>
+				<Container>
 				<BackSearchActionBar to={'/'} onSearch={() => console.log("to")}/>
 				<TravelRecap/>
 				<Query query={getAttractionsByTypeQL} variables={{type: "ATTRACTION"}}>
@@ -67,8 +81,11 @@ class DestinationOffers extends React.Component {
 						return <OffersByType type={"Restaurants"} attractions={data.getAttractionByType}/>;
 					}}
 				</Query>
-
-			</div>
+				<NavLink to={'/basket'}>
+					<Button value={"Voir mon panier"}/>
+				</NavLink>
+				</Container>
+			</View>
 		);
 	}
 }
