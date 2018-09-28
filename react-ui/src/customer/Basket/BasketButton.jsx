@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { CREATE_BASKET } from "../../queries";
 import moment from "moment/moment";
 import Button from "../../component/Button/Button";
-import {setBasketId} from "../DestinationOffers/destinationOffersActions";
+import {setBasketId} from "./basketActions";
 
 class BasketButton extends React.Component {
 	render() {

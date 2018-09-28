@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import Button from "../../component/Button/Button";
-import {addToBasket, removeFromBasket} from "../DestinationOffers/destinationOffersActions";
+import {addToBasket, removeFromBasket} from "../Basket/basketActions";
 
 const Container = styled.div`
 	display: ${props => props.isShowing ? 'flex' : 'none'};

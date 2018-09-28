@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose, graphql } from "react-apollo";
-import { emptyBasket } from "../DestinationOffers/destinationOffersActions";
+import { emptyBasket } from "../Basket/basketActions";
 import { VALIDATE_BASKET, CREATE_PASS } from "../../queries";
 
 import Button from "../../component/Button/Button";

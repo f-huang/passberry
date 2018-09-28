@@ -4,7 +4,7 @@ import {
 	// SEE_MORE,
 	ADD_TO_BASKET, EMPTY_BASKET,
 	REMOVE_FROM_BASKET, SET_BASKET_ID
-} from "./destinationOffersActions";
+} from "./basketActions";
 import { BASKET } from "../localStorageKeys";
 
 let basket = localStorage.getItem(BASKET);

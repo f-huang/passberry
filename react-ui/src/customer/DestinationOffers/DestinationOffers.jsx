@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Query } from "react-apollo";
 import { GET_ATTRACTION_BY_TYPE } from "../../queries";
-import { addToBasket, removeFromBasket } from "./destinationOffersActions";
+import { addToBasket, removeFromBasket } from "../Basket/basketActions";
 
 import BackSearchActionBar from "../../component/ActionBar/BackSearchActionBar";
 import TravelRecap from "./components/TravelRecap.jsx";
