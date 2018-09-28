@@ -15,11 +15,11 @@ import AttractionCreate from "./admin/attraction/create/AttractionCreate";
 import AttractionManage from "./admin/attraction/manage/AttractionManage";
 import TravelView from "./customer/Travel/TravelView";
 import DestinationOffers from "./customer/DestinationOffers/DestinationOffers";
+import BasketView from "./customer/Basket/BasketView";
 
 const routes = (
     <BrowserRouter forceRefresh={true}>
 	    <Switch>
-		    {/*<Route exact path="/" component={CityCatalogPage}/>*/}
 		    <Route exact path="/" component={TravelView}/>
 		    <Route exact path="/admin-add-activity" component={AttractionCreate}/>
 		    <Route exact path="/admin-manage-activity" component={AttractionManage}/>
@@ -30,12 +30,12 @@ const routes = (
 		    <Route exact path="/qr" component={QRPage}/>
 		    <Route exact path="/login" component={Login}/>
 		    <Route exact path="/sign-up" component={SignUp}/>
+		    <Route exact path="/basket" component={BasketView}/>
 		    {/*<Route exact path="/qr-scan" component={PartnerScanPass}/>*/}
 		    {/*<Route exact path="/partner-see-customer" component={PartnerSeeUser}/>*/}
 		    <Route exact path="/:destination" component={DestinationOffers}/>
 		    {/*<Route exact path="/:city/pass/:typeOfJourney(vuego-made|customize)" component={Pass}/>*/}
 		    <Route exact path="/attraction/:id-:name" component={Attraction}/>
-		    {/*<Route exact path="/shopping-cart" component={ShoppingCart}/>*/}
 		    {/*<Route exact path="/pass" component={Pass}/>*/}
 		    {/*<Route exact path="/profile" component={Profile}/>*/}
 		    <Route component={Error404}/>

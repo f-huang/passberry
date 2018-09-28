@@ -3,12 +3,14 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import Button from "../../../component/Button/Button";
 import Offer from "./Offer";
+import { withRouter } from "react-router-dom";
 
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 `;
+
 const TopContainer = styled.div`
 	display: flex;
 	overflow: hidden;
@@ -46,7 +48,7 @@ class OffersByType extends React.Component {
 		const attractions = this.props.attractions.map(attraction => (
 			<Offer key={attraction.id}
 			       offer={attraction}
-			       onClick={() => console.log("click")}/>
+			       onClick={(e) => this.props.history.push(`/attraction/${attraction.id}-${attraction.name}`)}/>
 		));
 		return (
 			<Container>
@@ -62,4 +64,7 @@ class OffersByType extends React.Component {
 	}
 }
 
-export default OffersByType;
+const mapDispatchToProps = ({
+});
+
+export default withRouter(OffersByType);
