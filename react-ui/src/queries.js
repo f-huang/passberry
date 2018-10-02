@@ -1,7 +1,7 @@
 import gql from "graphql-tag"
 
 export const GET_ATTRACTION_BY_TYPE = gql`
-	query getAttractionByType($type: String!) {
+	query getAttractionByType($type: ProductType!) {
 	  getAttractionByType(type: $type) {
 	    id
 	    name
