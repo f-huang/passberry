@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+
 import { connect } from "react-redux";
+import { removeTraveler, editTraveler } from "../travelActions";
 
 import Traveler from "./Traveler";
-import Button from "../../../component/Button/Button";
-import theme from "../../../app/theme";
-import {addTraveler, removeTraveler, editTraveler} from "../travelActions";
 
 const Container = styled.div`
 	display: flex;
@@ -57,11 +56,6 @@ class ListTravelers extends React.Component {
 		return (
 			<Container>
 				{travelersInputs}
-				<Button
-					value={"+"}
-					style={{backgroundColor: theme.colorTertiary}}
-					onClick={this.onClickAddTraveler}
-				/>
 			</Container>
 		);
 	}
@@ -75,7 +69,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return ({
-		onClickAddTraveler: () => dispatch(addTraveler()),
 		onClickRemoveTraveler: (index) => dispatch(removeTraveler(index)),
 		onChangeEditTraveler: (traveler) => dispatch(editTraveler(traveler))
 	})

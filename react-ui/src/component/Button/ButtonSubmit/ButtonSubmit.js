@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Button from "../Button";
+import theme from "../../../app/theme";
 
 
 class ButtonSubmit extends Component {
@@ -21,7 +22,7 @@ class ButtonSubmit extends Component {
 			<Button type="submit"
 			        value={ value }
 			        secondClassName={ "ButtonSubmit" }
-			        backgroundColor={"#A1383C"}
+			        backgroundColor={theme.colorPrimary}
 			        isClickable={ isClickable }
 			        { ... rest }
 			/>

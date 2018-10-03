@@ -4,7 +4,6 @@ import theme from "../../../app/theme";
 
 const Input = styled.input`
 	-webkit-appearance: none; -moz-appearance: none;
-	background-color: ${theme.colorInverse};
 	border-radius: 2px;
 	border: 0;
 	padding: 12px 8px;

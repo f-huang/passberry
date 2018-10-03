@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import Button from "../../../component/Button/Button";
 import TravelInput from "./TravelInput";
+import theme from "../../../app/theme";
 
 
 const Container = styled.div`
@@ -18,7 +19,7 @@ const Container = styled.div`
 const buttonStyle = {
 	position: 'absolute',
 	right: '8px',
-	backgroundColor: "#A1383C",
+	backgroundColor: theme.colorPurple,
 	width: '24px',
 	height: '24px',
 	borderRadius: '50%',
