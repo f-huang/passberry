@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import BackActionBar from "../../component/ActionBar/BackActionBar";
-import BasketButton from "./BasketButton";
+import BasketButton from "./components/BasketButton";
 
 const EnumArrangeItems = {
 	CLASSIC: 'CLASSIC',
@@ -31,7 +31,7 @@ class BasketView extends React.Component {
 			else
 				ret.push(item);
 		});
-		ret.map(item => delete(item['travelerId']));
+		// ret.map(item => delete(item['travelerId']));
 		return ret;
 	};
 
@@ -59,7 +59,7 @@ class BasketView extends React.Component {
 	};
 
 	render() {
-		const items = this.arrangeItems();
+		const items = this.props.basket.items;
 		console.log(items);
 		return (
 			<div>
