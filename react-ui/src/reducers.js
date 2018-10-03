@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 
-import travelPage from "./customer/Travel/travelReducers";
-import destinationOffersPage from "./customer/Basket/basketReducers";
+import travelPageReducer from "./customer/Travel/travelReducers";
+import basketReducer from "./customer/Basket/basketReducers";
+import basketPageReducer from "./customer/Basket/basketPageReducer";
 
 export const reducer = combineReducers({
-	travelDetails: travelPage,
-	basket: destinationOffersPage.basket
+	travelDetails: travelPageReducer,
+	basket: basketReducer.basket,
+	basketPage: basketPageReducer.basketPage
 });
