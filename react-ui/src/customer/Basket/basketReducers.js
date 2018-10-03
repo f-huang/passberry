@@ -8,7 +8,7 @@ import {
 import { BASKET } from "../localStorageKeys";
 
 let basket = localStorage.getItem(BASKET);
-basket = basket ? JSON.parse(basket) : {};
+basket = basket ? JSON.parse(basket) : {items: []};
 
 function basketReducer(state = basket, action) {
 	let newBasket;
