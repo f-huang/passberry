@@ -7,6 +7,7 @@ import { emptyBasket } from "../Basket/basketActions";
 import { VALIDATE_BASKET, CREATE_PASS } from "../../queries";
 
 import Button from "../../component/Button/Button";
+import EnumToggleItems from "../Basket/EnumItemsLayout";
 
 class PaymentButton extends React.Component {
 
@@ -76,8 +77,18 @@ class PaymentButton extends React.Component {
 }
 
 const mapStateToProps = state => {
-	const quantities = state.basket.items ? state.basket.items.map(item => item.quantity) : [];
-	const prices = state.basket.items ? state.basket.items.map(item => item.product.price.adult) : [];
+	const ids = state.basketPage.travelers ? Object.keys(state.basketPage.travelers).filter(id =>
+		state.basketPage.travelers[id] === true
+	) : null;
+	console.log(ids);
+	const items = !ids || ids.length === 0 ?
+		state.basket.items :
+		state.basket.items.filter(item =>
+			ids.find(id => parseInt(item.travelerId, 10) === parseInt(id, 10))
+		);
+	console.log(items);
+	const quantities = items.map(item => item.quantity);
+	const prices = items.map(item => item.product.price.adult);
 
 	return ({
 		total: prices.length > 0 ? prices.reduce((total, currentPrice, index) => total + quantities[index] * currentPrice).toFixed(2) : 0,

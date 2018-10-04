@@ -4,8 +4,11 @@ import { connect } from "react-redux";
 
 import BackActionBar from "../../component/ActionBar/BackActionBar";
 import BasketButton from "./components/BasketButton";
-import ListBasketItems from "./components/ListBasketItems";
+import ListClassicBasketItems from "./components/ListClassicBasketItems";
+import ListPerTravelerBasketItems from "./components/ListPerTravelerBasketItems";
 import ToggleBasketItemsLayout from "./components/ToggleBasketItemsLayout";
+import EnumToggleItems from "./EnumItemsLayout";
+import BasketTotal from "./components/BasketTotal";
 
 
 class BasketView extends React.Component {
@@ -18,7 +21,11 @@ class BasketView extends React.Component {
 			<div>
 				<BackActionBar to={'/' + (this.props.destination || "") } title={"Panier"}/>
 				<ToggleBasketItemsLayout/>
-				<ListBasketItems/>
+				{this.props.itemsLayout === EnumToggleItems.CLASSIC.value ?
+					<ListClassicBasketItems/> :
+					<ListPerTravelerBasketItems/>
+				}
+				<BasketTotal/>
 				<BasketButton/>
 			</div>
 		)
@@ -28,8 +35,8 @@ class BasketView extends React.Component {
 const mapStateToProps = state => {
 	return ({
 		destination: state.travelDetails.destination,
-		travelers: state.travelDetails.travelers,
-	})
+		itemsLayout: state.basketPage.itemsLayout,
+	});
 };
 
 
