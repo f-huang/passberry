@@ -69,6 +69,26 @@ export const CREATE_BASKET = gql`
 	}
 `;
 
+export const UPDATE_BASKET  = gql`
+	mutation updateBasket($basketUpdate: UpdateBasketInput!) {
+		updateBasket(input:$basketUpdate) {
+			status {
+				code
+				message
+			}
+			basket {
+				id
+				userId
+		        items {
+					userId
+					quantity
+					itemId
+				}
+			}
+	  }
+	}
+`;
+
 export const VALIDATE_BASKET = gql`
 	mutation validateBasket($input: ValidateBasketInput!) {
 		validateBasket(input: $input) {
