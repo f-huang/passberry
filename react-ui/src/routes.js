@@ -7,7 +7,6 @@ import Login from "./customer/Credentials/Login";
 import QRPage from "./customer/QRPage";
 import ProfilePage from "./customer/ProfilePage";
 import ParametersPage from "./customer/ParametersPage";
-import TripsPage from "./customer/TripsPage";
 import SelectionsPage from "./customer/SelectionsPage";
 import Error404 from "./Error404";
 import Attraction from "./customer/Attraction";
@@ -17,6 +16,8 @@ import TravelView from "./customer/Travel/TravelView";
 import DestinationOffers from "./customer/DestinationOffers/DestinationOffers";
 import BasketView from "./customer/Basket/BasketView";
 import PaymentView from "./customer/Payment/PaymentView";
+import MyTravelsView from "./customer/MyTravels/MyTravelsView";
+import MyTravelsDestinationView from "./customer/MyTravelsDestination/MyTravelsDestinationView";
 
 const routes = (
     <BrowserRouter forceRefresh={true}>
@@ -27,7 +28,8 @@ const routes = (
 		    <Route exact path="/selections" component={SelectionsPage}/>
 		    <Route exact path="/profile" component={ProfilePage}/>
 		    <Route exact path="/parameters" component={ParametersPage}/>
-		    <Route exact path="/trips" component={TripsPage}/>
+		    <Route exact path="/my-travels" component={MyTravelsView}/>
+		    <Route exact path="/my-travels/:destination" component={MyTravelsDestinationView}/>
 		    <Route exact path="/qr" component={QRPage}/>
 		    <Route exact path="/login" component={Login}/>
 		    <Route exact path="/sign-up" component={SignUp}/>
