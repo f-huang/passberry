@@ -70,8 +70,8 @@ export const CREATE_BASKET = gql`
 `;
 
 export const UPDATE_BASKET  = gql`
-	mutation updateBasket($basketUpdate: UpdateBasketInput!) {
-		updateBasket(input:$basketUpdate) {
+	mutation updateBasket($input: UpdateBasketInput!) {
+		updateBasket(input: $input) {
 			status {
 				code
 				message
