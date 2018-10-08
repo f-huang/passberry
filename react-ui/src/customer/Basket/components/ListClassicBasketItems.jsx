@@ -11,10 +11,11 @@ class ListClassicBasketItems extends React.Component {
 
 	getCounts = (items) => {
 		const counts = {};
-		for (let i = 0; i < items.length; i++) {
-			let num = items[i].product.id;
-			counts[num] = (counts[num] || 0) + 1;
-		}
+		if (items)
+			for (let i = 0; i < items.length; i++) {
+				let num = items[i].product.id;
+				counts[num] = (counts[num] || 0) + 1;
+			}
 		return counts;
 	};
 
@@ -44,7 +45,6 @@ class ListClassicBasketItems extends React.Component {
 }
 
 const mapStateToProps = state => {
-	console.log(state.basket);
 	return ({
 		basket: state.basket,
 	})
