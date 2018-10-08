@@ -22,7 +22,7 @@ class BasketCreateButton extends React.Component {
 						userId: item.travelerId,
 						quantity: item.quantity,
 					})) : [],
-					userId: null
+					userId: 1
 				}
 			}
 		};
