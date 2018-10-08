@@ -3,11 +3,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose, graphql } from "react-apollo";
-import { emptyBasket } from "../Basket/basketActions";
+import {emptyBasket, reinitializeBasket} from "../Basket/basketActions";
 import { VALIDATE_BASKET, CREATE_PASS } from "../../queries";
 
 import Button from "../../component/Button/Button";
-import EnumToggleItems from "../Basket/EnumItemsLayout";
+import EnumBasketState from "../Basket/EnumBasketState";
 
 class PaymentButton extends React.Component {
 
@@ -24,15 +24,15 @@ class PaymentButton extends React.Component {
 				input: {
 					basketId: this.props.basket.id,
 					userId: 1,
-					state: 'SUCCESS'
+					state: this.props.basketState.value
 				}
 			}
 		}).then((data) => {
-			console.log("basket: ", data);
-			this.props.onMutateSuccess();
+			this.props.basketState === EnumBasketState.PAID ?
+				this.props.emptyBasket() :
+				this.props.reinitializeBasket(this.props.basket);
 			this.props.history.push('/');
 		})
-
 	};
 
 	executeMutatePass = () => {
@@ -77,9 +77,10 @@ class PaymentButton extends React.Component {
 }
 
 const mapStateToProps = state => {
-	const ids = state.basketPage.travelers ? Object.keys(state.basketPage.travelers).filter(id =>
-		state.basketPage.travelers[id] === true
-	) : null;
+	const ids = state.basketPage.travelers ?
+		Object.keys(state.basketPage.travelers).filter(id =>
+			state.basketPage.travelers[id] === true
+		) : null;
 	const items = !ids || ids.length === 0 ?
 		state.basket.items :
 		state.basket.items.filter(item =>
@@ -90,15 +91,17 @@ const mapStateToProps = state => {
 
 	return ({
 		total: prices.length > 0 ? prices.reduce((total, currentPrice, index) => total + quantities[index] * currentPrice).toFixed(2) : 0,
+		basketState: state.basket.items.length === items.length ? EnumBasketState.PAID : EnumBasketState.HALF_PAID,
 		startDate: state.travelDetails.travelDates.startDate.format("YYYY-MM-DD hh:mm:ss"),
 		endDate: state.travelDetails.travelDates.endDate.format("YYYY-MM-DD hh:mm:ss"),
-		basket: state.basket
+		basket: { ...state.basket, items: items }
 	})
 };
 
 const mapDispatchToProps = dispatch => {
 	return ({
-		onMutateSuccess: () => { dispatch(emptyBasket()) }
+		reinitializeBasket: (basket) => { dispatch(reinitializeBasket(basket)) },
+		emptyBasket: () => { dispatch(emptyBasket()) }
 	})
 };
 
