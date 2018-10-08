@@ -3,7 +3,8 @@ import React from "react";
 import { connect } from "react-redux";
 
 import BackActionBar from "../../component/ActionBar/BackActionBar";
-import BasketButton from "./components/BasketButton";
+import BasketCreateButton from "./components/BasketCreateButton";
+import BasketUpdateButton from "./components/BasketUpdateButton";
 import ListClassicBasketItems from "./components/ListClassicBasketItems";
 import ListPerTravelerBasketItems from "./components/ListPerTravelerBasketItems";
 import ToggleBasketItemsLayout from "./components/ToggleBasketItemsLayout";
@@ -26,7 +27,10 @@ class BasketView extends React.Component {
 					<ListPerTravelerBasketItems/>
 				}
 				<BasketTotal/>
-				<BasketButton/>
+				{this.props.isNewBasket ?
+					<BasketCreateButton/> :
+					<BasketUpdateButton/>
+				}
 			</div>
 		)
 	}
@@ -34,6 +38,7 @@ class BasketView extends React.Component {
 
 const mapStateToProps = state => {
 	return ({
+		isNewBasket: !(state.basket && state.basket.id),
 		destination: state.travelDetails.destination,
 		itemsLayout: state.basketPage.itemsLayout,
 	});

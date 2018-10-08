@@ -9,7 +9,7 @@ import { setBasketId } from "../basketActions";
 
 import Button from "../../../component/Button/Button";
 
-class BasketButton extends React.Component {
+class BasketCreateButton extends React.Component {
 	render() {
 		const variables = {
 			variables: {
@@ -58,4 +58,4 @@ const mapDispatchToProps = dispatch => {
 
 const withOptions = connect(mapStateToProps, mapDispatchToProps);
 
-export default withRouter(withOptions(BasketButton));
+export default withRouter(withOptions(BasketCreateButton));
