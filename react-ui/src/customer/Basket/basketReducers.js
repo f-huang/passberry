@@ -2,7 +2,7 @@ import {
 	// FILTER_ATTRACTIONS,
 	// SEE_ATTRACTION,
 	// SEE_MORE,
-	ADD_TO_BASKET, EMPTY_BASKET,
+	ADD_TO_BASKET, EMPTY_BASKET, REINITIALIZE_BASKET,
 	REMOVE_FROM_BASKET, SET_BASKET_ID
 } from "./basketActions";
 import { BASKET } from "../localStorageKeys";
@@ -15,7 +15,7 @@ function basketReducer(state = basket, action) {
 	switch (action.type) {
 		case ADD_TO_BASKET:
 			const lastUpdateTime = Date.now();
-			const initTime = state.length > 0 ? state.initTime : lastUpdateTime;
+			const initTime = state.length > 0 && state.initTime ? state.initTime : lastUpdateTime;
 			const indexItem = state.items ? state.items.findIndex(basketItem =>
 				basketItem.travelerId === action.item.travelerId && basketItem.product.id === action.item.product.id
 			) : -1;
@@ -50,6 +50,13 @@ function basketReducer(state = basket, action) {
 			}
 			else
 				return state;
+
+		case REINITIALIZE_BASKET:
+			console.log("reinit basket", action.basket);
+			localStorage.removeItem(BASKET);
+			localStorage.setItem(BASKET, JSON.stringify(action.basket));
+			return { ...action.basket };
+
 
 		case SET_BASKET_ID:
 			const basketWithId = Object.assign({}, state, action.id);

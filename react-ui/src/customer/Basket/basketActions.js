@@ -1,6 +1,7 @@
 export const ADD_TO_BASKET = 'ADD_TO_BASKET';
 export const EMPTY_BASKET = 'EMPTY_BASKET';
 export const REMOVE_FROM_BASKET = 'REMOVE_FROM_BASKET';
+export const REINITIALIZE_BASKET = 'REINITIALIZE_BASKET';
 export const SET_BASKET_ID = 'SET_BASKET_ID';
 export const TOGGLE_ITEMS_LAYOUT = 'TOGGLE_ITEMS_LAYOUT';
 export const SWITCH_TRAVELER_BASKET = 'SWITCH_TRAVELER_BASKET';
@@ -12,6 +13,10 @@ export const addToBasket = (item) => ({
 
 export const removeFromBasket = (item) => ({
 	type: REMOVE_FROM_BASKET, item
+});
+
+export const reinitializeBasket = (basket) => ({
+	type: REINITIALIZE_BASKET, basket
 });
 
 export const setBasketId = (id) => ({
