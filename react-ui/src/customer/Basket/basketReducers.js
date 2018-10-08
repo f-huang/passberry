@@ -58,7 +58,7 @@ function basketReducer(state = basket, action) {
 			return basketWithId;
 
 		case EMPTY_BASKET:
-			localStorage.setItem(BASKET, JSON.stringify({}));
+			localStorage.removeItem(BASKET);
 			return {};
 
 		default:
