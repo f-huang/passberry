@@ -20,8 +20,8 @@ const passAttraction = (insertId, attractionId) => ({
 
 const resolver = {
 	Query: {
-		getPassByUserId: (_, { input }) => {
-			return Pass.getByUserId(input.userId).then(pass =>
+		getPassByUserId: (_, { userId }) => {
+			return Pass.getByUserId(userId).then(pass =>
 				PassToAttraction.getPassAttractions(pass.id).then(attractions => {
 					pass.attractions = attractions;
 					return {
@@ -29,11 +29,10 @@ const resolver = {
 						pass: pass
 					};
 				}).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
-
 			).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
 		},
-		getPassByTravelerId: (_, { input }) => {
-			return Pass.getByTravelerId(input.travelerId).then(pass =>
+		getPassByTravelerId: (_, { travelerId }) => {
+			return Pass.getByTravelerId(travelerId).then(pass =>
 				PassToAttraction.getPassAttractions(pass.id).then(attractions => {
 					pass.attractions = attractions;
 					return {

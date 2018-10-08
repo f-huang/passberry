@@ -151,8 +151,8 @@ type Query {
     readQr(data: String): User
 
 	convertTokenToId(token: String): TokenToId
-	getPassByUserId(input: GetPassByUserIdInput!): GetPassPayload!
-	getPassByTravelerId(input: GetPassByTravelerIdInput!): GetPassPayload!
+	getPassByUserId(userId: ID!): GetPassPayload!
+	getPassByTravelerId(travelerId: ID!): GetPassPayload!
 }
 
 # --------------------------------------------------------

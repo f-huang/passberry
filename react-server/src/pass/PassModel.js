@@ -62,7 +62,7 @@ exports.getByUserId = (userId) => new Promise((resolve, reject) => {
 	const sql = `SELECT 
 	\`id\`, \`user_id\` AS \`userId\`, \`traveler_id\` AS \`travelerId\`,
 	\`init_time\` AS \`initTime\`, \`expiration_time\` AS \`expirationTime\` 
-	FROM ${TABLE_NAME} WHERE \'user_id\'=?`;
+	FROM ${TABLE_NAME} WHERE \`user_id\`=?`;
 	pool.query(sql, userId, (error, rows) => {
 		if (error) {
 			console.error(error);
