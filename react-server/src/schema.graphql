@@ -119,7 +119,7 @@ type Pass {
 	id: ID!
 	userId: ID!
 	travelerId: ID!
-	attractions: [AttractionTicket]!
+	tickets: [AttractionTicket]!
 }
 
 type TokenToId {
@@ -131,7 +131,7 @@ type TokenToId {
 
 type GetPassPayload {
 	status: Status!
-	pass: Pass!
+	pass: Pass
 }
 
 # --------------------------------------------------------

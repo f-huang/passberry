@@ -1,5 +1,5 @@
 const Pass = require('./PassModel');
-const PassToAttraction = require('./PassToAttractionModel');
+const Ticket = require('./TicketModel');
 const moment = require('moment');
 const { getStatus, StatusCodeEnum } = require("../status");
 
@@ -13,7 +13,7 @@ const pass = (input) => ({
 	"end_date": input.endDate
 });
 
-const passAttraction = (insertId, attractionId) => ({
+const ticketInput = (insertId, attractionId) => ({
 	"pass_id": insertId,
 	"attraction_id": attractionId
 });
@@ -22,24 +22,34 @@ const resolver = {
 	Query: {
 		getPassByUserId: (_, { userId }) => {
 			return Pass.getByUserId(userId).then(pass =>
-				PassToAttraction.getPassAttractions(pass.id).then(attractions => {
-					pass.attractions = attractions;
-					return {
+				pass && pass.id ?
+					Ticket.getPassTickets(pass.id).then(tickets => {
+						pass.tickets = tickets;
+						return {
+							status: getStatus(StatusCodeEnum.success, 'OK'),
+							pass: pass
+						};
+					}).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
+					: {
 						status: getStatus(StatusCodeEnum.success, 'OK'),
-						pass: pass
-					};
-				}).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
+						pass: null
+					}
 			).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
 		},
 		getPassByTravelerId: (_, { travelerId }) => {
 			return Pass.getByTravelerId(travelerId).then(pass =>
-				PassToAttraction.getPassAttractions(pass.id).then(attractions => {
-					pass.attractions = attractions;
-					return {
+				pass && pass.id ?
+					Ticket.getPassTickets(pass.id).then(tickets => {
+						pass.tickets = tickets;
+						return {
+							status: getStatus(StatusCodeEnum.success, 'OK'),
+							pass: pass
+						};
+					}).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
+					: {
 						status: getStatus(StatusCodeEnum.success, 'OK'),
-						pass: pass
-					};
-				}).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
+						pass: null
+					}
 
 			).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
 		}
@@ -49,15 +59,15 @@ const resolver = {
 			const ret = {
 				userId: input.pass.userId,
 				travelerId: input.pass.travelerId,
-				attractions: []
+				tickets: []
 			};
 			const promises = [];
 			return Pass.create(pass(input)).then(insertId => {
 				ret.id = insertId;
 				input.pass.tickets.forEach(ticket => {
 					for (let i = 0; i < ticket.quantity; i++) {
-						promises.push(PassToAttraction.create(passAttraction(insertId, ticket.attractionId)).then(insertId =>
-							ret.attractions.push({
+						promises.push(Ticket.create(ticketInput(insertId, ticket.attractionId)).then(insertId =>
+							ret.tickets.push({
 								id: insertId,
 								attractionId: ticket.attractionId,
 								usedTime: null
@@ -71,7 +81,7 @@ const resolver = {
 			}).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
 		},
 		burnAttractionTicket: (_, { input }) => {
-			return PassToAttraction.update({
+			return Ticket.update({
 				'id': input.ticketId,
 				'used_time': input.timestamp
 			}).then(result => {
@@ -81,8 +91,8 @@ const resolver = {
 					'expirationTime': moment(input.timestamp).add(EXPIRE_INS, 'days')
 				}).then(result => {
 					Pass.getById(input.passId).then(pass => {
-						PassToAttraction.getPassAttractions(input.passId).then(attractions => {
-							pass.attractions = attractions;
+						Ticket.getPassTickets(input.passId).then(tickets => {
+							pass.tickets = tickets;
 							return ({
 								status: getStatus(StatusCodeEnum.success, 'OK'),
 								pass: pass
