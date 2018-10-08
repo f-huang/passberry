@@ -5,7 +5,7 @@ import styled from "styled-components";
 import backIcon from "../../assets/icons/arrow_left_black.svg";
 import homeIcon from "../../assets/icons/home_black.svg";
 import {withRouter} from "react-router-dom";
-import PassInputsHandler from "../../customer/Pass/PassInputsHandler";
+import PassInputsHandler from "../../customer/(unused)Pass/PassInputsHandler";
 
 const Bar = styled.div`
 	position: relative;

@@ -6,7 +6,7 @@ import theme from "../app/theme";
 
 
 import monacoImg from "../assets/monaco.jpg";
-import PassInputsHandler from "./Pass/PassInputsHandler";
+import PassInputsHandler from "./(unused)Pass/PassInputsHandler";
 const N_CELL_PER_ROW = window.innerWidth > 1000 ? 5 : (window.innerWidth < 500 ? 2 : 3);
 
 const searchBarStyle = {

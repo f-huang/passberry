@@ -9,7 +9,7 @@ import monacoImg from "../../assets/monaco.jpg";
 import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
 import Error404 from "../../Error404";
 import CityHomeSearchBar from "./CityHomeSearchBar";
-import PassInputsHandler from "../Pass/PassInputsHandler";
+import PassInputsHandler from "../(unused)Pass/PassInputsHandler";
 
 
 const style = {
