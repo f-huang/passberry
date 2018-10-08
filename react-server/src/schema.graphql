@@ -29,6 +29,12 @@ enum ItemType {
 	TASTING_SESSION
 }
 
+enum BasketState {
+	PENDING,
+	HALF_PAID,
+	PAID
+}
+
 enum StatusCode {
 	SUCCESS
 	SERVER_SIDE_ERROR
@@ -213,7 +219,7 @@ input UpdateBasketInput {
 input ValidateBasketInput {
 	basketId: ID!
 	userId: ID!
-	state: String!
+	state: BasketState!
 }
 
 input PassTicketInput {
