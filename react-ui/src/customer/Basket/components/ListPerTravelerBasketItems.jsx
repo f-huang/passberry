@@ -22,6 +22,7 @@ class ListPerTravelerBasketItems extends React.Component {
 		return (
 			<ul>
 				{this.props.travelers.map((traveler, index) => (
+					this.props.basket.items.find(item => item.travelerId === traveler.id) &&
 					<div key={`basket-row-${index}`}>
 						<li>
 							<div>
@@ -29,7 +30,7 @@ class ListPerTravelerBasketItems extends React.Component {
 								<input type="checkbox"
 								       checked={this.props.travelersBasket[traveler.id] ? 'checked' : ''}
 								       onClick={e => this.props.switchTravelerBasket(
-								       	    traveler.id,
+									       traveler.id,
 									       !this.props.travelersBasket[traveler.id]
 								       )}
 								/>
