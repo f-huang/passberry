@@ -1,5 +1,5 @@
 const Pass = require('./PassModel');
-const Ticket = require('./TicketModel');
+const Ticket = require('../ticket/TicketModel');
 const moment = require('moment');
 const { getStatus, StatusCodeEnum } = require("../status");
 
@@ -20,38 +20,29 @@ const ticketInput = (insertId, attractionId) => ({
 
 const resolver = {
 	Query: {
-		getPassByUserId: (_, { userId }) => {
-			return Pass.getByUserId(userId).then(pass =>
-				pass && pass.id ?
-					Ticket.getPassTickets(pass.id).then(tickets => {
-						pass.tickets = tickets;
-						return {
-							status: getStatus(StatusCodeEnum.success, 'OK'),
-							pass: pass
-						};
-					}).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
-					: {
-						status: getStatus(StatusCodeEnum.success, 'OK'),
-						pass: null
-					}
-			).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
+		getPassesByUserId: (_, { userId }) => {
+			return Pass.getByUserId(userId).then(async passes => {
+				if (passes && passes.length)
+					 await Promise.all(passes.map(pass => {
+						return Ticket.getPassTickets(pass.id).then(tickets =>
+							pass.tickets = tickets
+						);
+					})
+				);
+				return { passes: passes };
+			}).catch(e => { console.error(e); return { passes: null } })
 		},
-		getPassByTravelerId: (_, { travelerId }) => {
-			return Pass.getByTravelerId(travelerId).then(pass =>
-				pass && pass.id ?
-					Ticket.getPassTickets(pass.id).then(tickets => {
-						pass.tickets = tickets;
-						return {
-							status: getStatus(StatusCodeEnum.success, 'OK'),
-							pass: pass
-						};
-					}).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
-					: {
-						status: getStatus(StatusCodeEnum.success, 'OK'),
-						pass: null
-					}
-
-			).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
+		getPassesByTravelerId: (_, { travelerId }) => {
+			return Pass.getByTravelerId(travelerId).then(async passes => {
+				if (passes && passes.length)
+					await Promise.all(passes.map(pass => {
+							return Ticket.getPassTickets(pass.id).then(tickets =>
+								pass.tickets = tickets
+							);
+						})
+					);
+				return { passes: passes };
+			}).catch(e => { console.error(e); return { passes: null } })
 		}
 	},
 	Mutation: {

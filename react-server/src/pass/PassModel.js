@@ -69,7 +69,7 @@ exports.getByUserId = (userId) => new Promise((resolve, reject) => {
 			reject(error);
 			return null;
 		}
-		resolve(rows && rows.length > 0 ? rows[0] : {});
+		resolve(rows && rows.length > 0 ? rows : []);
 	});
 });
 
@@ -84,7 +84,7 @@ exports.getByTravelerId = (travelerId) => new Promise((resolve, reject) => {
 			reject(error);
 			return null;
 		}
-		resolve(rows && rows.length > 0 ? rows[0] : {});
+		resolve(rows && rows.length > 0 ? rows : []);
 	});
 });
 
