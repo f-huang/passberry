@@ -1,11 +1,11 @@
 import React from "react";
-import styled from "styled-components";
+import MyTicketsView from "./tabviews/MyTicketsView";
 
 class MyTravelsDestinationView extends React.Component {
 	render() {
 		return (
 			<div>
-
+				<MyTicketsView/>
 			</div>
 		)
 	}
