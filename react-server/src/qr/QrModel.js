@@ -8,7 +8,7 @@ const TABLE_NAME = "qr_code";
 const uniqueNumber = () => (Date.now() + (Math.round(Math.random()) * 100000000)).toString(16);
 
 
-exports.getForUser = (userId) => new Promise((resolve, reject) => {
+exports.getByUserId = (userId) => new Promise((resolve, reject) => {
 	const sql = `SELECT * from \`${TABLE_NAME}\` WHERE user_id = ? ORDER BY \`timestamp\` DESC`;
 	if (!userId) {
 		reject("user id not defined or null");
@@ -45,8 +45,8 @@ exports.getAll = () => new Promise((resolve, reject) => {
 exports.generate = (userId) => new Promise((resolve, reject) => {
 	const sql = `INSERT INTO \`${TABLE_NAME}\` SET ?`;
 	const values = {
-		user_id: userId,
-		value: uniqueNumber()
+		"user_id": userId,
+		"value": uniqueNumber()
 	};
 	pool.query(sql, values, (error, result) => {
 		if (error) {

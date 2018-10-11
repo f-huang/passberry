@@ -154,7 +154,8 @@ type Query {
     getTravelersByUserId(userId: ID!): [Traveler]!
     getAllUsers(limit: Int, sortField: String, sortOrder: String): [User]
 
-    getQrValue(token: String): String
+    getQrByToken(token: String!): String
+    getQrByUserId(userId: ID!): String
     readQr(data: String): User
 
 	convertTokenToId(token: String): TokenToId
@@ -192,6 +193,10 @@ input CreateAttractionInput {
 	type: ProductType!
 	description: String
 	link: String
+}
+
+input GenerateQrInput {
+	userId: ID!
 }
 
 input BasketItemInput {
@@ -329,7 +334,7 @@ type Mutation {
 
 	createAttraction(input: CreateAttractionInput!): CreateAttractionPayload!
     
-    generateQr(input: ID!): GenerateQrPayload!
+    generateQr(input: GenerateQrInput!): GenerateQrPayload!
 
 	createBasket(input: CreateBasketInput!): CreateBasketPayload!
 	updateBasket(input: UpdateBasketInput!): UpdateBasketPayload!
