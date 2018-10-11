@@ -1,7 +1,23 @@
 const pool = require('../database/pool');
 
+const Ticket = require('../ticket/TicketModel');
+
 const TABLE_NAME = 'pass';
 const QR_TABLE_NAME = 'qr_code';
+
+const addTicketsToPass = (rows) => {
+	const promises = [];
+	rows.map(row =>
+		promises.push(Ticket.getPassTickets(row.id).then(tickets =>
+				row.tickets = tickets
+			)
+		));
+	return Promise.all(promises).then (() => {
+		console.log(rows);
+		return (rows);
+	})
+};
+
 
 exports.create = (pass) => new Promise((resolve, reject) => {
 	const sql = `INSERT INTO ${TABLE_NAME} SET ?`;
@@ -70,7 +86,11 @@ exports.getByUserId = (userId) => new Promise((resolve, reject) => {
 			reject(error);
 			return null;
 		}
-		resolve(rows && rows.length > 0 ? rows : []);
+		if (!rows || rows.length === 0) {
+			resolve([]);
+			return ;
+		}
+		resolve(addTicketsToPass(rows));
 	});
 });
 
@@ -85,25 +105,33 @@ exports.getByTravelerId = (travelerId) => new Promise((resolve, reject) => {
 			reject(error);
 			return null;
 		}
-		resolve(rows && rows.length > 0 ? rows : []);
+		if (!rows || rows.length === 0) {
+			resolve([]);
+			return ;
+		}
+		resolve(addTicketsToPass(rows));
 	});
 });
 
 exports.getByQr = (qr) => new Promise((resolve, reject) => {
 	const sql = `SELECT 
-	${TABLE_NAME}.\`id\`, ${TABLE_NAME}.\`user_id\` AS \`userId\`, ${TABLE_NAME}.\`traveler_id\` AS \`travelerId\`,
-	\`init_time\` AS \`initTime\`, \`expiration_time\` AS \`expirationTime\`
-	FROM ${TABLE_NAME}
-	INNER JOIN ${QR_TABLE_NAME}
-	ON ${QR_TABLE_NAME}.user_id=${TABLE_NAME}.traveler_id
-	WHERE ${QR_TABLE_NAME}.\`value\`=?`;
+		${TABLE_NAME}.\`id\`, ${TABLE_NAME}.\`user_id\` AS \`userId\`, ${TABLE_NAME}.\`traveler_id\` AS \`travelerId\`,
+		\`init_time\` AS \`initTime\`, \`expiration_time\` AS \`expirationTime\`
+		FROM ${TABLE_NAME}
+		INNER JOIN ${QR_TABLE_NAME}
+		ON ${QR_TABLE_NAME}.user_id=${TABLE_NAME}.traveler_id
+		WHERE ${QR_TABLE_NAME}.\`value\`=?`;
 	pool.query(sql, qr, (error, rows) => {
 		if (error) {
 			console.error(error);
 			reject(error);
 			return null;
 		}
-		resolve(rows && rows.length > 0 ? rows : []);
+		if (!rows || rows.length === 0) {
+			resolve([]);
+			return ;
+		}
+		resolve(addTicketsToPass(rows));
 	});
 });
 

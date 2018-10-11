@@ -21,38 +21,17 @@ const ticketInput = (insertId, attractionId) => ({
 const resolver = {
 	Query: {
 		getPassesByUserId: (_, { userId }) => {
-			return Pass.getByUserId(userId).then(async passes => {
-				if (passes && passes.length)
-					 await Promise.all(passes.map(pass => {
-						return Ticket.getPassTickets(pass.id).then(tickets =>
-							pass.tickets = tickets
-						);
-					})
-				);
+			return Pass.getByUserId(userId).then(passes => {
 				return { passes: passes };
 			}).catch(e => { console.error(e); return { passes: null } })
 		},
 		getPassesByTravelerId: (_, { travelerId }) => {
-			return Pass.getByTravelerId(travelerId).then(async passes => {
-				if (passes && passes.length)
-					await Promise.all(passes.map(pass => {
-							return Ticket.getPassTickets(pass.id).then(tickets =>
-								pass.tickets = tickets
-							);
-						})
-					);
+			return Pass.getByTravelerId(travelerId).then(passes => {
 				return { passes: passes };
 			}).catch(e => { console.error(e); return { passes: null } })
 		},
 		getPassesByQr: (_, { qr }) => {
-			return Pass.getByQr(qr).then(async passes => {
-				if (passes && passes.length > 0)
-					await Promise.all(passes.map(pass => {
-							return Ticket.getPassTickets(pass.id).then(tickets =>
-								pass.tickets = tickets
-							);
-						})
-					);
+			return Pass.getByQr(qr).then(passes => {
 				return { passes: passes };
 			}).catch(e => { console.error(e); return { passes: null } })
 		}
