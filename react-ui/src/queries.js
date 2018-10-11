@@ -116,8 +116,25 @@ export const CREATE_PASS = gql`
 			attractions {
 				attractionId
 				usedTime
+				}
 			}
 		}
 	}
-}
+`;
+
+export const GET_PASSES_BY_USER_ID = gql`
+	query getPassesByUserId($userId: ID!) {
+		getPassesByUserId(userId: $userId) {
+			passes {
+				id
+				userId
+				travelerId
+				tickets {
+					id
+					attractionId
+					usedTime
+				}
+			}
+		}
+	}
 `;
