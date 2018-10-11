@@ -1,5 +1,24 @@
 import gql from "graphql-tag"
 
+export const SIGN_IN = `
+	mutation signIn($input: SignInInput!) {
+		signIn(input: $input) {
+			status {
+				message
+				code
+			}
+			errorMessage
+			token
+		}
+	}
+`;
+
+export const GET_QR_BY_TOKEN = gql`
+	query getQrByToken($token: String!) {
+		getQrByToken(token: $token)
+	}
+`;
+
 export const GET_ATTRACTION_BY_TYPE = gql`
 	query getAttractionByType($type: ProductType!) {
 	  getAttractionByType(type: $type) {

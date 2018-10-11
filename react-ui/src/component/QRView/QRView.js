@@ -1,8 +1,11 @@
 import React from "react";
 import QRCode from "qrcode.react";
-import apiCall from "../../Api";
+import { Query } from "react-apollo";
+import { connect } from "react-redux";
 
 import "./QRView.css";
+import {GET_QR_BY_TOKEN} from "../../queries";
+import {TOKEN} from "../../customer/localStorageKeys";
 
 const QRSize = 150;
 const canvasStyle = (skew) => {
@@ -17,54 +20,35 @@ const canvasStyle = (skew) => {
 		WebkitTransform: `skewY(${skew}deg)`,
 	}};
 
-const query = `
-	query QrGetValue($token: String) {
-		QrGetValue(token: $token)
-	}
-`;
-
-const variables = {
-	"token": sessionStorage.getItem("token"),
-};
-
-
 class QRView extends React.Component {
-	state = { url: "" };
-
-	constructor(props) {
-		super(props);
-		this.updateUrl = this.updateUrl.bind(this);
-	}
-
-
-	componentDidMount() {
-		this.updateUrl().catch(() => {this.setState({ url : "" })});
-	}
-
-	updateUrl = async () => {
-		const result = await apiCall(query, variables)
-			.then(out => JSON.parse(out).touristData.getQrValue);
-		const url = await result ?
-			'localhost:3000/' + result :
-			'www.google.fr';
-		this.setState({url: url});
-		console.log('url', url);
-	};
-
 	render() {
+		const variables = { token: this.props.token };
 		return (
 			<div className="QRView">
 				<div className="QRView-background">
-					{ this.state.url ?
-						<QRCode className="QRView-code"
-					        value={ this.state.url }
-					        renderAs="canvas"
-					        size={ QRSize }
-					        style={ canvasStyle(20) }/> : <p/> }
+					<Query query={ GET_QR_BY_TOKEN } variables={ variables }>
+						{ ({ loading, error, data }) => {
+							if (loading) return <p> Loading </p>;
+							if (error) return <p> Error </p>;
+							console.log(data);
+							return (
+								<QRCode className="QRView-code"
+								        value={ data.getQrByToken }
+								        renderAs="canvas"
+								        size={ QRSize }
+								        style={ canvasStyle(20) }/>
+						)}}
+					</Query>
 				</div>
 			</div>
 		);
 	}
 }
 
-export default QRView;
+const mapStateToProps = state => {
+	return ({
+		token: localStorage.getItem(TOKEN)
+	});
+};
+
+export default connect(mapStateToProps)(QRView);

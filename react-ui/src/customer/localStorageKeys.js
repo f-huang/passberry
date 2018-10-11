@@ -1,3 +1,5 @@
+export const TOKEN = 'TOKEN';
+
 export const TRAVELERS_BASKET_CHECKED = 'TRAVELERS_BASKET_CHECKED';
 export const TRAVELERS = 'TRAVELERS';
 export const DESTINATION = 'DESTINATION';

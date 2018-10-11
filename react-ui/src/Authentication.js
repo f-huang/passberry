@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import apiCall from "./Api";
-
-const KEY_TOKEN = "token";
+import { SIGN_IN } from "./queries";
+import { TOKEN } from "./customer/localStorageKeys";
 
 const queryUser = `
 	query UserGet($id: ID!) {
@@ -16,8 +16,8 @@ const queryUser = `
 export default class Authentication {
 
 
-	getToken = () => localStorage.getItem(KEY_TOKEN);
-	setToken = (token) => localStorage.setItem(KEY_TOKEN, token);
+	getToken = () => localStorage.getItem(TOKEN);
+	setToken = (token) => localStorage.setItem(TOKEN, token);
 
 	isLogged() {
 		const token = this.getToken();
@@ -46,21 +46,13 @@ export default class Authentication {
 	}
 
 	signIn(email, password) {
-		const querySignIn = `
-			mutation signIn($user: UserSigningIn) {
-				signIn(user: $user) {
-					token
-					message
-					code
-				}
-			}
-		`;
 		const user = {
-			"email": email,
-			"password": password
+			email: email,
+			password: password
 		};
-		return apiCall(querySignIn, { "user": user })
+		return apiCall(SIGN_IN, { input: user })
 			.then(out => {
+				console.log(out);
 				const json = JSON.parse(out).data.signIn;
 				if (json.token) {
 					this.setToken(json.token);
