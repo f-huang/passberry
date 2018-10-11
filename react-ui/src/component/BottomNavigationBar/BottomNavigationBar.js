@@ -68,7 +68,7 @@ class BottomNavigationBar extends React.Component {
 		{
 			name: BottomNavigationBar.items.currentTrip,
 			alt: "trip-icon",
-			location: "/trips",
+			location: "/my-travels",
 			icon: iconTrip,
 			iconSelected: iconTripSelected
 		},
