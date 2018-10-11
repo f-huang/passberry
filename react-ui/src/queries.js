@@ -19,6 +19,12 @@ export const GET_QR_BY_TOKEN = gql`
 	}
 `;
 
+export const GET_QR_BY_USER_ID = gql`
+	query getQrByUserId($userId: ID!) {
+		getQrByUserId(userId: $userId)
+	}
+`;
+
 export const GET_ATTRACTION_BY_TYPE = gql`
 	query getAttractionByType($type: ProductType!) {
 	  getAttractionByType(type: $type) {
@@ -154,6 +160,17 @@ export const GET_PASSES_BY_USER_ID = gql`
 					usedTime
 				}
 			}
+		}
+	}
+`;
+
+export const GET_TRAVELERS_BY_USER_ID = gql`
+	query getTravelersByUserId($userId: ID!){
+		getTravelersByUserId(userId: $userId) {
+			id
+			userId
+			firstName
+			lastName
 		}
 	}
 `;
