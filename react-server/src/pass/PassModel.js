@@ -1,6 +1,7 @@
 const pool = require('../database/pool');
 
 const TABLE_NAME = 'pass';
+const QR_TABLE_NAME = 'qr_code';
 
 exports.create = (pass) => new Promise((resolve, reject) => {
 	const sql = `INSERT INTO ${TABLE_NAME} SET ?`;
@@ -87,4 +88,23 @@ exports.getByTravelerId = (travelerId) => new Promise((resolve, reject) => {
 		resolve(rows && rows.length > 0 ? rows : []);
 	});
 });
+
+exports.getByQr = (qr) => new Promise((resolve, reject) => {
+	const sql = `SELECT 
+	${TABLE_NAME}.\`id\`, ${TABLE_NAME}.\`user_id\` AS \`userId\`, ${TABLE_NAME}.\`traveler_id\` AS \`travelerId\`,
+	\`init_time\` AS \`initTime\`, \`expiration_time\` AS \`expirationTime\`
+	FROM ${TABLE_NAME}
+	INNER JOIN ${QR_TABLE_NAME}
+	ON ${QR_TABLE_NAME}.user_id=${TABLE_NAME}.traveler_id
+	WHERE ${QR_TABLE_NAME}.\`value\`=?`;
+	pool.query(sql, qr, (error, rows) => {
+		if (error) {
+			console.error(error);
+			reject(error);
+			return null;
+		}
+		resolve(rows && rows.length > 0 ? rows : []);
+	});
+});
+
 

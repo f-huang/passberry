@@ -154,7 +154,6 @@ type Query {
     getAllUsers(limit: Int, sortField: String, sortOrder: String): [User]
 
 	getTravelerByQr(qr: String!): Traveler
-	getPassesByQr(qr: String!): [Pass]!
 
 
     getQrByToken(token: String!): String
@@ -162,8 +161,10 @@ type Query {
     readQr(data: String): User
 
 	convertTokenToId(token: String): TokenToId
+
 	getPassesByUserId(userId: ID!): GetPassPayload!
 	getPassesByTravelerId(travelerId: ID!): GetPassPayload!
+	getPassesByQr(qr: String!): GetPassPayload!
 }
 
 # --------------------------------------------------------

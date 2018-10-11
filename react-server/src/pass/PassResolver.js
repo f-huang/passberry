@@ -43,6 +43,18 @@ const resolver = {
 					);
 				return { passes: passes };
 			}).catch(e => { console.error(e); return { passes: null } })
+		},
+		getPassesByQr: (_, { qr }) => {
+			return Pass.getByQr(qr).then(async passes => {
+				if (passes && passes.length > 0)
+					await Promise.all(passes.map(pass => {
+							return Ticket.getPassTickets(pass.id).then(tickets =>
+								pass.tickets = tickets
+							);
+						})
+					);
+				return { passes: passes };
+			}).catch(e => { console.error(e); return { passes: null } })
 		}
 	},
 	Mutation: {
