@@ -25,6 +25,7 @@ const tokenResolver = require("./token/TokenResolver");
 const basketResolver = require("./basket/BasketResolver");
 const paymentResolver = require("./payment/PaymentResolver");
 const passResolver = require("./pass/PassResolver");
+const ticketResolver = require("./ticket/TicketResolver");
 const addressResolver = require("./address/AddressResolver");
 
 const resolvers = mergeResolvers([
@@ -36,6 +37,7 @@ const resolvers = mergeResolvers([
 	basketResolver,
 	paymentResolver,
 	passResolver,
+	ticketResolver,
 	addressResolver
 ]);
 

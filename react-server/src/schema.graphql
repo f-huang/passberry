@@ -113,6 +113,7 @@ type AttractionTicket {
 	id: ID!
 	attractionId: ID!
 	usedTime: Date
+	passId: ID
 }
 
 type Pass {
@@ -161,6 +162,8 @@ type Query {
     readQr(data: String): User
 
 	convertTokenToId(token: String): TokenToId
+
+	getTicketByQrAndAttractionId(qr: String!, attractionId: ID!): AttractionTicket
 
 	getPassesByUserId(userId: ID!): GetPassPayload!
 	getPassesByTravelerId(travelerId: ID!): GetPassPayload!
