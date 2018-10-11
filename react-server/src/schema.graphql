@@ -122,6 +122,13 @@ type Pass {
 	tickets: [AttractionTicket]!
 }
 
+type Traveler {
+	id: ID!
+	userId: ID!
+	firstName: String!
+	lastName: String
+}
+
 type TokenToId {
 	status: Status!
 	id: ID
@@ -144,6 +151,7 @@ type Query {
     getAllAttractions(limit: Int, sortField: String, sortOrder: String): [Attraction]
 
     getUserById(id: ID!): User
+    getTravelersByUserId(userId: ID!): [Traveler]!
     getAllUsers(limit: Int, sortField: String, sortOrder: String): [User]
 
     getQrValue(token: String): String

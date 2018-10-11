@@ -22,6 +22,9 @@ const resolver = {
 		},
 		getAllUsers: (_, { limit = 0, sortField = "", sortOrder = "" }) => {
 			return User.getAll().then(rows => rows)
+		},
+		getTravelersByUserId: (_, { userId }) => {
+
 		}
 	},
 	Mutation: {
