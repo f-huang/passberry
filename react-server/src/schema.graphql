@@ -35,6 +35,13 @@ enum BasketState {
 	PAID
 }
 
+enum ScanState {
+	SUCCESS,
+	NOT_FOUND,
+	ALREADY_USED,
+	ERROR
+}
+
 enum StatusCode {
 	SUCCESS
 	SERVER_SIDE_ERROR
@@ -135,6 +142,14 @@ type TokenToId {
 	token: String!
 }
 
+type Scan {
+	id: ID!
+	userId: ID!
+	attractionId: ID!
+	timestamp: Date!
+	state: ScanState!
+	qr: String!
+}
 
 type GetPassPayload {
 	passes: [Pass]
@@ -277,6 +292,14 @@ input GetPassByTravelerIdInput {
 	travelerId: ID!
 }
 
+input CreateScanInput {
+	attractionId: ID!
+	userId: ID!
+	qr: String!
+	state: ScanState!
+	timestamp: Date!
+}
+
 
 # --------------------------------------------------------
 # --------------------------------------------------------
@@ -330,6 +353,12 @@ type BurnAttractionTicketPayload {
 	pass: Pass!
 }
 
+type CreateScanPayload {
+	status: Status!
+	scan: Scan!
+}
+
+
 
 # --------------------------------------------------------
 # --------------------------------------------------------
@@ -351,4 +380,6 @@ type Mutation {
 
 	createPass(input: CreatePassInput!): CreatePassPayload!
 	burnAttractionTicket(input: BurnAttractionTicketInput!): BurnAttractionTicketPayload!
+
+	createScan(input: CreateScanInput!): CreateScanPayload!
 }

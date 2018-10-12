@@ -21,6 +21,7 @@ const userResolver = require("./user/UserResolver");
 const travelerResolver = require("./traveler/TravelerResolver");
 const attractionResolver = require("./attraction/AttractionResolver");
 const qrResolver = require("./qr/QrResolver");
+const scanResolver = require("./scan/ScanResolver");
 const tokenResolver = require("./token/TokenResolver");
 const basketResolver = require("./basket/BasketResolver");
 const paymentResolver = require("./payment/PaymentResolver");
@@ -33,6 +34,7 @@ const resolvers = mergeResolvers([
 	travelerResolver,
 	attractionResolver,
 	qrResolver,
+	scanResolver,
 	tokenResolver,
 	basketResolver,
 	paymentResolver,
