@@ -196,6 +196,19 @@ export const GET_TICKET_BY_QR_AND_ATTRACTION_ID = gql`
 	}
 `;
 
+
+export const GET_TICKET_BY_TRAVELER_ID_AND_ATTRACTION_ID = gql`
+	query getTicketByTravelerIdAndAttractionId($travelerId: ID!, $attractionId: ID!) {
+		getTicketByTravelerIdAndAttractionId(travelerId: $travelerId, attractionId: $attractionId) {
+			id
+			passId
+			usedTime
+			attractionId
+		}
+	}
+`;
+
+
 export const CREATE_SCAN = gql`
 	mutation createScan($input: CreateScanInput!) {
 		createScan(input: $input) {
