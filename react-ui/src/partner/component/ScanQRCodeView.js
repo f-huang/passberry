@@ -3,7 +3,9 @@ import QrReader from 'react-qr-reader'
 import { withRouter } from "react-router-dom";
 import { graphql, compose, withApollo } from "react-apollo";
 import { connect } from "react-redux";
-import {GET_TICKET_BY_QR_AND_ATTRACTION_ID, GET_TRAVELER_BY_QR} from "../../queries";
+import { CREATE_SCAN, GET_TRAVELER_BY_QR } from "../../queries";
+import moment from "moment";
+import EnumScanState from "../EnumScanState";
 
 const styles = {
 	searchBar: {
@@ -21,8 +23,7 @@ class ScanQRCodeView extends React.Component {
 		super(props);
 		this.state = {
 			error: false,
-			ticket: null,
-			qrValue: null,
+			scanning: false
 		};
 	}
 
@@ -44,23 +45,34 @@ class ScanQRCodeView extends React.Component {
 	}
 
 	onScan = (result) => {
-		// result = "16662a89a1e";
-		if (result !== null) {
-			if (result !== undefined && result != null) {
-					this.props.client.query({
-						query: GET_TRAVELER_BY_QR,
-						variables: { qrValue: result }
-					}).then(({loading, error, data}) => {
-						if (loading) console.log("Loading");
-						if (error) console.log("Error");
-						// this.onSuccess(data.getTravelerByQr.id);
-					});
-				}
-			}
+		// result = "1666e341956";
+		if (result !== null && result !== undefined && this.state.scanning === false) {
+			this.setState({scanning: true});
+			this.props.client.query({
+				query: GET_TRAVELER_BY_QR,
+				variables: { qrValue: result }
+			}).then(({loading, error, data}) => {
+				if (loading) console.log("Loading");
+				if (error) console.log("Error");
+				const variables = {variables: {
+					input: {
+						attractionId: this.props.attractionId,
+							userId: this.props.userId,
+							qr: result,
+							state: (data.getTravelerByQr === null ? EnumScanState.NOT_FOUND : EnumScanState.SUCCESS).value,
+							timestamp: moment().format('YYYY-MM-DD hh:mm:ss'),
+					}}};
+				this.props.createScan(variables).then(({ data }) => {
+					if (data)
+						this.onSuccess(data.createScan.scan.id);
+					this.setState({scanning: false});
+				})
+			});
+		}
 	};
 
-	onSuccess = (profileId) => {
-		this.props.history.push(`/scanned-profile/${profileId}`);
+	onSuccess = (scanId) => {
+		this.props.history.push(`/scanned-profile/${scanId}`);
 	};
 
 	onError = (error) => {
@@ -90,12 +102,14 @@ class ScanQRCodeView extends React.Component {
 const mapStateToProps = state => {
 	return ({
 		attractionId: 1,
+		userId: 10
 	})
 };
 
 
 const withOptions = compose(
 	withApollo,
+	graphql(CREATE_SCAN, { name: 'createScan' }),
 	connect(mapStateToProps, null)
 );
 
