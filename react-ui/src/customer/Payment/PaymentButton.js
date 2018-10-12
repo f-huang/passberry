@@ -2,8 +2,8 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { compose, graphql } from "react-apollo";
-import {emptyBasket, reinitializeBasket} from "../Basket/basketActions";
+import { compose, graphql, withApollo } from "react-apollo";
+import { emptyBasket, reinitializeBasket } from "../Basket/basketActions";
 import { VALIDATE_BASKET, CREATE_PASS } from "../../queries";
 
 import Button from "../../component/Button/Button";
@@ -39,28 +39,29 @@ class PaymentButton extends React.Component {
 		const travelersIds = [...new Set(this.props.basket.items.map(item => item.travelerId))];
 		travelersIds.forEach(travelerId => {
 			const tickets = [];
-			const travelerItems = this.props.basket.items.filter(item => item.travelerId === travelerId && item.quantity > 0)
+			const travelerItems = this.props.basket.items.filter(item => item.travelerId === travelerId && item.quantity > 0);
 			travelerItems.forEach(travelerItem => tickets.push({
 				attractionId: travelerItem.product.id,
 				quantity: travelerItem.quantity
 			}));
-			this.props.createPass({
+			const variables = {
 				variables: {
 					input: {
 						basketId: this.props.basket.id,
 						startDate: this.props.startDate,
 						endDate: this.props.endDate,
 						pass: {
-							userId: 1,
+							userId: this.props.userId,
 							travelerId: travelerId,
 							tickets: tickets
 						}
 					}
 				}
-			}).then((data) => {
-				console.log("pass: ", data);
+			};
+			this.props.createPass(variables).then((data) => {
+				console.log(data)
 			})
-		});
+		})
 	};
 
 	executeMutations = () => {
@@ -92,9 +93,10 @@ const mapStateToProps = state => {
 	return ({
 		total: prices.length > 0 ? prices.reduce((total, currentPrice, index) => total + quantities[index] * currentPrice).toFixed(2) : 0,
 		basketState: state.basket.items.length === items.length ? EnumBasketState.PAID : EnumBasketState.HALF_PAID,
-		startDate: state.travelDetails.travelDates.startDate.format("YYYY-MM-DD hh:mm:ss"),
-		endDate: state.travelDetails.travelDates.endDate.format("YYYY-MM-DD hh:mm:ss"),
-		basket: { ...state.basket, items: items }
+		startDate: state.travelDetails.travelDates.startDate.format("YYYY-MM-DD"),
+		endDate: state.travelDetails.travelDates.endDate.format("YYYY-MM-DD"),
+		basket: { ...state.basket, items: items },
+		userId: 1
 	})
 };
 
@@ -106,8 +108,8 @@ const mapDispatchToProps = dispatch => {
 };
 
 const withOptions = compose(
-	graphql(VALIDATE_BASKET, { name: 'validateBasket'}),
-	graphql(CREATE_PASS, { name: 'createPass'}),
+	graphql(CREATE_PASS, { name: 'createPass' }),
+	graphql(VALIDATE_BASKET, { name: 'validateBasket' }),
 	connect(mapStateToProps, mapDispatchToProps)
 );
 

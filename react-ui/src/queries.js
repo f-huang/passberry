@@ -129,8 +129,8 @@ export const VALIDATE_BASKET = gql`
 
 export const CREATE_PASS = gql`
 	mutation createPass($input: CreatePassInput!) {
-		createPass(input: $input) {
-			status {
+	createPass(input: $input) {
+		status {
 			code
 			message
 		}
@@ -138,13 +138,13 @@ export const CREATE_PASS = gql`
 			id
 			userId
 			travelerId
-			attractions {
+			tickets {
 				attractionId
 				usedTime
-				}
 			}
 		}
 	}
+}
 `;
 
 export const GET_PASSES_BY_USER_ID = gql`
