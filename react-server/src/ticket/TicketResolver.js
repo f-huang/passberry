@@ -13,6 +13,17 @@ const resolver = {
 				});
 				return ticket;
 			}).catch(e => { console.error(e); return ticket});
+		},
+		getTicketByTravelerIdAndAttractionId: (_, { travelerId, attractionId }) => {
+			let ticket = null;
+			return Pass.getByTravelerId(travelerId).then(passes => {
+				passes.forEach(pass => {
+					const index = pass.tickets.findIndex(ticket => parseInt(ticket.attractionId, 10) === parseInt(attractionId, 10));
+					if (index !== -1)
+						ticket = pass.tickets[index];
+				});
+				return ticket;
+			}).catch(e => { console.error(e); return ticket});
 		}
 	}
 };

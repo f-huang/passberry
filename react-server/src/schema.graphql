@@ -179,6 +179,7 @@ type Query {
 	convertTokenToId(token: String): TokenToId
 
 	getTicketByQrAndAttractionId(qr: String!, attractionId: ID!): AttractionTicket
+	getTicketByTravelerIdAndAttractionId(travelerId: ID!, attractionId: ID!): AttractionTicket
 
 	getPassesByUserId(userId: ID!): GetPassPayload!
 	getPassesByTravelerId(travelerId: ID!): GetPassPayload!
