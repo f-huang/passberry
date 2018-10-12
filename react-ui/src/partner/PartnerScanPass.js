@@ -1,22 +1,17 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
 
 import ScanQRCodeView from './component/ScanQRCodeView';
 import '../app/base.css'
 import AppBar from "../component/AppBar/AppBar";
 
 const title = "Scan attraction";
-const to = "/partner-see-customer";
-const onSuccess = () => {
-	return <Redirect to={to} push={true}/>
-};
 
 class PartnerScanPass extends React.Component {
     render() {
         return (
             <div className="PartnerScanPass">
                 <AppBar title={title}/>
-                <ScanQRCodeView onSuccess={onSuccess}/>
+                <ScanQRCodeView/>
             </div>
         )
     }
