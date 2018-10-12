@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Query, withApollo, compose } from "react-apollo";
-import { GET_TICKET_BY_TRAVELER_ID_AND_ATTRACTION_ID, UPDATE_SCAN_STATE } from "../queries";
+import { GET_TICKET_BY_TRAVELER_ID_AND_ATTRACTION_ID, UPDATE_SCAN_STATE } from "../../queries";
 import EnumScanState from "./EnumScanState";
-import Button from "../component/Button/Button";
+import Button from "../../component/Button/Button";
+import ValidateEntryButton from "./component/ValidateEntryButton";
 
 class ScannedProfileView extends React.Component {
 	constructor(props) {
@@ -58,7 +59,7 @@ class ScannedProfileView extends React.Component {
 					}}
 				</Query>
 				<Button value={"x"}/>
-				<Button value={"Valider"}/>
+				<ValidateEntryButton/>
 			</div>
 		);
 	}
