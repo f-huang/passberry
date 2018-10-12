@@ -225,3 +225,20 @@ export const CREATE_SCAN = gql`
 		}
 	}
 `;
+
+export const UPDATE_SCAN_STATE =  gql`
+	mutation updateScanState($input:UpdateScanStateInput!) {
+		updateScanState(input: $input) {
+			status {
+				code
+				message
+			}
+			scan {
+				id
+				qr
+				attractionId
+				state
+			}
+		}
+	}
+`;

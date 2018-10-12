@@ -1,12 +1,39 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Query, graphql, compose } from "react-apollo";
-import {GET_TICKET_BY_TRAVELER_ID_AND_ATTRACTION_ID} from "../queries";
+import { Query, withApollo, compose } from "react-apollo";
+import { GET_TICKET_BY_TRAVELER_ID_AND_ATTRACTION_ID, UPDATE_SCAN_STATE } from "../queries";
+import EnumScanState from "./EnumScanState";
+import Button from "../component/Button/Button";
 
 class ScannedProfileView extends React.Component {
+	constructor(props) {
+		super(props);
+		this.scanId = this.props.match.params.scanId;
+	}
+
+	getScanState = (ticket) => {
+		if (ticket === null)
+			return EnumScanState.NOT_FOUND;
+		else if (ticket.usedTime !== null)
+			return EnumScanState.ALREADY_USED;
+		else
+			return EnumScanState.SUCCESS;
+	};
+
+	updateScan = (state) => {
+		this.props.client.mutate({
+			mutation: UPDATE_SCAN_STATE,
+			variables: {
+				input: {
+					id: this.scanId,
+					state: state.value
+				}
+			}
+		});
+	};
+
 	render() {
 		const traveler = this.props.traveler;
-		console.log(this.props.traveler.id, this.props.attractionId);
 		return (
 			<div>
 				Scanned Profile
@@ -14,27 +41,30 @@ class ScannedProfileView extends React.Component {
 					{traveler.firstName}
 					{traveler.lastName}
 				</div>
-				<Query query={GET_TICKET_BY_TRAVELER_ID_AND_ATTRACTION_ID}
+				<Query query={ GET_TICKET_BY_TRAVELER_ID_AND_ATTRACTION_ID }
 				       variables={{ travelerId: this.props.traveler.id, attractionId: this.props.attractionId }}>
 					{ ({ loading, error, data }) => {
 						if (loading) return <p>Loading</p>;
 						if (error) return <p>Error</p>;
 						const ticket = data.getTicketByTravelerIdAndAttractionId;
-						if (ticket === null || ticket === undefined)
+						const state = this.getScanState(ticket);
+						this.updateScan(state);
+						if (state === EnumScanState.NOT_FOUND)
 							return <p>Ticket not found</p>;
-						else if (ticket && ticket.usedTime !== null)
+						else if (state  === EnumScanState.ALREADY_USED)
 							return <p>Ticket already used</p>;
-						else
+						else if (state === EnumScanState.SUCCESS)
 							return <p>{ticket.id} @ {ticket.attractionId}</p>
 					}}
 				</Query>
+				<Button value={"x"}/>
+				<Button value={"Valider"}/>
 			</div>
 		);
 	}
 }
 
 const mapStateToProps = state => {
-	console.log(state);
 	return ({
 		traveler: state.scan.traveler,
 		attractionId: 1,
@@ -42,18 +72,8 @@ const mapStateToProps = state => {
 	})
 };
 
-const mapPropsToOptions = ({ travelerId,  attractionId }) => ({
-	variables: {
-		travelerId,
-		attractionId
-	},
-	name: 'ticket',
-});
-
 const withOptions = compose(
-	// graphql(GET_TICKET_BY_TRAVELER_ID_AND_ATTRACTION_ID, {
-	// 	options: mapPropsToOptions
-	// }),
+	withApollo,
 	connect(mapStateToProps)
 );
 
