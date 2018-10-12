@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { CREATE_SCAN, GET_TRAVELER_BY_QR } from "../../queries";
 import moment from "moment";
 import EnumScanState from "../EnumScanState";
+import {setTraveler} from "../scanActions";
 
 const styles = {
 	searchBar: {
@@ -45,7 +46,7 @@ class ScanQRCodeView extends React.Component {
 	}
 
 	onScan = (result) => {
-		// result = "1666e341956";
+		result = "1666e671e3c";
 		if (result !== null && result !== undefined && this.state.scanning === false) {
 			this.setState({scanning: true});
 			this.props.client.query({
@@ -54,18 +55,21 @@ class ScanQRCodeView extends React.Component {
 			}).then(({loading, error, data}) => {
 				if (loading) console.log("Loading");
 				if (error) console.log("Error");
+				this.props.onFoundTraveler(data.getTravelerByQr);
+				console.log("Data", data.getTravelerByQr);
 				const variables = {variables: {
 					input: {
 						attractionId: this.props.attractionId,
 							userId: this.props.userId,
 							qr: result,
-							state: (data.getTravelerByQr === null ? EnumScanState.NOT_FOUND : EnumScanState.SUCCESS).value,
+							state: (data.getTravelerByQr === null ? EnumScanState.NOT_FOUND : EnumScanState.PENDING).value,
 							timestamp: moment().format('YYYY-MM-DD hh:mm:ss'),
 					}}};
 				this.props.createScan(variables).then(({ data }) => {
 					if (data)
 						this.onSuccess(data.createScan.scan.id);
-					this.setState({scanning: false});
+					else
+						this.setState({scanning: false});
 				})
 			});
 		}
@@ -106,11 +110,17 @@ const mapStateToProps = state => {
 	})
 };
 
+const mapDispatchToProps = dispatch => {
+	return ({
+		onFoundTraveler: (traveler) => dispatch(setTraveler({ traveler }))
+	})
+};
+
 
 const withOptions = compose(
 	withApollo,
 	graphql(CREATE_SCAN, { name: 'createScan' }),
-	connect(mapStateToProps, null)
+	connect(mapStateToProps, mapDispatchToProps)
 );
 
 export default withRouter(withOptions(ScanQRCodeView));

@@ -18,7 +18,8 @@ import BasketView from "./customer/Basket/BasketView";
 import PaymentView from "./customer/Payment/PaymentView";
 import MyTravelsView from "./customer/MyTravels/MyTravelsView";
 import MyTravelsDestinationView from "./customer/MyTravelsDestination/MyTravelsDestinationView";
-import PartnerScanPass from "./partner/PartnerScanPass";
+import ScanProfileView from "./partner/ScanProfileView";
+import ScannedProfileView from "./partner/ScannedProfileView";
 
 const routes = (
     <BrowserRouter forceRefresh={true}>
@@ -36,7 +37,8 @@ const routes = (
 		    <Route exact path="/sign-up" component={SignUp}/>
 		    <Route exact path="/basket" component={BasketView}/>
 		    <Route exact path="/payment" component={PaymentView}/>
-		    <Route exact path="/scan-profile" component={PartnerScanPass}/>
+		    <Route exact path="/scan-profile" component={ScanProfileView}/>
+		    <Route exact path="/scanned-profile/:scanId" component={ScannedProfileView}/>
 		    {/*<Route exact path="/partner-see-customer" component={PartnerSeeUser}/>*/}
 		    <Route exact path="/:destination" component={DestinationOffers}/>
 		    {/*<Route exact path="/:city/pass/:typeOfJourney(vuego-made|customize)" component={Pass}/>*/}
