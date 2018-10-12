@@ -242,3 +242,23 @@ export const UPDATE_SCAN_STATE =  gql`
 		}
 	}
 `;
+
+export const CREATE_ENTRY = gql`
+	mutation createEntry($input: CreateEntryInput!) {
+		createEntry(input: $input) {
+			status {
+				code
+				message
+			}
+			entry {
+				id
+				timestamp
+				state
+				attractionId
+				userId
+				scanId
+				comment
+			}
+		}
+	}
+`;
