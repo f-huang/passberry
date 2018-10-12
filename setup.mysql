@@ -228,12 +228,11 @@ CREATE TABLE IF NOT EXISTS
 
 CREATE TABLE IF NOT EXISTS
     qr_code(
-        `id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
         `user_id` INT UNSIGNED NOT NULL,
-        `value` VARCHAR(255),
+        `value` VARCHAR(255) NOT NULL UNIQUE,
         `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (`user_id`) REFERENCES user(`id`),
-        PRIMARY KEY (`id`)
+        PRIMARY KEY (`value`)
     ) ENGINE=InnoDB;
 
 
@@ -241,13 +240,30 @@ CREATE TABLE IF NOT EXISTS
 	scan(
 		`id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
 		`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		`qr_code_id` INT UNSIGNED NOT NULL,
-		`user_id` INT UNSIGNED NOT NULL,
-		`state` ENUM("SUCCESS", "NOT_FOUND", "NOT_MATCH", "ERROR", "CANCELED", "REJECTED"),
-        FOREIGN KEY (`user_id`) REFERENCES user(`id`),
-        FOREIGN KEY (`qr_code_id`) REFERENCES qr_code(`id`),
+		`staff_user_id` INT UNSIGNED NOT NULL,
+		`attraction_id` INT UNSIGNED NOT NULL,
+		`qr_code` VARCHAR(255) NOT NULL,
+		`state` ENUM('SUCCESS', 'NOT_FOUND', 'ALREADY_USED', 'ERROR'),
+        FOREIGN KEY (`staff_user_id`) REFERENCES user(`id`),
+        FOREIGN KEY (`attraction_id`) REFERENCES attraction(`id`),
+        FOREIGN KEY (`qr_code`) REFERENCES qr_code(`value`),
 		PRIMARY KEY(`id`)
 	) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS
+	entry(
+		`id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+		`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		`staff_user_id` INT UNSIGNED NOT NULL,
+		`attraction_id` INT UNSIGNED NOT NULL,
+		`state` ENUM('ACCEPTED', 'WRONG_PERSON', 'WRONG_DETAILS', 'NO_IDENTITY_PROOF', 'IN_BAD_STATE', 'OTHER'),
+		`comment` TEXT DEFAULT NULL,
+        FOREIGN KEY (`staff_user_id`) REFERENCES user(`id`),
+        FOREIGN KEY (`attraction_id`) REFERENCES attraction(`id`),
+		PRIMARY KEY(`id`)
+	) ENGINE=InnoDB;
+
 
 LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/countries.csv'
 	INTO TABLE dev_passberry.country
