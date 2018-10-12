@@ -262,3 +262,30 @@ export const CREATE_ENTRY = gql`
 		}
 	}
 `;
+
+export const CREATE_ATTRACTION = gql`
+	mutation createAttraction($input: CreateAttractionInput!) {
+		createAttraction(input: $input) {
+			status {
+				code
+				message
+			}
+			attraction {
+				id
+				name
+				price {
+					adult
+				}
+				description
+				type
+				address {
+					street
+					supplement
+					city
+					postcode
+					countryCode
+				}
+			}
+		}
+	}
+`;

@@ -8,7 +8,12 @@ const attraction = (input) => ({
 	"price_adult": input.price.adult,
 	...(input.price.child ? {"price_child": input.price.child} : {}),
 	...(input.price.maxAgeForChild ? {"price_max_age_for_child": input.price.maxAgeForChild} : {}),
-	"type": input.type
+	"type": input.type,
+	"address_street": input.address.street,
+	...(input.address.supplement ? { "address_supplement": input.address.supplement } : {}),
+	"address_city": input.address.city,
+	"address_postcode": input.address.postcode,
+	...(input.address.countryCode ? { "address_country_code": input.address.countryCode } : {}),
 });
 
 const formatAttraction = (attraction) => {
@@ -43,7 +48,7 @@ const resolver = {
 		}
 	},
 	Mutation: {
-		createAttraction: (_, {input}) => {
+		createAttraction: (_, { input }) => {
 			return Attraction.create(attraction(input))
 				.then(insertId => {
 					input.id = insertId;
