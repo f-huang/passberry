@@ -37,6 +37,7 @@ enum BasketState {
 
 enum ScanState {
 	SUCCESS,
+	PENDING,
 	NOT_FOUND,
 	ALREADY_USED,
 	ERROR

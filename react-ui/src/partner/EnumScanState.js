@@ -2,6 +2,9 @@ const EnumScanState = {
 	SUCCESS: {
 		value: 'SUCCESS',
 	},
+	PENDING: {
+		value: 'PENDING'
+	},
 	NOT_FOUND: {
 		value: 'NOT_FOUND',
 	},
