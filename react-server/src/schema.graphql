@@ -43,6 +43,15 @@ enum ScanState {
 	ERROR
 }
 
+enum EntryState {
+	ACCEPTED,
+	WRONG_PERSON,
+	WRONG_DETAILS,
+	NO_IDENTITY_PROOF,
+	IN_BAD_STATE,
+	OTHER
+}
+
 enum StatusCode {
 	SUCCESS
 	SERVER_SIDE_ERROR
@@ -150,6 +159,16 @@ type Scan {
 	timestamp: Date!
 	state: ScanState!
 	qr: String!
+}
+
+type Entry {
+	id: ID!
+	timestamp: Date!
+	userId: ID!
+	attractionId: ID!
+	scanId: ID!
+	state: EntryState!
+	comment: String
 }
 
 type GetPassPayload {
@@ -307,6 +326,15 @@ input UpdateScanStateInput {
 	state: ScanState!
 }
 
+input CreateEntryInput {
+	timestamp: Date!
+	userId: ID!
+	attractionId: ID!
+	scanId: ID!
+	state: EntryState!
+	comment: String
+}
+
 
 # --------------------------------------------------------
 # --------------------------------------------------------
@@ -370,6 +398,11 @@ type UpdateScanStatePayload {
 	scan: Scan
 }
 
+type CreateEntryPayload {
+	status: Status!
+	entry: Entry
+}
+
 # --------------------------------------------------------
 # --------------------------------------------------------
 # --------------------------------------------------------
@@ -393,4 +426,6 @@ type Mutation {
 
 	createScan(input: CreateScanInput!): CreateScanPayload!
 	updateScanState(input: UpdateScanStateInput!): UpdateScanStatePayload!
+
+	createEntry(input: CreateEntryInput!): CreateEntryPayload!
 }
