@@ -174,3 +174,24 @@ export const GET_TRAVELERS_BY_USER_ID = gql`
 		}
 	}
 `;
+
+export const GET_TRAVELER_BY_QR = gql`
+	query getTravelerByQr($qrValue: String!){
+		getTravelerByQr(qr: $qrValue) {
+			id
+			firstName
+			lastName
+		}
+	}
+`;
+
+export const GET_TICKET_BY_QR_AND_ATTRACTION_ID = gql`
+	query getTicketByQrAndAttractionId($qrValue: String!, $attractionId: ID!) {
+		getTicketByQrAndAttractionId(qr: $qrValue, attractionId: $attractionId) {
+			id
+			passId
+			usedTime
+			attractionId
+		}
+	}
+`;
