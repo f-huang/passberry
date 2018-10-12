@@ -3,7 +3,7 @@ import QrReader from 'react-qr-reader'
 import { withRouter } from "react-router-dom";
 import { graphql, compose, withApollo } from "react-apollo";
 import { connect } from "react-redux";
-import { CREATE_SCAN, GET_TRAVELER_BY_QR } from "../../queries";
+import { CREATE_SCAN, GET_TRAVELER_BY_QR } from "../../../queries";
 import moment from "moment";
 import EnumScanState from "../EnumScanState";
 import {setTraveler} from "../scanActions";
@@ -46,7 +46,7 @@ class ScanQRCodeView extends React.Component {
 	}
 
 	onScan = (result) => {
-		result = "1666e671e3c";
+		// result = "1666e671e3c";
 		if (result !== null && result !== undefined && this.state.scanning === false) {
 			this.setState({scanning: true});
 			this.props.client.query({

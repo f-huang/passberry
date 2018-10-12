@@ -1,5 +1,5 @@
 import { SET_TRAVELER } from "./scanActions";
-import {PARTNER_SCANNED} from "../customer/localStorageKeys";
+import {PARTNER_SCANNED} from "../../customer/localStorageKeys";
 
 const traveler = localStorage.getItem(PARTNER_SCANNED);
 const initialState = {

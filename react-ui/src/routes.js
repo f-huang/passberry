@@ -18,8 +18,8 @@ import BasketView from "./customer/Basket/BasketView";
 import PaymentView from "./customer/Payment/PaymentView";
 import MyTravelsView from "./customer/MyTravels/MyTravelsView";
 import MyTravelsDestinationView from "./customer/MyTravelsDestination/MyTravelsDestinationView";
-import ScanProfileView from "./partner/ScanProfileView";
-import ScannedProfileView from "./partner/ScannedProfileView";
+import ScanProfileView from "./partner/scan/ScanProfileView";
+import ScannedProfileView from "./partner/scan/ScannedProfileView";
 
 const routes = (
     <BrowserRouter forceRefresh={true}>

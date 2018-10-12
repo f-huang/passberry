@@ -1,8 +1,8 @@
 import React from 'react'
 
 import ScanQRCodeView from './component/ScanQRCodeView';
-import '../app/base.css'
-import AppBar from "../component/AppBar/AppBar";
+import AppBar from "../../component/AppBar/AppBar";
+import '../../app/base.css'
 
 const title = "Scan attraction";
 
