@@ -302,6 +302,11 @@ input CreateScanInput {
 	timestamp: Date!
 }
 
+input UpdateScanStateInput {
+	id: ID!
+	state: ScanState!
+}
+
 
 # --------------------------------------------------------
 # --------------------------------------------------------
@@ -360,7 +365,10 @@ type CreateScanPayload {
 	scan: Scan!
 }
 
-
+type UpdateScanStatePayload {
+	status: Status!
+	scan: Scan
+}
 
 # --------------------------------------------------------
 # --------------------------------------------------------
@@ -384,4 +392,5 @@ type Mutation {
 	burnAttractionTicket(input: BurnAttractionTicketInput!): BurnAttractionTicketPayload!
 
 	createScan(input: CreateScanInput!): CreateScanPayload!
+	updateScanState(input: UpdateScanStateInput!): UpdateScanStatePayload!
 }
