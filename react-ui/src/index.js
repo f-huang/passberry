@@ -22,6 +22,10 @@ const client = new ApolloClient({
 	// to a different host
 	link: new HttpLink(),
 	cache: new InMemoryCache(),
+	onError: ({ networkError, graphQLErrors }) => {
+		console.log('graphQLErrors', graphQLErrors);
+		console.log('networkError', networkError);
+	}
 });
 
 const store = createStore(reducer);
