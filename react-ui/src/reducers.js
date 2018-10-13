@@ -4,10 +4,12 @@ import travelPageReducer from "./customer/Travel/travelReducers";
 import basketReducer from "./customer/Basket/basketReducers";
 import basketPageReducer from "./customer/Basket/basketPageReducer";
 import scanReducer from "./partner/scan/scanReducers";
+import attractionCreateReducer from "./admin/attraction/create/attractionCreateReducers";
 
 export const reducer = combineReducers({
 	travelDetails: travelPageReducer,
 	basket: basketReducer.basket,
 	basketPage: basketPageReducer.basketPage,
-	scan: scanReducer.scan
+	scan: scanReducer.scan,
+	createAttraction: attractionCreateReducer
 });

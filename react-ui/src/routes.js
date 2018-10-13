@@ -10,7 +10,7 @@ import ParametersPage from "./customer/ParametersPage";
 import SelectionsPage from "./customer/SelectionsPage";
 import Error404 from "./Error404";
 import Attraction from "./customer/Attraction";
-import AttractionCreate from "./admin/attraction/create/AttractionCreate";
+import AttractionCreateView from "./admin/attraction/create/AttractionCreateView";
 import AttractionManage from "./admin/attraction/manage/AttractionManage";
 import TravelView from "./customer/Travel/TravelView";
 import DestinationOffers from "./customer/DestinationOffers/DestinationOffers";
@@ -25,7 +25,7 @@ const routes = (
     <BrowserRouter forceRefresh={true}>
 	    <Switch>
 		    <Route exact path="/" component={TravelView}/>
-		    <Route exact path="/admin-add-activity" component={AttractionCreate}/>
+		    <Route exact path="/admin-add-activity" component={AttractionCreateView}/>
 		    <Route exact path="/admin-manage-activity" component={AttractionManage}/>
 		    <Route exact path="/selections" component={SelectionsPage}/>
 		    <Route exact path="/profile" component={ProfilePage}/>
