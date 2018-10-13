@@ -6,7 +6,7 @@ import { Provider as ReduxProvider } from "react-redux";
 import { CookiesProvider } from 'react-cookie';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
+import { createUploadLink } from 'apollo-upload-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { reducer } from "./reducers";
 
@@ -20,7 +20,7 @@ const client = new ApolloClient({
 	//  `/graphql` endpoint on the same host
 	// Pass the configuration option { uri: YOUR_GRAPHQL_API_URL } to the `HttpLink` to connect
 	// to a different host
-	link: new HttpLink(),
+	link: createUploadLink(),
 	cache: new InMemoryCache(),
 	onError: ({ networkError, graphQLErrors }) => {
 		console.log('graphQLErrors', graphQLErrors);

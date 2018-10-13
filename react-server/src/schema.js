@@ -1,6 +1,7 @@
 const { makeExecutableSchema } = require('graphql-tools');
 const fs = require('fs');
 const path = require('path');
+const uploadSchema = require('./upload-schema');
 
 // Resolvers
 const mergeResolvers = (resolvers) => {
@@ -45,7 +46,7 @@ const resolvers = mergeResolvers([
 	addressResolver
 ]);
 
-const typeDefs = [ fs.readFileSync(path.join(__dirname, 'schema.graphql'), 'utf8') ];
+const typeDefs = [ uploadSchema, fs.readFileSync(path.join(__dirname, 'schema.graphql'), 'utf8') ];
 
 const schema = makeExecutableSchema({
 	typeDefs,

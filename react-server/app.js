@@ -6,6 +6,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
 const graphqlHTTP = require('express-graphql');
+const { graphqlUploadExpress } = require('graphql-upload');
 const session = require("express-session");
 const schema = require('./src/schema');
 const jwt = require('express-jwt');
@@ -35,8 +36,12 @@ app.use(apiEndPoint, jwt({
 	credentialsRequired: false,
 }));
 
+app.use(apiEndPoint, graphqlUploadExpress({
+	maxFileSize: 10000000,
+	maxFiles: 10
+}));
+
 app.use(apiEndPoint, bodyParser.json(), (req, res) => {
-	console.log("req.user = " , req.user);
 	return graphqlHTTP({
 		schema: schema,
 		context: { user: req.user  },
