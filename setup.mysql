@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS
         `is_a_must_do` TINYINT(1) NOT NULL DEFAULT 0,
         `price_adult` DECIMAL(8, 3) UNSIGNED NOT NULL DEFAULT 0.0,
         `price_child` DECIMAL(8, 3) UNSIGNED DEFAULT NULL,
+        `price_student` DECIMAL(8, 3) UNSIGNED DEFAULT NULL,
         `price_max_age_for_child` INT UNSIGNED DEFAULT NULL,
         `address_street` VARCHAR(256),
         `address_supplement` VARCHAR(128),

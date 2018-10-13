@@ -82,6 +82,7 @@ type Address {
 type AttractionPrice {
 	adult: Float!
 	child: Float
+	student: Float
 	maxAgeForChild: Int
 }
 
@@ -227,6 +228,7 @@ input SignUpInput {
 input CreateAttractionPrice {
 	adult: Float!
 	child: Float
+	student: Float
 	maxAgeForChild: Int
 }
 
@@ -246,6 +248,7 @@ input CreateAttractionInput {
 	description: String
 	link: String
 	isAMustDo: Boolean
+	images: [Upload]
 }
 
 input GenerateQrInput {
