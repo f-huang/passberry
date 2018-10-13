@@ -6,6 +6,9 @@
 /node_modules
 /react-ui/node_modules
 
+# files uploaded
+/react-server/uploads
+
 # testing
 /coverage
 /react-ui/coverage
