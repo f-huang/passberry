@@ -71,6 +71,14 @@ type Status {
 # --------------------------------------------------------
 # --------------------------------------------------------
 
+type Address {
+	street: String!
+	supplement: String
+	city: String!
+	postcode: String!
+	countryCode: String
+}
+
 type AttractionPrice {
 	adult: Float!
 	child: Float
@@ -84,15 +92,7 @@ type Attraction {
 	price: AttractionPrice!
 	link: String
 	type: String!
-}
-
-type Address {
-	id: ID!
-	street: String!
-	supplement: String
-	city: String!
-	postcode: String!
-	countryCode: String
+	address: Address!
 }
 
 type User {
@@ -230,12 +230,22 @@ input CreateAttractionPrice {
 	maxAgeForChild: Int
 }
 
+input AddressInput {
+	street: String!
+	supplement: String
+	city: String!
+	postcode: String!
+	countryCode: String!
+}
+
 input CreateAttractionInput {
 	name: String!
 	price: CreateAttractionPrice!
+	address: AddressInput!
 	type: ProductType!
 	description: String
 	link: String
+	isAMustDo: Boolean
 }
 
 input GenerateQrInput {
