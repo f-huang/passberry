@@ -27,17 +27,10 @@ exports.getById = (id) => {
 };
 
 
-exports.create = (id, files) => {
+exports.create = (image) => {
 	const sql = `INSERT INTO \`${TABLE_NAME}\` SET ?; `;
-	const images = [];
-	for (let file of files) {
-		images.push(mapForDb({
-			path: file.path,
-			descriptionId: id
-		}));
-	}
 	return new Promise((resolve, reject) => {
-		pool.query(sql.repeat(images.length), images, (error, result) => {
+		pool.query(sql, image, (error, result) => {
 			if (error) {
 				reject(error);
 				throw(error);

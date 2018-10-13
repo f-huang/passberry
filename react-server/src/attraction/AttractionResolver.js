@@ -1,5 +1,11 @@
 const Attraction = require("./AttractionModel");
+const AttractionImage = require('./AttractionImageModel');
+const GraphqlUpload = require('graphql-upload');
 const { getStatus, StatusCodeEnum } = require("../status");
+
+const fs = require('fs');
+const path = require('path');
+const UPLOAD_DIR = "../../../uploads/";
 
 const attraction = (input) => ({
 	"name": input.name,
@@ -14,6 +20,11 @@ const attraction = (input) => ({
 	"address_city": input.address.city,
 	"address_postcode": input.address.postcode,
 	...(input.address.countryCode ? { "address_country_code": input.address.countryCode } : {}),
+})
+
+const attractionImage = (input) => ({
+	"path": input.path,
+	"attraction_id": input.attractionId
 });
 
 const formatAttraction = (attraction) => {
@@ -29,7 +40,19 @@ const formatAttraction = (attraction) => {
 	return attraction;
 };
 
+const saveImage = async (image, index) => {
+	const { createReadStream, mimetype, encoding, filename } = await image;
+	const rStream = createReadStream(filename);
+	const extension = filename.split('.').pop();
+	const newFilename = `${Date.now()+index+Math.floor(Math.random())}.${extension}`;
+	const storingPath = path.join(__dirname + UPLOAD_DIR, newFilename);
+	const wStream = fs.createWriteStream(storingPath);
+	rStream.pipe(wStream);
+	return storingPath;
+};
+
 const resolver = {
+	Upload: GraphqlUpload,
 	Query: {
 		getAttractionById: (_, { id }) => {
 			return Attraction.get({ id: id }).then(rows => {
@@ -52,6 +75,15 @@ const resolver = {
 			return Attraction.create(attraction(input))
 				.then(insertId => {
 					input.id = insertId;
+					input.images && input.images.map(async (image, index) => {
+						saveImage(image, index).then(storingPath => {
+							console.log("end --", storingPath);
+							AttractionImage.create(attractionImage({
+								attractionId: insertId,
+								path: storingPath
+							}))
+						})
+					});
 					return {
 						status: getStatus(StatusCodeEnum.success, 'OK'),
 						attraction: input
