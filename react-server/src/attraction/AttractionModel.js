@@ -31,6 +31,31 @@ exports.get = (filters) => new Promise((resolve, reject) => {
 });
 
 
+exports.getMustDos = (destination) => new Promise((resolve, reject) => {
+	const sql = `SELECT \`${TABLE_NAME}\`.\`id\`, \`name\`, \`link\`, \`description\`, \`type\`,
+		\`price_adult\` AS \`priceAdult\`, \`price_child\` AS \`priceChild\`,
+		\`price_max_age_for_child\` AS \`priceMaxAgeForChild\`,
+		\`address_street\` AS \`addressStreet\`, \`address_supplement\` AS \`addressSupplement\`,
+		\`address_city\` AS \`addressCity\`, \`address_postcode\` AS \`addressPostcode\`,
+		\`address_country_code\` AS \`addressCountryCode\`,
+		GROUP_CONCAT(\`${IMAGE_TABLE_NAME}\`.\`path\`) AS \`images\` 
+		FROM \`${TABLE_NAME}\`
+		LEFT JOIN ${IMAGE_TABLE_NAME} 
+		ON \`${TABLE_NAME}\`.\`id\`=\`${IMAGE_TABLE_NAME}\`.\`attraction_id\`
+		WHERE \`address_city\`=? AND \`is_a_must_do\`=1
+		GROUP BY \`${TABLE_NAME}\`.\`id\`
+	`;
+	pool.query(sql, destination, (error, rows) => {
+		if (error) {
+			console.error(error);
+			reject(error);
+			return null;
+		}
+		resolve(rows);
+	})
+});
+
+
 exports.getAll = () => new Promise((resolve, reject) => {
 	const sql = `SELECT
 		\`id\`, \`name\`, \`link\`, \`description\`, \`type\`,

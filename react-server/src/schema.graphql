@@ -22,6 +22,11 @@ enum ProductType {
 	RESTAURANT
 }
 
+enum PassDiscountType {
+	RAW
+	PERCENT
+}
+
 enum ItemType {
 	PASS
 	ATTRACTION
@@ -142,6 +147,21 @@ type Pass {
 	tickets: [AttractionTicket]!
 }
 
+type PassDiscount {
+	type: PassDiscountType!
+	amount: Float!
+}
+
+type VuegoPass {
+	id: ID
+	name: String
+	description: String
+	destination: String!
+	discount: PassDiscount
+	price: Float!
+	attractions: [Attraction]!
+}
+
 type Traveler {
 	id: ID!
 	firstName: String!
@@ -206,6 +226,8 @@ type Query {
 	getPassesByUserId(userId: ID!): GetPassPayload!
 	getPassesByTravelerId(travelerId: ID!): GetPassPayload!
 	getPassesByQr(qr: String!): GetPassPayload!
+
+	getVuegoPassMustDo(destination: String!): VuegoPass
 }
 
 # --------------------------------------------------------

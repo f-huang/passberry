@@ -28,6 +28,7 @@ const tokenResolver = require("./token/TokenResolver");
 const basketResolver = require("./basket/BasketResolver");
 const paymentResolver = require("./payment/PaymentResolver");
 const passResolver = require("./pass/PassResolver");
+const vuegoPassResolver = require("./vuego_pass/VuegoPassResolver");
 const ticketResolver = require("./ticket/TicketResolver");
 
 const resolvers = mergeResolvers([
@@ -41,7 +42,8 @@ const resolvers = mergeResolvers([
 	basketResolver,
 	paymentResolver,
 	passResolver,
-	ticketResolver,
+	vuegoPassResolver,
+	ticketResolver
 ]);
 
 const typeDefs = [ uploadSchema, fs.readFileSync(path.join(__dirname, 'schema.graphql'), 'utf8') ];
