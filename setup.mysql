@@ -60,6 +60,29 @@ CREATE TABLE IF NOT EXISTS
 
 
 CREATE TABLE IF NOT EXISTS
+	vuego_pass(
+		`id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+        `name` VARCHAR(128),
+        `description` TEXT,
+        `destination` VARCHAR(128) NOT NULL,
+        `price` DECIMAL(8, 3) UNSIGNED NOT NULL,
+        `discount_type` ENUM('RAW', 'PERCENT') DEFAULT 'RAW',
+        `discount_amount` DECIMAL(8, 3) UNSIGNED DEFAULT 0.0,
+        PRIMARY KEY(`id`)
+	) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS
+	vuego_pass_attraction(
+		`attraction_id` INT UNSIGNED NOT NULL,
+		`vuego_pass_id` INT UNSIGNED NOT NULL,
+		FOREIGN KEY(`attraction_id`) REFERENCES attraction(`id`),
+		FOREIGN KEY(`vuego_pass_id`) REFERENCES vuego_pass(`id`),
+		PRIMARY KEY(`attraction_id`, `vuego_pass_id`)
+	) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS
 	role(
 		`id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
 		`name` VARCHAR(48),
@@ -201,12 +224,14 @@ CREATE TABLE IF NOT EXISTS
         `user_id` INT UNSIGNED NOT NULL,
         `start_date` DATE,
         `end_date` DATE,
+        `vuego_pass_id` INT UNSIGNED DEFAULT NULL,
         `traveler_id` INT UNSIGNED NOT NULL,
         `is_used` TINYINT(1) NOT NULL DEFAULT 0,
         FOREIGN KEY (`transaction_id`) REFERENCES transaction(`id`),
         FOREIGN KEY (`basket_id`) REFERENCES basket(`id`),
         FOREIGN KEY (`user_id`) REFERENCES user(`id`),
         FOREIGN KEY (`traveler_id`) REFERENCES user(`id`),
+        FOREIGN KEY (`vuego_pass_id`) REFERENCES vuego_pass(`id`),
         PRIMARY KEY(`id`)
     ) ENGINE=InnoDB;
 
