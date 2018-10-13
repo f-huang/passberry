@@ -56,22 +56,16 @@ class Attraction extends Component {
 								<Description>
 									{attraction.description}
 								</Description>
-								<Category>{`Tarifs : ${attraction.price.adult} - ${attraction.price.child}` } </Category>
+								<Category>{`Tarifs : ${attraction.price.adult}`} {attraction.price.child && ' - ' + attraction.price.child} </Category>
 								<a href={'http://www.'+attraction.link}>{attraction.link}</a>
-								<Query query={GET_ADDRESS_BY_ID} variables={{id: attraction.id}}>
-									{({loading, error, data }) => {
-										if (loading) return <p> Loading </p>;
-										if (error) return <p> Error </p>;
-										const address = data.getAddressById;
-										return (
-											<p>{address.street}, {address.postcode}{address.city}</p>
-										)
-									}}
-								</Query>
+								<p>
+									{attraction.address.street} {attraction.address.supplement && attraction.address.supplement}
+									{attraction.address.postcode} {attraction.address.city}
+								</p>
 								<TicketQuantity product={attraction} isShowing={this.state.isDialogShowing}/>
 								<Button value={"Ajouter dans le panier"}  onClick={(e) =>
 									this.setState({isDialogShowing: !this.state.isDialogShowing})
-								        }
+								}
 								/>
 							</div>
 						</App>
