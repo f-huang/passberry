@@ -1,7 +1,7 @@
-id,name,description,link,price_adult,price_child,price_max_age_for_child,address_id,partner_id,type
-1,"Musée Océanographique","Musée de Monaco","oceano.mc",12,8,9,1,1,"ATTRACTION",
-2,"Jardin Exotique","Jardin de Monaco",\N,12,8,9,2,2,"ATTRACTION",
-3,"La Brasserie de Monaco",\N,"brasseriedemonaco.com",12,8,9,4,3,"RESTAURANT",
-4,"La marée","Restaurant de fruits de mer",\N,12,8,9,5,4,"RESTAURANT",
-5,"L'orangerie","Breuveries à base d'orange","orangerie.mc",12,8,9,6,5,"RESTAURANT",
-6,"Palais Princier","Palais de Monaco","palais.mc",12,8,9,3,2,"ATTRACTION",
+id,name,description,link,is_a_must_do,price_adult,price_child,price_max_age_for_child,address_street,address_supplement,address_city,address_postcode,address_country_code,partner_id,type
+1,"Musée Océanographique","Musée de Monaco",oceano.mc,1,12,8,9,"Avenue Saint-Martin",\N,Monaco,98000,MC,1,ATTRACTION
+2,"Jardin Exotique","Jardin de Monaco",\N,1,12,8,9,"Boulevard du Jardin Exotique",\N,Monaco,98000,MC,2,ATTRACTION
+3,"La Brasserie de Monaco",\N,brasseriedemonaco.com,1,12,8,9,"36 route de la Piscine",\N,Monaco,98000,MC,3,RESTAURANT
+4,"La marée","Restaurant de fruits de mer",\N,1,12,8,9,"7 avenue J.F Kennedy",\N,Monaco,98000,MC,4,RESTAURANT
+5,"L'orangerie","Breuveries à base d'orange",orangerie.mc,1,12,8,9,"9 rue de la Turbie",\N,Monaco,98000,MC,5,RESTAURANT
+6,"Palais Princier","Palais de Monaco",palais.mc,1,12,8,9,"PCJ9+HW",\N,Monaco,98000,MC,2,ATTRACTION

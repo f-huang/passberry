@@ -13,6 +13,13 @@ CREATE TABLE IF NOT EXISTS
 
 
 CREATE TABLE IF NOT EXISTS
+    country(
+        `name` VARCHAR(48) NOT NULL UNIQUE,
+        `code` CHAR(2),
+        PRIMARY KEY(`code`)
+    ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS
 	partner(
 		`id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
 		`name` VARCHAR(128),
@@ -23,9 +30,32 @@ CREATE TABLE IF NOT EXISTS
         `address_country_code` CHAR(2),
 		`bank_api_key` VARCHAR(128),
 		`is_deleted` TINYINT(1) NOT NULL DEFAULT 0,
-        FOREIGN KEY(`country_code`) REFERENCES country(`code`),
+        FOREIGN KEY(`address_country_code`) REFERENCES country(`code`),
 		PRIMARY KEY(`id`)
 	) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS
+    attraction(
+        `id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
+        `name` VARCHAR(128) NOT NULL,
+        `description` TEXT,
+        `link` VARCHAR(256),
+        `is_a_must_do` TINYINT(1) NOT NULL DEFAULT 0,
+        `price_adult` DECIMAL(8, 3) UNSIGNED NOT NULL DEFAULT 0.0,
+        `price_child` DECIMAL(8, 3) UNSIGNED DEFAULT NULL,
+        `price_max_age_for_child` INT UNSIGNED DEFAULT NULL,
+        `address_street` VARCHAR(256),
+        `address_supplement` VARCHAR(128),
+        `address_city` VARCHAR(48),
+        `address_postcode` VARCHAR(12),
+        `address_country_code` CHAR(2),
+        `partner_id` INT UNSIGNED,
+        `type` VARCHAR(48) DEFAULT NULL,
+        FOREIGN KEY(`partner_id`) REFERENCES partner(`id`),
+        FOREIGN KEY(`address_country_code`) REFERENCES country(`code`),
+        PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB;
 
 
 CREATE TABLE IF NOT EXISTS
@@ -69,11 +99,11 @@ CREATE TABLE IF NOT EXISTS
         `registration_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         `last_logon_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         `type` ENUM('STAFF', 'MUNICIPALITY', 'PARTNER', 'TOURIST') DEFAULT 'TOURIST',
-        `address_street` VARCHAR(256),
-        `address_supplement` VARCHAR(128),
-        `address_city` VARCHAR(48),
-        `address_postcode` VARCHAR(12),
-        `address_country_code` CHAR(2),
+        `address_street` VARCHAR(256) DEFAULT NULL,
+        `address_supplement` VARCHAR(128) DEFAULT NULL,
+        `address_city` VARCHAR(48) DEFAULT NULL,
+        `address_postcode` VARCHAR(12) DEFAULT NULL,
+        `address_country_code` CHAR(2) DEFAULT NULL,
         `newsletters` TINYINT(1) NOT NULL DEFAULT 0,
         `is_activated` TINYINT(1) NOT NULL  DEFAULT 0,
         `is_deleted` TINYINT(1) NOT NULL DEFAULT 0,
@@ -83,7 +113,7 @@ CREATE TABLE IF NOT EXISTS
         FOREIGN KEY(`role_id`) REFERENCES role(`id`),
         FOREIGN KEY(`attraction_id`) REFERENCES attraction(`id`),
         FOREIGN KEY(`partner_id`) REFERENCES partner(`id`),
-        FOREIGN KEY(`country_code`) REFERENCES country(`code`),
+        FOREIGN KEY(`address_country_code`) REFERENCES country(`code`),
 		PRIMARY KEY(`id`)
     ) ENGINE=InnoDB;
 
@@ -118,37 +148,6 @@ CREATE TABLE IF NOT EXISTS
         FOREIGN KEY(`user_id`) REFERENCES user(`id`),
         PRIMARY KEY (`path`)
     ) ENGINE=InnoDB;
-
-
-CREATE TABLE IF NOT EXISTS
-    country(
-        `name` VARCHAR(48) NOT NULL UNIQUE,
-        `code` CHAR(2),
-        PRIMARY KEY(`code`)
-    ) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS
-    attraction(
-        `id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
-        `name` VARCHAR(128) NOT NULL,
-        `description` TEXT,
-        `link` VARCHAR(256),
-        `is_a_must_do` TINYINT(1) NOT NULL DEFAULT 0,
-        `price_adult` DECIMAL(8, 3) UNSIGNED NOT NULL DEFAULT 0.0,
-        `price_child` DECIMAL(8, 3) UNSIGNED DEFAULT NULL,
-        `price_max_age_for_child` INT UNSIGNED DEFAULT NULL,
-        `address_street` VARCHAR(256),
-        `address_supplement` VARCHAR(128),
-        `address_city` VARCHAR(48),
-        `address_postcode` VARCHAR(12),
-        `address_country_code` CHAR(2),
-        `partner_id` INT UNSIGNED,
-        `type` VARCHAR(48) DEFAULT NULL,
-        FOREIGN KEY(`partner_id`) REFERENCES partner(`id`),
-        FOREIGN KEY(`country_code`) REFERENCES country(`code`),
-        PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB;
-
 
 CREATE TABLE IF NOT EXISTS
     attraction_image(
@@ -279,21 +278,6 @@ LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/countries.csv'
 	OPTIONALLY ENCLOSED BY '"'
 	LINES TERMINATED BY '\n'
 	IGNORE 1 LINES;
---
---LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_address.csv'
---   	INTO TABLE dev_passberry.address
---   	FIELDS TERMINATED BY ','
---   	OPTIONALLY ENCLOSED BY '"'
---   	LINES TERMINATED BY '\n'
---   	IGNORE 1 LINES;
-
-LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_user.csv'
-   	INTO TABLE dev_passberry.user
-   	FIELDS TERMINATED BY ','
-   	OPTIONALLY ENCLOSED BY '"'
-   	LINES TERMINATED BY '\n'
-   	IGNORE 1 LINES;
-
 
 LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_partner.csv'
    	INTO TABLE dev_passberry.partner
@@ -305,6 +289,14 @@ LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_partner.csv'
 
 LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_attraction.csv'
    	INTO TABLE dev_passberry.attraction
+   	FIELDS TERMINATED BY ','
+   	OPTIONALLY ENCLOSED BY '"'
+   	LINES TERMINATED BY '\n'
+   	IGNORE 1 LINES;
+
+
+LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_user.csv'
+   	INTO TABLE dev_passberry.user
    	FIELDS TERMINATED BY ','
    	OPTIONALLY ENCLOSED BY '"'
    	LINES TERMINATED BY '\n'
