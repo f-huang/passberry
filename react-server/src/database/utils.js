@@ -11,6 +11,8 @@ exports.getColumnsAliasesAsString = (columns, aliases) => {
 	return ret;
 };
 
+exports.getFileExtension = (filename) => filename.split('.').pop();
+
 exports.getColumnsAsString = (columns, usual) => {
 	let ret = "";
 	columns = (columns !== undefined && columns.length > 0) ? [...new Set([...columns, ...usual])] : usual;

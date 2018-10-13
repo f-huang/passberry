@@ -27,18 +27,26 @@ export const GET_QR_BY_USER_ID = gql`
 
 export const GET_ATTRACTION_BY_TYPE = gql`
 	query getAttractionByType($type: ProductType!) {
-	  getAttractionByType(type: $type) {
-	    id
-	    name
-	    link
-	    description
-	    price {
-	      adult
-	      child
-	      maxAgeForChild
-	    }
-	    type
-	  }
+		getAttractionByType(type: $type) {
+			id
+			name
+			link
+			description
+			type
+			images
+			price {
+				adult
+				child
+				maxAgeForChild
+			}
+			address {
+				street
+				supplement
+				city
+				postcode
+				countryCode
+			}
+		}
 	}
 `;
 
@@ -48,14 +56,22 @@ export const GET_ATTRACTION_BY_ID = gql`
 		getAttractionById(id: $id) {
 			id
 			name
-			description
 			link
+			description
+			type
+			images
 			price {
 				adult
 				child
 				maxAgeForChild
 			}
-			type
+			address {
+				street
+				supplement
+				city
+				postcode
+				countryCode
+			}
 		}
 	}
 `;

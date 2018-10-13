@@ -22,8 +22,9 @@ const Name = styled.h2`
 `;
 
 const Offer = ({offer, onClick}) => {
+	const image = offer.images && offer.images.length > 0 ? offer.images[0] : monacoImg;
 	return (
-		<Container onClick={onClick} backgroundImage={monacoImg}>
+		<Container onClick={onClick} backgroundImage={image}>
 			<Name>{offer.name}</Name>
 		</Container>
 	);

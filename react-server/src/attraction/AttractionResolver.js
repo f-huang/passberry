@@ -1,11 +1,29 @@
 const Attraction = require("./AttractionModel");
 const AttractionImage = require('./AttractionImageModel');
 const GraphqlUpload = require('graphql-upload');
+const { getFileExtension } = require("../database/utils");
 const { getStatus, StatusCodeEnum } = require("../status");
 
 const fs = require('fs');
 const path = require('path');
 const UPLOAD_DIR = "../../../uploads/";
+
+const saveImage = async (image, index) => {
+	const { createReadStream, mimetype, encoding, filename } = await image;
+	const rStream = createReadStream(filename);
+	const extension = getFileExtension(filename);
+	const newFilename = `${Date.now()+index+Math.floor(Math.random())}.${extension}`;
+	const storingPath = path.join(__dirname + UPLOAD_DIR, newFilename);
+	const wStream = fs.createWriteStream(storingPath);
+	rStream.pipe(wStream);
+	return storingPath;
+};
+
+const convertPathToImage = (path) => {
+	const extension = getFileExtension(path);
+	const body = fs.readFileSync(path, { encoding: 'base64' });
+	return `data:image/${extension};base64,${body}`;
+};
 
 const attraction = (input) => ({
 	"name": input.name,
@@ -20,7 +38,7 @@ const attraction = (input) => ({
 	"address_city": input.address.city,
 	"address_postcode": input.address.postcode,
 	...(input.address.countryCode ? { "address_country_code": input.address.countryCode } : {}),
-})
+});
 
 const attractionImage = (input) => ({
 	"path": input.path,
@@ -30,25 +48,30 @@ const attractionImage = (input) => ({
 const formatAttraction = (attraction) => {
 	attraction.price = {
 		adult: parseFloat(attraction.priceAdult),
-		child: attraction.priceChild,
-		maxAgeForChild: attraction.priceMaxAgeForChild
+		child: attraction.priceChild ? parseFloat(attraction.priceChild) : null,
+		student: attraction.priceStudent ? parseFloat(attraction.priceStudent) : null,
+		maxAgeForChild: attraction.maxAgeForChild ? parseInt(attraction.maxAgeForChild, 10) : null
 	};
-	parseInt(attraction.id, 10);
+	attraction.address = {
+		street: attraction.addressStreet,
+		supplement: attraction.addressSupplement,
+		city: attraction.addressCity,
+		postcode: attraction.addressPostcode,
+		countryCode: attraction.addressCountryCode,
+	};
+	attraction.id = parseInt(attraction.id, 10);
+	if (attraction.images) {
+		attraction.images = attraction.images.split(',').map(path => convertPathToImage(path));
+	}
 	delete attraction['priceChild'];
 	delete attraction['priceAdult'];
 	delete attraction['maxAgeForChild'];
+	delete attraction['addressStreet'];
+	delete attraction['addressSupplement'];
+	delete attraction['addressCity'];
+	delete attraction['addressPostcode'];
+	delete attraction['addressCountryCode'];
 	return attraction;
-};
-
-const saveImage = async (image, index) => {
-	const { createReadStream, mimetype, encoding, filename } = await image;
-	const rStream = createReadStream(filename);
-	const extension = filename.split('.').pop();
-	const newFilename = `${Date.now()+index+Math.floor(Math.random())}.${extension}`;
-	const storingPath = path.join(__dirname + UPLOAD_DIR, newFilename);
-	const wStream = fs.createWriteStream(storingPath);
-	rStream.pipe(wStream);
-	return storingPath;
 };
 
 const resolver = {
@@ -68,7 +91,7 @@ const resolver = {
 			return Attraction.getAll().then(rows =>
 				rows.map(row => formatAttraction(row))
 			);
-		}
+		},
 	},
 	Mutation: {
 		createAttraction: (_, { input }) => {

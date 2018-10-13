@@ -94,6 +94,7 @@ type Attraction {
 	link: String
 	type: String!
 	address: Address!
+	images: [String]
 }
 
 type User {
