@@ -29,7 +29,6 @@ const basketResolver = require("./basket/BasketResolver");
 const paymentResolver = require("./payment/PaymentResolver");
 const passResolver = require("./pass/PassResolver");
 const ticketResolver = require("./ticket/TicketResolver");
-const addressResolver = require("./address/AddressResolver");
 
 const resolvers = mergeResolvers([
 	userResolver,
@@ -43,7 +42,6 @@ const resolvers = mergeResolvers([
 	paymentResolver,
 	passResolver,
 	ticketResolver,
-	addressResolver
 ]);
 
 const typeDefs = [ uploadSchema, fs.readFileSync(path.join(__dirname, 'schema.graphql'), 'utf8') ];
