@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { Query } from "react-apollo";
-import { GET_ADDRESS_BY_ID, GET_ATTRACTION_BY_ID } from "../queries";
+import { GET_ATTRACTION_BY_ID } from "../queries";
+import { showView } from "./TicketQuantity/ticketQuantityActions";
 
 import App from "../App";
 import BottomNavigationBar from "../component/BottomNavigationBar/BottomNavigationBar";
@@ -37,9 +39,14 @@ class Attraction extends Component {
 				description: "",
 				type: "Unknown"
 			},
-			isDialogShowing: false
 		}
+		this.onClickAddToCart = this.onClickAddToCart.bind(this);
 	}
+
+	onClickAddToCart = (e) => {
+		e.preventDefault();
+		this.props.onClickShowView()
+	};
 
 	render() {
 		const id = this.props.match.params.id;
@@ -62,10 +69,8 @@ class Attraction extends Component {
 									{attraction.address.street} {attraction.address.supplement && attraction.address.supplement}
 									{attraction.address.postcode} {attraction.address.city}
 								</p>
-								<TicketQuantity product={attraction} isShowing={this.state.isDialogShowing}/>
-								<Button onClick={(e) =>
-									this.setState({isDialogShowing: !this.state.isDialogShowing})
-								}>{"Ajouter dans le panier"} </Button>
+								<TicketQuantity product={attraction}/>
+								<Button onClick={this.onClickAddToCart}>{"Ajouter dans le panier"}</Button>
 							</div>
 						</App>
 					);
@@ -75,5 +80,9 @@ class Attraction extends Component {
 	}
 }
 
+const mapDispatchToProps = dispatch => ({
+	onClickShowView: () => dispatch(showView())
+});
 
-export default withRouter(Attraction);
+
+export default withRouter(connect(null, mapDispatchToProps)(Attraction));

@@ -1,10 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
+import { connect } from "react-redux";
+import { showView } from "../../TicketQuantity/ticketQuantityActions";
+
 import monacoImg from "../../../assets/monaco.jpg";
 import defaultImg from "../../../assets/default-image.png";
 import theme from "../../../app/theme";
 import Button from "../../../component/Button/Button";
+import TicketQuantity from "../../TicketQuantity/TicketQuantity";
 
 const Container = styled.div`
 	display: block;
@@ -33,9 +37,10 @@ const BottomContainer = styled.div`
 `;
 
 const ButtonAdd = styled(Button)`
-	position: absolute:
-	top: 16px
-	right: 16px;
+	position: absolute;
+	z-index: 1;
+	top: 8px
+	right: 8px;
 	width: 24px;
 	height: 24px;
 	padding: 0;
@@ -54,12 +59,20 @@ const Price = styled.span`
 	font-size: 10px;	
 `;
 
-const OfferLargeSized = ({offer, onClick}) => {
+const onClickAdd = (event, onClickShowView) => {
+	event.stopPropagation();
+	onClickShowView();
+};
+
+const OfferLargeSized = ({offer, onClick, onClickShowView}) => {
 	const image = offer.images && offer.images.length > 0 ? offer.images[0] : monacoImg;
 	return (
-		<Container>
-			<TopContainer onClick={onClick} backgroundImage={image}>
-				<ButtonAdd>+</ButtonAdd>
+		<Container onClick={onClick} >
+			<TopContainer backgroundImage={image}>
+				<ButtonAdd onClick={e => onClickAdd(e, onClickShowView)}>
+					+
+				</ButtonAdd>
+				<TicketQuantity product={offer}/>
 			</TopContainer>
 			<BottomContainer>
 				<Name><b>{offer.name}</b></Name>
@@ -69,5 +82,10 @@ const OfferLargeSized = ({offer, onClick}) => {
 	);
 };
 
+const mapDispatchToProps = dispatch => {
+	return ({
+		onClickShowView: () => dispatch(showView())
+	});
+};
 
-export default OfferLargeSized;
+export default connect(null, mapDispatchToProps)(OfferLargeSized);
