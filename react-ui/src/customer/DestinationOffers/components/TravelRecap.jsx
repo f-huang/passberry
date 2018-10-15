@@ -13,6 +13,7 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: space-between;
+	background-color: ${theme.colorInverse};
 	border-bottom: 1px solid ${theme.borderColor};
 	border-top: 1px solid ${theme.borderColor};
 `;

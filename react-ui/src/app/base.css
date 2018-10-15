@@ -34,8 +34,7 @@ a {
 	text-decoration: none;
 }
 
-a:hover a:active a:visited a:focus {
-	color: WindowText;
+a:link, a:visited, a:hover, a:focus, a:active {
 	cursor: pointer;
 	text-decoration: none;
 }

@@ -1,13 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import Button from "../../../component/Button/Button";
 import Offer from "./Offer";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import theme from "../../../app/theme";
 
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
+	background-color: ${theme.colorInverse};
+	padding: 4px 8px;
+	margin: 8px 0;
 	width: 100%;
 `;
 
@@ -16,7 +20,6 @@ const TopContainer = styled.div`
 	overflow: hidden;
 	justify-content: space-between;
 	align-items: center;
-	padding: 16px;
 `;
 
 const BottomContainer = styled.div`
@@ -25,10 +28,15 @@ const BottomContainer = styled.div`
 `;
 
 const Type = styled.h3`
-	font-size: 0.8em;
+	font-size: 20px;
 	font-weight: bold;
+	margin: 4px;
 `;
 
+const SeeAllLink = styled.a`
+	font-size: 13px;
+	color: ${theme.colorPurple};
+`;
 
 class OffersByType extends React.Component {
 	static propTypes = {
@@ -54,7 +62,7 @@ class OffersByType extends React.Component {
 			<Container>
 				<TopContainer>
 					<Type>{this.props.type}</Type>
-					<Button backgroundColor={'#3134fd'} value={"VOIR TOUT"}/>
+					<SeeAllLink href={"/"}>{"Voir tout"}</SeeAllLink>
 				</TopContainer>
 				<BottomContainer>
 					{attractions}
@@ -64,7 +72,10 @@ class OffersByType extends React.Component {
 	}
 }
 
-const mapDispatchToProps = ({
-});
+const mapStateToProps = (state) => {
+	return ({
+		destination: state.travelDetails.destination
+	});
+};
 
-export default withRouter(OffersByType);
+export default withRouter(connect(mapStateToProps)(OffersByType));

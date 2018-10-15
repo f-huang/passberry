@@ -11,13 +11,14 @@ import BackSearchActionBar from "../../component/ActionBar/BackSearchActionBar";
 import TravelRecap from "./components/TravelRecap.jsx";
 import OffersByType from "./components/OffersByType";
 import Button from "../../component/Button/Button";
+import theme from "../../app/theme";
 
 const View = styled.div`
 	width: 100%;
+	background-color: ${theme.backgroundColor};
 `;
 
 const Container = styled.div`
-	padding: 8px;
 `;
 
 
