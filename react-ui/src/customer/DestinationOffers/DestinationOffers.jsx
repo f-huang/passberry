@@ -20,6 +20,7 @@ const Container = styled.div`
 	padding: 8px;
 `;
 
+
 class DestinationOffers extends React.Component {
 
 	constructor(props) {
@@ -47,26 +48,26 @@ class DestinationOffers extends React.Component {
 	render() {
 		return (
 			<View>
-				<Container>
 				<BackSearchActionBar to={'/'} onSearch={() => console.log("to")}/>
 				<TravelRecap/>
-				<Query query={GET_ATTRACTION_BY_TYPE} variables={{type: "ATTRACTION"}}>
-					{({loading, error, data}) => {
-						if (loading) return <p> Loading </p>;
-						if (error) return <p> Error : </p>;
-						return <OffersByType type={"Visites"} attractions={data.getAttractionByType}/>;
-					}}
-				</Query>
-				<Query query={GET_ATTRACTION_BY_TYPE} variables={{type: "RESTAURANT"}}>
-					{({loading, error, data}) => {
-						if (loading) return <p> Loading </p>;
-						if (error) return <p> Error : </p>;
-						return <OffersByType type={"Restaurants"} attractions={data.getAttractionByType}/>;
-					}}
-				</Query>
-				<NavLink to={'/basket'}>
-					<Button value={"Voir mon panier"}/>
-				</NavLink>
+				<Container>
+					<Query query={GET_ATTRACTION_BY_TYPE} variables={{type: "ATTRACTION"}}>
+						{({loading, error, data}) => {
+							if (loading) return <p> Loading </p>;
+							if (error) return <p> Error : </p>;
+							return <OffersByType type={"Visites"} attractions={data.getAttractionByType}/>;
+						}}
+					</Query>
+					<Query query={GET_ATTRACTION_BY_TYPE} variables={{type: "RESTAURANT"}}>
+						{({loading, error, data}) => {
+							if (loading) return <p> Loading </p>;
+							if (error) return <p> Error : </p>;
+							return <OffersByType type={"Restaurants"} attractions={data.getAttractionByType}/>;
+						}}
+					</Query>
+					<NavLink to={'/basket'}>
+						<Button value={"Voir mon panier"}/>
+					</NavLink>
 				</Container>
 			</View>
 		);
