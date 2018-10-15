@@ -8,7 +8,7 @@ import theme from "../../../app/theme";
 
 const Container = styled.div`
 	position: relative;
-	padding: 4px 8px;
+	padding: 0px 8px;
 	width: 100%;
 	display: flex;
 	flex-direction: row;
