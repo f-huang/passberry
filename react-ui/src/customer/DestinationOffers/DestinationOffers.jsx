@@ -29,6 +29,8 @@ const ButtonBasket = styled(Button)`
 	bottom: calc(${BottomNavigationBar.BOTTOM_BAR_HEIGHT} + 24px);
 	left: 50%;
 	transform: translateX(-50%);
+	width: 50vw;
+	max-width: 280px;
 `;
 
 class DestinationOffers extends React.Component {
@@ -86,15 +88,7 @@ class DestinationOffers extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	const ids = state.basketPage.travelers ?
-		Object.keys(state.basketPage.travelers).filter(id =>
-			state.basketPage.travelers[id] === true
-		) : null;
-	const items = !ids || ids.length === 0 ?
-		state.basket.items :
-		state.basket.items.filter(item =>
-			ids.find(id => parseInt(item.travelerId, 10) === parseInt(id, 10))
-		);
+	const items = state.basket.items;
 	const quantities = items ? items.map(item => item.quantity) : [];
 	const prices = items ? items.map(item => item.product.price.adult) : [];
 	return ({

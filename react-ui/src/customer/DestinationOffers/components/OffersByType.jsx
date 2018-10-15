@@ -17,14 +17,25 @@ const Container = styled.div`
 
 const TopContainer = styled.div`
 	display: flex;
-	overflow: hidden;
 	justify-content: space-between;
 	align-items: center;
 `;
 
 const BottomContainer = styled.div`
-	display: flex;
+	position: relative;
 	overflow: hidden;
+	width: 100%;
+`;
+
+const ListOffers = styled.ul`
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	overflow-x: scroll;
+`;
+
+const ListItem = styled.li`
+	cursor: pointer;
 `;
 
 const Type = styled.h3`
@@ -54,9 +65,11 @@ class OffersByType extends React.Component {
 
 	render() {
 		const attractions = this.props.attractions.map(attraction => (
-			<Offer key={attraction.id}
+			<ListItem key={attraction.id}>
+			<Offer
 			       offer={attraction}
 			       onClick={(e) => this.props.history.push(`/attraction/${attraction.id}-${attraction.name}`)}/>
+			</ListItem>
 		));
 		return (
 			<Container>
@@ -65,7 +78,9 @@ class OffersByType extends React.Component {
 					<SeeAllLink href={"/"}>{"Voir tout"}</SeeAllLink>
 				</TopContainer>
 				<BottomContainer>
-					{attractions}
+					<ListOffers>
+						{attractions}
+					</ListOffers>
 				</BottomContainer>
 			</Container>
 		);

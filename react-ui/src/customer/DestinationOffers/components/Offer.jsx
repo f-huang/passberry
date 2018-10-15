@@ -6,19 +6,21 @@ import defaultImg from "../../../assets/default-image.png";
 import theme from "../../../app/theme";
 
 const Container = styled.div`
-	overflow: hidden;
-	border-radius: 20px;
 	background: url(${props => props.backgroundImage ? props.backgroundImage : defaultImg}) no-repeat;
 	background-size: cover;
+	border-radius: 11px;
+	overflow: hidden;
 	box-shadow: 0px 0px 1px 1px ${theme.lightGrey};
 	height: 18vh;
-	width: calc(100% / 4);
+	width: 50vw;
 	margin-right: 8px;
 `;
 
 const Name = styled.h2`
 	font-size: 0.8em;
 	font-weight: bold;
+	text-align: center;
+	user-select: none;
 `;
 
 const Offer = ({offer, onClick}) => {
