@@ -1,110 +1,35 @@
 import React from "react";
-import styled from "styled-components";
 
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
 import { Query } from "react-apollo";
 import { GET_ATTRACTION_BY_TYPE } from "../../queries";
 import { addToBasket, removeFromBasket } from "../Basket/basketActions";
 
-import DestinationActionBar from "../../component/ActionBar/DestinationActionBar";
-import TravelRecap from "./components/TravelRecap.jsx";
 import OffersByType from "./components/OffersByType";
-import Button from "../../component/Button/Button";
-import theme from "../../app/theme";
-import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
 import VuegoMustDoPass from "./components/VuegoMustDoPass";
+import EnumAttractionType from "./EnumAttractionType";
 
-const Root = styled.div`
-	width: 100%;
-	height: 100%;
-	background-color: ${theme.backgroundColor};
-	display: flex;
-	flex-direction: column;
-`;
-
-const Container = styled.div`
-	overflow-y: scroll;
-	margin-bottom: ${BottomNavigationBar.BOTTOM_BAR_HEIGHT};
-`;
-
-const ButtonBasket = styled(Button)`
-	background-color: ${theme.colorYellow};
-	position: fixed;
-	bottom: calc(${BottomNavigationBar.BOTTOM_BAR_HEIGHT} + 24px);
-	left: 50%;
-	transform: translateX(-50%);
-	width: 50vw;
-	max-width: 280px;
-`;
 
 class DestinationOffers extends React.Component {
-
-	constructor(props) {
-		super(props);
-		this.state = {
-			basket: props.basket || [],
-			travelers: props.travelers || [],
-			startDate: props.startDate || 0,
-			endDate: props.endDate || 0,
-		}
-		//TODO:
-		// if destination doesnt match
-		// history.replace('/');
-	}
-
-	componentWillReceiveProps(props) {
-		this.setState = ({
-			basket: props.basket || this.state.basket,
-			travelers: props.travelers || this.state.travelers,
-			startDate: props.startDate || this.state.startDate,
-			endDate: props.endDate || this.state.endDate
-		});
-	}
-
 	render() {
 		return (
-			<Root>
-				<div>
-					<DestinationActionBar to={'/'} title={this.props.destination}/>
-					<TravelRecap/>
-				</div>
-				<Container>
-					<VuegoMustDoPass/>
-					<Query query={GET_ATTRACTION_BY_TYPE} variables={{type: "ATTRACTION"}}>
-						{({loading, error, data}) => {
-							if (loading) return <p> Loading </p>;
-							if (error) return <p> Error : </p>;
-							return <OffersByType type={"Visites"} attractions={data.getAttractionByType}/>;
-						}}
-					</Query>
-					<Query query={GET_ATTRACTION_BY_TYPE} variables={{type: "RESTAURANT"}}>
-						{({loading, error, data}) => {
-							if (loading) return <p> Loading </p>;
-							if (error) return <p> Error : </p>;
-							return <OffersByType type={"Restaurants"} attractions={data.getAttractionByType}/>;
-						}}
-					</Query>
-					<NavLink to={'/basket'}>
-						<ButtonBasket value={`Panier : ${this.props.total}€`}/>
-					</NavLink>
-				</Container>
-				<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>
-			</Root>
+			<div>
+				<VuegoMustDoPass/>
+				{ Object.values(EnumAttractionType).map(attractionType => (
+					<div key={attractionType.value}>
+						<Query query={GET_ATTRACTION_BY_TYPE} variables={{ type: attractionType.value }}>
+							{({ loading, error, data }) => {
+								if (loading) return <p> Loading </p>;
+								if (error) return <p> Error </p>;
+								return <OffersByType type={ attractionType } attractions={data.getAttractionByType}/>;
+							}}
+						</Query>
+					</div>
+				))}
+			</div>
 		);
 	}
 }
-
-const mapStateToProps = (state) => {
-	const items = state.basket.items;
-	const quantities = items ? items.map(item => item.quantity) : [];
-	const prices = items ? items.map(item => item.product.price.adult) : [];
-	return ({
-		total: prices.length > 0 ? prices.reduce((total, currentPrice, index) => total + quantities[index] * currentPrice).toFixed(2) : 0,
-		basket: state.basket,
-		destination: state.travelDetails.destination
-	})
-};
 
 const mapDispatchToProps = (dispatch) => {
 	return ({
@@ -113,4 +38,4 @@ const mapDispatchToProps = (dispatch) => {
 	});
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DestinationOffers);
+export default connect(null, mapDispatchToProps)(DestinationOffers);

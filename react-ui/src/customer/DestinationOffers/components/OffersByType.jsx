@@ -5,6 +5,7 @@ import Offer from "./Offer";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import theme from "../../../app/theme";
+import EnumAttractionType from "../EnumAttractionType";
 
 const Container = styled.div`
 	display: flex;
@@ -51,7 +52,10 @@ const SeeAllLink = styled.a`
 
 class OffersByType extends React.Component {
 	static propTypes = {
-		type: PropTypes.string.isRequired,
+		type: PropTypes.shape({
+			value: PropTypes.string.isRequired,
+			display: PropTypes.string.isRequired
+		}),
 		attractions: PropTypes.arrayOf(PropTypes.shape({
 			id: PropTypes.string.isRequired,
 			name: PropTypes.string.isRequired,
@@ -59,7 +63,7 @@ class OffersByType extends React.Component {
 	};
 
 	static defaultProps = {
-		type: '',
+		type: EnumAttractionType.ATTRACTION,
 		attractions: [{ id: 0, name: '' }]
 	};
 
@@ -74,8 +78,8 @@ class OffersByType extends React.Component {
 		return (
 			<Container>
 				<TopContainer>
-					<Type>{this.props.type}</Type>
-					<SeeAllLink href={"/"}>{"Voir tout"}</SeeAllLink>
+					<Type>{this.props.type.display}</Type>
+					<SeeAllLink href={`/${this.props.destination}?type=${this.props.type.value.toLocaleLowerCase()}`}>{"Voir tout"}</SeeAllLink>
 				</TopContainer>
 				<BottomContainer>
 					<ListOffers>

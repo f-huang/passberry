@@ -13,13 +13,13 @@ import Attraction from "./customer/Attraction";
 import AttractionCreateView from "./admin/attraction/create/AttractionCreateView";
 import AttractionManage from "./admin/attraction/manage/AttractionManage";
 import TravelView from "./customer/Travel/TravelView";
-import DestinationOffers from "./customer/DestinationOffers/DestinationOffers";
 import BasketView from "./customer/Basket/BasketView";
 import PaymentView from "./customer/Payment/PaymentView";
 import MyTravelsView from "./customer/MyTravels/MyTravelsView";
 import MyTravelsDestinationView from "./customer/MyTravelsDestination/MyTravelsDestinationView";
 import ScanProfileView from "./partner/scan/ScanProfileView";
 import ScannedProfileView from "./partner/scan/ScannedProfileView";
+import Destination from "./customer/DestinationOffers/Destination";
 
 const routes = (
     <BrowserRouter forceRefresh={true}>
@@ -39,11 +39,9 @@ const routes = (
 		    <Route exact path="/payment" component={PaymentView}/>
 		    <Route exact path="/scan-profile" component={ScanProfileView}/>
 		    <Route exact path="/scanned-profile/:scanId" component={ScannedProfileView}/>
-		    {/*<Route exact path="/partner-see-customer" component={PartnerSeeUser}/>*/}
-		    <Route exact path="/:destination" component={DestinationOffers}/>
-		    {/*<Route exact path="/:city/pass/:typeOfJourney(vuego-made|customize)" component={Pass}/>*/}
 		    <Route exact path="/attraction/:id-:name" component={Attraction}/>
-		    {/*<Route exact path="/pass" component={Pass}/>*/}
+		    {/*<Route exact path="/partner-see-customer" component={PartnerSeeUser}/>*/}
+		    <Route exact path="/:destination" component={Destination}/>
 		    {/*<Route exact path="/profile" component={Profile}/>*/}
 		    <Route component={Error404}/>
 		    {/*<Route exact path="*" component={PageNotFound}/>*/}
