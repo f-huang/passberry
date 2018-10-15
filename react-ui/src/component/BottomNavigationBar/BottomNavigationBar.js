@@ -11,7 +11,7 @@ import iconWishList from "../../assets/icons/heart_black.svg";
 import iconWishListSelected from "../../assets/icons/heart_black.svg";
 import iconQR from "../../assets/icons/qr-empty.svg";
 import iconQRSelected from "../../assets/icons/qr-full.svg";
-import iconProfile from "../../assets/icons/person_black.svg";
+import iconProfile from "../../assets/icons/user_black.svg";
 import iconProfileSelected from "../../assets/icons/profile-full.svg";
 import iconParameters from "../../assets/icons/gears_black.svg";
 import iconParametersSelected from "../../assets/icons/gears_black.svg";
