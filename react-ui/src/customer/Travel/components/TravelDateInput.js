@@ -8,6 +8,20 @@ import { editDates } from "../travelActions";
 import { connect } from "react-redux";
 import { DateRangePicker } from "react-dates";
 
+import "./css/date_range_picker.css";
+import iconCalendar from "../../../assets/icons/calendar_black.svg";
+
+const Container = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+`;
+
+const CalendarImg = styled.img`
+	width: 16px;
+	height: 16px;
+`;
 
 class TravelDateInput extends React.Component {
 	constructor(props) {
@@ -25,17 +39,20 @@ class TravelDateInput extends React.Component {
 
 	render() {
 		return (
-			<DateRangePicker
-				startDate={this.props.startDate}
-				startDateId={"startDateId"}
-				endDate={this.props.endDate}
-				endDateId={"endDateId"}
-				orientation={ "vertical" }
-				withPortal={true}
-				focusedInput={this.state.focusedInput}
-				onDatesChange={this.onDatesChange}
-				onFocusChange={this.onFocusChange}
-			/>
+			<Container>
+				<CalendarImg src={iconCalendar} alt="icon-calendar"/>
+				<DateRangePicker
+					startDate={this.props.startDate}
+					startDateId={"startDateId"}
+					endDate={this.props.endDate}
+					endDateId={"endDateId"}
+					orientation={"vertical"}
+					withPortal={true}
+					focusedInput={this.state.focusedInput}
+					onDatesChange={this.onDatesChange}
+					onFocusChange={this.onFocusChange}
+				/>
+			</Container>
 		);
 	}
 }

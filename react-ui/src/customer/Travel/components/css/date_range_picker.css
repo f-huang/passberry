@@ -1,0 +1,17 @@
+.DateRangePickerInput {
+	border: 0;
+}
+
+.DateInput_input {
+	font-size: 4vmin;
+}
+
+.DateRangePickerInput_input {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 4px;
+}
+
+.DateRangePickerInput_arrow {
+	padding-bottom: 4px;
+}
