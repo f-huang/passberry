@@ -47,9 +47,13 @@ class TicketQuantity extends React.Component {
 						return (
 							<div key={index}>
 								<div>{traveler.name}</div>
-								<Button value={'-'} onClick={(e) => this.props.onClickRemoveItem(this.props.product, traveler.id)}/>
+								<Button onClick={(e) => this.props.onClickRemoveItem(this.props.product, traveler.id)}>
+									-
+								</Button>
 								<div>{travelerItemState ? travelerItemState.quantity : 0}</div>
-								<Button value={'+'} onClick={(e) => this.props.onClickAddItem(this.props.product, traveler.id)}/>
+								<Button onClick={(e) => this.props.onClickAddItem(this.props.product, traveler.id)}>
+									+
+								</Button>
 							</div>
 						);
 					})

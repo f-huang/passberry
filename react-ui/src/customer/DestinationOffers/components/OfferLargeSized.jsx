@@ -4,6 +4,7 @@ import styled from "styled-components";
 import monacoImg from "../../../assets/monaco.jpg";
 import defaultImg from "../../../assets/default-image.png";
 import theme from "../../../app/theme";
+import Button from "../../../component/Button/Button";
 
 const Container = styled.div`
 	display: block;
@@ -16,6 +17,7 @@ const Container = styled.div`
 `;
 
 const TopContainer = styled.div`
+	position: relative;
 	background: url(${props => props.backgroundImage ? props.backgroundImage : defaultImg}) no-repeat;
 	background-size: cover;
 	overflow: hidden;
@@ -28,6 +30,16 @@ const BottomContainer = styled.div`
 	overflow: hidden;
 	padding: 8px;
 	user-select: none;
+`;
+
+const ButtonAdd = styled(Button)`
+	position: absolute:
+	top: 16px
+	right: 16px;
+	width: 24px;
+	height: 24px;
+	padding: 0;
+	border-radius: 50%;
 `;
 
 const Name = styled.h2`
@@ -46,7 +58,9 @@ const OfferLargeSized = ({offer, onClick}) => {
 	const image = offer.images && offer.images.length > 0 ? offer.images[0] : monacoImg;
 	return (
 		<Container>
-			<TopContainer onClick={onClick} backgroundImage={image}/>
+			<TopContainer onClick={onClick} backgroundImage={image}>
+				<ButtonAdd>+</ButtonAdd>
+			</TopContainer>
 			<BottomContainer>
 				<Name><b>{offer.name}</b></Name>
 				<Price>{`Tarif adulte : ${offer.price.adult.toFixed(2)}€`}</Price>

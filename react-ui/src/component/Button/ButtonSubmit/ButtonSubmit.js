@@ -12,7 +12,7 @@ class ButtonSubmit extends Component {
 	}
 
 	render() {
-		const {value, isFormValid, ...rest} = this.props;
+		const {isFormValid, ...rest} = this.props;
 		const isClickable = (
 			(isFormValid !== null && isFormValid !== undefined)
 			|| (this.state.isFormValid !== null && this.state.isFormValid !== undefined)
@@ -20,12 +20,11 @@ class ButtonSubmit extends Component {
 
 		return (
 			<Button type="submit"
-			        value={ value }
 			        secondClassName={ "ButtonSubmit" }
 			        backgroundColor={theme.colorPrimary}
 			        isClickable={ isClickable }
 			        { ... rest }
-			/>
+			>{this.props.children}</Button>
 		);
 	}
 }

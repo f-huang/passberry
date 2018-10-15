@@ -41,7 +41,7 @@ const Traveler = ({traveler, removable, index, onClick, onChange}) => (
 			/>
 		</InputContainer>
 		{removable &&
-		<Button value={"x"} onClick={onClick} style={buttonStyle}/>
+		<Button onClick={onClick} style={buttonStyle}>x</Button>
 		}
 	</Container>
 );

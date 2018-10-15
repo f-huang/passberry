@@ -66,8 +66,8 @@ class PassValidateActivities extends React.Component {
 					</PriceContainer>
 				</Row>
 				<Row>
-					<Button onClick={this.onClickCustomize} style={buttonStyle} value={"Personnaliser"}/>
-					<ButtonSubmit value={'Valider'} style={buttonStyle} onClick={this.props.onClickSubmit}/>
+					<Button onClick={this.onClickCustomize} style={buttonStyle}>{"Personnaliser"}</Button>
+					<ButtonSubmit style={buttonStyle} onClick={this.props.onClickSubmit}>{"Valider"}</ButtonSubmit>
 				</Row>
 			</FixedContainer>;
 	}

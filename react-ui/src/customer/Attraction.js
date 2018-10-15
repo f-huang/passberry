@@ -63,10 +63,9 @@ class Attraction extends Component {
 									{attraction.address.postcode} {attraction.address.city}
 								</p>
 								<TicketQuantity product={attraction} isShowing={this.state.isDialogShowing}/>
-								<Button value={"Ajouter dans le panier"}  onClick={(e) =>
+								<Button onClick={(e) =>
 									this.setState({isDialogShowing: !this.state.isDialogShowing})
-								}
-								/>
+								}>{"Ajouter dans le panier"} </Button>
 							</div>
 						</App>
 					);

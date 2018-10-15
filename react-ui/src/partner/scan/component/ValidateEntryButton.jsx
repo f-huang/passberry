@@ -35,9 +35,9 @@ const ValidateEntryButton = (props) => (
 	          update={() => { onValidate(props);}}
 	>
 		{ (mutate) => { return (
-			<Button
-			value={"Valider"}
-			onClick={e => onClick(e, props, mutate)}/>
+			<Button onClick={e => onClick(e, props, mutate)}>
+				{"Valider"}
+			</Button>
 		)}}
 	</Mutation>
 );

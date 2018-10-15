@@ -32,7 +32,8 @@ const ButtonBasket = styled(Button)`
 	bottom: calc(${BottomNavigationBar.BOTTOM_BAR_HEIGHT} + 24px);
 	left: 50%;
 	transform: translateX(-50%);
-	width: 50vw;
+	width: 80vw;
+	font-size: 13px;
 	max-width: 280px;
 `;
 
@@ -58,7 +59,7 @@ class Destination extends React.Component {
 				<Container>
 					{middleContainer}
 					<NavLink to={'/basket'}>
-						<ButtonBasket value={`Panier : ${this.props.total}€`}/>
+						<ButtonBasket>{`Panier : ${this.props.total}€`}</ButtonBasket>
 					</NavLink>
 				</Container>
 				<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>

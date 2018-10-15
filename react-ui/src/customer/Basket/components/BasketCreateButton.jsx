@@ -35,7 +35,9 @@ class BasketCreateButton extends React.Component {
 			>
 				{(mutate) => { return (
 					<div>
-						<Button onClick={e => mutate(variables)}/>
+						<Button onClick={e => mutate(variables)}>
+							{ "Valider" }
+						</Button>
 					</div>
 				)}}
 			</Mutation>

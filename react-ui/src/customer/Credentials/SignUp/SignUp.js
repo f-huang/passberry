@@ -109,7 +109,7 @@ class SignUp extends Component {
 							/>Female
 						</label>
 						<br />
-						<ButtonSubmit value={"Valider"}/>
+						<ButtonSubmit>{"Valider"}</ButtonSubmit>
 					</form>
 				</div>
 			</div>

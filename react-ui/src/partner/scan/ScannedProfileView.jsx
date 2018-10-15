@@ -58,7 +58,7 @@ class ScannedProfileView extends React.Component {
 							return <p>{ticket.id} @ {ticket.attractionId}</p>
 					}}
 				</Query>
-				<Button value={"x"}/>
+				<Button>x</Button>
 				<ValidateEntryButton/>
 			</div>
 		);

@@ -30,14 +30,16 @@ const Login = (props) =>
 		<div className="Login-button-container">
 			<Button secondClassName={"Login-Buttons"}
 			        style={buttonStyle}
-			        onClick={ () => onClickSignIn(props) }
-			        value={"Créer un compte"}/>
+			        onClick={ () => onClickSignIn(props) }>
+				{"Créer un compte"}
+			</Button>
 		</div>
 		<div className="Login-button-container">
 			<Button secondClassName={"Login-Buttons"}
 			        style={buttonStyle}
-			        onClick={ () => onClickLater(props) }
-			        value={"S'inscrire plus tard"}/>
+			        onClick={ () => onClickLater(props) }>
+				{"S'inscrire plus tard"}
+			</Button>
 		</div>
 	</div>;
 

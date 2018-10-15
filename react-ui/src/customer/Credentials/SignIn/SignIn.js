@@ -70,7 +70,7 @@ class SignIn extends Component {
 					           placeholder="Mot de passe"
 					           required/>
 					<p className={"SignIn-ForgotPassword"}>Mot de passe oublié</p>
-					<ButtonSubmit isFormValid={ this.state.isFormValid } value={"Valider"}/>
+					<ButtonSubmit isFormValid={ this.state.isFormValid }>{"Valider"}</ButtonSubmit>
 				</form>
 			</div>
 		);

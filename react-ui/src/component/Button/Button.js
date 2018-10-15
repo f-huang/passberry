@@ -18,7 +18,7 @@ const CustomButton = styled.button`
 	cursor: pointer;
 	text-align: center;
 	pointer-events: ${props => props.isClickable ? 'auto' : 'none'};
-	box-shadow: 0 0 4px #999;
+	box-shadow: 0 2px 0 #000;
 
 	&:focus {
 		outline: none;
@@ -43,13 +43,13 @@ class Button extends React.Component {
 
 
 	render() {
-		const {value, secondClassName, ...rest} = this.props;
+		const {secondClassName, ...rest} = this.props;
 		return (
 			<CustomButton
 				className={`${ secondClassName }`}
 				isClickable={this.state.isClickable}
 				{... rest}>
-				{value ? value : "OK"}
+				{ this.props.children }
 			</CustomButton>
 		);
 	}

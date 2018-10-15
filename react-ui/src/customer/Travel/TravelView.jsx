@@ -26,7 +26,9 @@ const TravelView = (props) => (
 			<TravelForm/>
 			<ListTravelers/>
 			<NavLink to={'/' + props.destination}>
-				<ButtonSubmit value={"Go !"}/>
+				<ButtonSubmit>
+					{ "Go !" }
+				</ButtonSubmit>
 			</NavLink>
 		</Form>
 	</div>

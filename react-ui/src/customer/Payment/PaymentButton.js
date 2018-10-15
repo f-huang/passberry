@@ -71,8 +71,9 @@ class PaymentButton extends React.Component {
 
 	render() {
 		return (
-			<Button value={`Payer €${this.props.total}`}
-			        onClick={this.executeMutations}/>
+			<Button onClick={this.executeMutations}>
+				{`Payer €${this.props.total}`}
+			</Button>
 		)
 	}
 }

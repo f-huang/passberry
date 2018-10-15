@@ -25,7 +25,9 @@ const AttractionCreateButton = (props) => {
 		          }}
 		>
 			{ (mutate) =>
-				<ButtonSubmit value={"Créer"} onClick={e => onClick(props, mutate)}/>
+				<ButtonSubmit onClick={e => onClick(props, mutate)}>
+					{ "Créer" }
+				</ButtonSubmit>
 			}
 		</Mutation>
 	)
