@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import travelPageReducer from "./customer/Travel/travelReducers";
 import basketReducer from "./customer/Basket/basketReducers";
 import basketPageReducer from "./customer/Basket/basketPageReducer";
+import ticketQuantity from "./customer/TicketQuantity/ticketQuantityReducer";
 import scanReducer from "./partner/scan/scanReducers";
 import attractionCreateReducer from "./admin/attraction/create/attractionCreateReducers";
 
@@ -11,5 +12,6 @@ export const reducer = combineReducers({
 	basket: basketReducer.basket,
 	basketPage: basketPageReducer.basketPage,
 	scan: scanReducer.scan,
-	createAttraction: attractionCreateReducer
+	createAttraction: attractionCreateReducer,
+	ticketQuantity: ticketQuantity
 });
