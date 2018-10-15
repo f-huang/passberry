@@ -1,12 +1,13 @@
 const Attraction = require("./AttractionModel");
 const AttractionImage = require('./AttractionImageModel');
 const GraphqlUpload = require('graphql-upload');
-const { formatAttraction } = require("./attractionUtils");
+
+const { convertPathToImage } = require("../imageUtils");
 const { saveImage } = require("../imageUtils");
 const { getStatus, StatusCodeEnum } = require("../status");
 
 
-const attraction = (input) => ({
+const parent = (input) => ({
 	"name": input.name,
 	...(input.description ? {"description": input.description} : {}),
 	...(input.link ? {"link": input.link} : {}),
@@ -32,23 +33,23 @@ const resolver = {
 	Query: {
 		getAttractionById: (_, { id }) => {
 			return Attraction.get({ id: id }).then(rows => {
-				return rows[0] ? formatAttraction(rows[0]) : null;
+				return rows[0] ? (rows[0]) : null;
 			});
 		},
 		getAttractionByType: (_, { type }) => {
 			return Attraction.get({ type: type }).then(rows =>
-				rows.map(row => formatAttraction(row))
+				rows.map(row => (row))
 			);
 		},
 		getAllAttractions: (_, { limit = 0, sortField = "", sortOrder = "" }) => {
 			return Attraction.getAll().then(rows =>
-				rows.map(row => formatAttraction(row))
+				rows.map(row => (row))
 			);
 		},
 	},
 	Mutation: {
 		createAttraction: (_, { input }) => {
-			return Attraction.create(attraction(input))
+			return Attraction.create(parent(input))
 				.then(insertId => {
 					input.id = insertId;
 					input.images && input.images.map(async (image, index) => {
@@ -70,6 +71,27 @@ const resolver = {
 					attraction: input
 				}));
 		}
+	},
+	Attraction: {
+		id: parent => parseInt(parent.id, 10),
+		name: parent => parent.name,
+		description: parent => parent.description,
+		link: parent => parent.link,
+		type: parent => parent.type,
+		price: parent => ({
+			adult: parseFloat(parent.priceAdult),
+			child: parent.priceChild ? parseFloat(parent.priceChild) : null,
+			student: parent.priceStudent ? parseFloat(parent.priceStudent) : null,
+			maxAgeForChild: parent.maxAgeForChild ? parseInt(parent.maxAgeForChild) : null
+		}),
+		address: parent => ({
+			street: parent.addressStreet,
+			supplement: parent.addressSupplement,
+			city: parent.addressCity,
+			postcode: parent.addressPostcode,
+			countryCode: parent.addressCountryCode,
+		}),
+		images: parent => parent.images ? parent.images.split(',').map(path => convertPathToImage(path)) : null
 	}
 };
 
