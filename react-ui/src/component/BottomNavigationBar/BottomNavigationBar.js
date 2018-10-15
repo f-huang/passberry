@@ -20,11 +20,10 @@ import iconParametersSelected from "../../assets/icons/gears_black.svg";
 //ITEM
 import BottomNavigationItem from "./BottomNavigationBarItem";
 
-const BOTTOM_BAR_HEIGHT = '48px';
 
 const BottomNavContainer = styled.div`
 	width: 100vw;
-	height: ${BOTTOM_BAR_HEIGHT};
+	height: ${props => props.height};
 	display: flex;
 	justify-content: space-between;
 	background-color: #ffffff;
@@ -42,9 +41,9 @@ const MiddleButton = styled.div`
 	top: -1vh;
 	transform: translateX(-50%);
 	border-radius: 50%;
-	border-top: 1px solid #4bb;
+	border-top: 1px solid ${theme.colorYellow};
 	z-index: 5;
-	background-color: #fff;
+	background-color: ${theme.colorInverse};
 	width: ${props => 100/ props.numberOfBtns}vw;
 	height:  ${props => 100/ props.numberOfBtns}vw;
 `;
@@ -63,6 +62,7 @@ class BottomNavigationBar extends React.Component {
 		itemSelected: PropTypes.string.isRequired,
 		onMount: PropTypes.func
 	};
+	static BOTTOM_BAR_HEIGHT = '48px';
 
 	navigationBtns = [
 		{
@@ -121,7 +121,7 @@ class BottomNavigationBar extends React.Component {
 	render() {
 
 		return (
-			<BottomNavContainer innerRef={navElement => this.navElement = navElement}>
+			<BottomNavContainer height={BottomNavigationBar.BOTTOM_BAR_HEIGHT} innerRef={navElement => this.navElement = navElement}>
 				<MiddleButton numberOfBtns={this.navigationBtns.length}/>
 				{this.navigationBtns.map((item, i) =>
 					<BottomNavigationItem handleClick={this.changePage}
