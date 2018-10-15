@@ -12,6 +12,7 @@ const Container = styled.div`
 	overflow: hidden;
 	box-shadow: 0px 0px 1px 1px ${theme.lightGrey};
 	height: 18vh;
+	max-height: 400px;
 	width: 50vw;
 	margin-right: 8px;
 `;

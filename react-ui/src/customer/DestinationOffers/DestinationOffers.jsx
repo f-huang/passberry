@@ -13,14 +13,19 @@ import OffersByType from "./components/OffersByType";
 import Button from "../../component/Button/Button";
 import theme from "../../app/theme";
 import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
+import VuegoMustDoPass from "./components/VuegoMustDoPass";
 
-const View = styled.div`
+const Root = styled.div`
 	width: 100%;
 	height: 100%;
 	background-color: ${theme.backgroundColor};
+	display: flex;
+	flex-direction: column;
 `;
 
 const Container = styled.div`
+	overflow-y: scroll;
+	margin-bottom: ${BottomNavigationBar.BOTTOM_BAR_HEIGHT};
 `;
 
 const ButtonBasket = styled(Button)`
@@ -59,10 +64,13 @@ class DestinationOffers extends React.Component {
 
 	render() {
 		return (
-			<View>
-				<DestinationActionBar to={'/'} title={this.props.destination}/>
-				<TravelRecap/>
+			<Root>
+				<div>
+					<DestinationActionBar to={'/'} title={this.props.destination}/>
+					<TravelRecap/>
+				</div>
 				<Container>
+					<VuegoMustDoPass/>
 					<Query query={GET_ATTRACTION_BY_TYPE} variables={{type: "ATTRACTION"}}>
 						{({loading, error, data}) => {
 							if (loading) return <p> Loading </p>;
@@ -82,7 +90,7 @@ class DestinationOffers extends React.Component {
 					</NavLink>
 				</Container>
 				<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>
-			</View>
+			</Root>
 		);
 	}
 }
