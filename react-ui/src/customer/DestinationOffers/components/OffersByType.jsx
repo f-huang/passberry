@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import Offer from "./Offer";
+import OfferMediumSized from "./OfferMediumSized";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import theme from "../../../app/theme";
@@ -70,7 +70,7 @@ class OffersByType extends React.Component {
 	render() {
 		const attractions = this.props.attractions.map(attraction => (
 			<ListItem key={attraction.id}>
-			<Offer
+			<OfferMediumSized
 			       offer={attraction}
 			       onClick={(e) => this.props.history.push(`/attraction/${attraction.id}-${attraction.name}`)}/>
 			</ListItem>

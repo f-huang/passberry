@@ -24,7 +24,7 @@ const Name = styled.h2`
 	user-select: none;
 `;
 
-const Offer = ({offer, onClick}) => {
+const OfferMediumSized = ({offer, onClick}) => {
 	const image = offer.images && offer.images.length > 0 ? offer.images[0] : monacoImg;
 	return (
 		<Container onClick={onClick} backgroundImage={image}>
@@ -34,4 +34,4 @@ const Offer = ({offer, onClick}) => {
 };
 
 
-export default Offer;
+export default OfferMediumSized;
