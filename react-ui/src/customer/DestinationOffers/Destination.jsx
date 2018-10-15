@@ -23,7 +23,7 @@ const Root = styled.div`
 
 const Container = styled.div`
 	overflow-y: scroll;
-	margin-bottom: ${BottomNavigationBar.BOTTOM_BAR_HEIGHT};
+	padding-bottom: calc(${BottomNavigationBar.BOTTOM_BAR_HEIGHT} + 72px);
 `;
 
 const ButtonBasket = styled(Button)`
