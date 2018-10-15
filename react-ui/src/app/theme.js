@@ -11,7 +11,8 @@ const theme = {
 	colorInverse: `#FFFFFF`,
 	textColor: '#525252',
 	lightGrey: '#b3b3b3',
-	backgroundColor: `#F6F6F6`
+	backgroundColor: `#F6F6F6`,
+	borderColor: "#979797"
 };
 
 export default theme;
