@@ -7,11 +7,15 @@
 	font-family: "Nunito";
 	src: url("../assets/fonts/Nunito/Nunito-Regular.ttf") format("truetype");
 }
+*, *:before, *:after {
+	box-sizing: inherit;
+}
 
 html {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+	box-sizing: border-box;
 }
 
 body {

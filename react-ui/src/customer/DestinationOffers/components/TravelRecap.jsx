@@ -7,18 +7,12 @@ const Container = styled.div`
 	position: relative;
 	width: 100%;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
+	flex-direction: row;
+	align-items: space-between;
 `;
 
 const NumberContainer = styled.div`
-	font-size: 0.6em;
 	font-weight: bold;
-`;
-
-const Name = styled.div`
-	font-size: 0.4em;
-	font-weight: lighter;
 `;
 
 
@@ -37,8 +31,7 @@ class TravelRecap extends React.Component {
 		return (
 			<Container>
 				<TravelDateInput/>
-				<NumberContainer>{this.state.travelers.length}{" people coming :"}</NumberContainer>
-				<Name>{this.state.travelers.map((traveler, index) => traveler.name + (index + 1 === this.state.travelers.length ? '' : ', '))}</Name>
+				<NumberContainer>{this.state.travelers.length}</NumberContainer>
 			</Container>
 		);
 	}
