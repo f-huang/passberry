@@ -7,20 +7,29 @@ import { Query } from "react-apollo";
 import { GET_ATTRACTION_BY_TYPE } from "../../queries";
 import { addToBasket, removeFromBasket } from "../Basket/basketActions";
 
-import BackSearchActionBar from "../../component/ActionBar/BackSearchActionBar";
+import DestinationActionBar from "../../component/ActionBar/DestinationActionBar";
 import TravelRecap from "./components/TravelRecap.jsx";
 import OffersByType from "./components/OffersByType";
 import Button from "../../component/Button/Button";
 import theme from "../../app/theme";
+import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
 
 const View = styled.div`
 	width: 100%;
+	height: 100%;
 	background-color: ${theme.backgroundColor};
 `;
 
 const Container = styled.div`
 `;
 
+const ButtonBasket = styled(Button)`
+	background-color: ${theme.colorYellow};
+	position: fixed;
+	bottom: calc(${BottomNavigationBar.BOTTOM_BAR_HEIGHT} + 24px);
+	left: 50%;
+	transform: translateX(-50%);
+`;
 
 class DestinationOffers extends React.Component {
 
@@ -49,7 +58,7 @@ class DestinationOffers extends React.Component {
 	render() {
 		return (
 			<View>
-				<BackSearchActionBar to={'/'} onSearch={() => console.log("to")}/>
+				<DestinationActionBar to={'/'} title={this.props.destination}/>
 				<TravelRecap/>
 				<Container>
 					<Query query={GET_ATTRACTION_BY_TYPE} variables={{type: "ATTRACTION"}}>
@@ -67,17 +76,31 @@ class DestinationOffers extends React.Component {
 						}}
 					</Query>
 					<NavLink to={'/basket'}>
-						<Button value={"Voir mon panier"}/>
+						<ButtonBasket value={`Panier : ${this.props.total}€`}/>
 					</NavLink>
 				</Container>
+				<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>
 			</View>
 		);
 	}
 }
 
 const mapStateToProps = (state) => {
+	const ids = state.basketPage.travelers ?
+		Object.keys(state.basketPage.travelers).filter(id =>
+			state.basketPage.travelers[id] === true
+		) : null;
+	const items = !ids || ids.length === 0 ?
+		state.basket.items :
+		state.basket.items.filter(item =>
+			ids.find(id => parseInt(item.travelerId, 10) === parseInt(id, 10))
+		);
+	const quantities = items ? items.map(item => item.quantity) : [];
+	const prices = items ? items.map(item => item.product.price.adult) : [];
 	return ({
+		total: prices.length > 0 ? prices.reduce((total, currentPrice, index) => total + quantities[index] * currentPrice).toFixed(2) : 0,
 		basket: state.basket,
+		destination: state.travelDetails.destination
 	})
 };
 

@@ -10,7 +10,7 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	background-color: ${theme.colorInverse};
-	padding: 4px 8px;
+	padding: 4px 8px 12px 8px;
 	margin: 8px 0;
 	width: 100%;
 `;
