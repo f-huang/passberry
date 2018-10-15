@@ -48,6 +48,7 @@
     "mysql": "^2.16.0",
     "npm": "^6.4.1",
     "qrcode.react": "^0.8.0",
+    "query-string": "^6.2.0",
     "react": "^16.5.2",
     "react-apollo": "^2.2.4",
     "react-cookie": "^3.0.4",
