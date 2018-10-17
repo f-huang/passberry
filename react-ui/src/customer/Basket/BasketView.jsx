@@ -15,8 +15,11 @@ import theme from "../../app/theme";
 import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
 
 const Root = styled.div`
-	min-height: 100%;
+	width: 100%;
+	height: 100%;
 	background-color: ${theme.backgroundColor};
+	display: flex;
+	flex-direction: column;
 `;
 
 const BasketDetails = styled.div`
@@ -31,12 +34,12 @@ const BasketDetails = styled.div`
 	width: 90%;
 `;
 
+const Wrapper = styled.div`
+	margin: 16px;
+`;
+
 const Container = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
 	overflow-y: scroll;
-	padding-top: 16px;
 	padding-bottom: calc(${BottomNavigationBar.BOTTOM_BAR_HEIGHT} + 72px);
 
 `;
@@ -49,9 +52,13 @@ class BasketView extends React.Component {
 	render() {
 		return (
 			<Root>
-				<BackActionBar to={'/' + (this.props.destination || "") } title={"Panier"}/>
+				<div>
+					<BackActionBar to={'/' + (this.props.destination || "") } title={"Panier"}/>
+				</div>
 				<Container>
-					<ToggleBasketItemsLayout/>
+					<Wrapper>
+						<ToggleBasketItemsLayout/>
+					</Wrapper>
 					<BasketDetails>
 						{this.props.itemsLayout === EnumToggleItems.CLASSIC.value ?
 							<ListClassicBasketItems/> :

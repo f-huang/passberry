@@ -13,7 +13,8 @@ const ListBasketItems = ({ items }) => {
 		<Table>
 			<tbody>
 			{items.map((item, index) =>
-				<BasketItem key={item.product.id+'-'+index} item={item}/>
+				item.quantity ?
+				<BasketItem key={item.product.id+'-'+index} item={item}/> : ""
 			)}
 			</tbody>
 		</Table>
