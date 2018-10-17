@@ -48,6 +48,7 @@ class TravelDateInput extends React.Component {
 					endDateId={"endDateId"}
 					orientation={"vertical"}
 					withPortal={true}
+					withFullScreenPortal={true}
 					focusedInput={this.state.focusedInput}
 					onDatesChange={this.onDatesChange}
 					onFocusChange={this.onFocusChange}
