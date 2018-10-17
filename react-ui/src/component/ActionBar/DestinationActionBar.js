@@ -9,7 +9,7 @@ const Bar = styled.div`
 	height: 7vh;
 	width: 100%;
 	position: relative;
-	background-color: ${theme.colorYellow};
+	background-color: ${theme.colorPrimary};
 `;
 
 const Container = styled.div`

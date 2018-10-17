@@ -12,9 +12,14 @@ import ToggleBasketItemsLayout from "./components/ToggleBasketItemsLayout";
 import EnumToggleItems from "./EnumItemsLayout";
 import BasketRecap from "./components/BasketRecap";
 import theme from "../../app/theme";
+import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
 
+const Root = styled.div`
+	min-height: 100%;
+	background-color: ${theme.backgroundColor};
+`;
 
-const Container = styled.div`
+const BasketDetails = styled.div`
 	margin: 0 auto;
 	position: relative;
 	background-color: ${theme.colorInverse};
@@ -26,8 +31,14 @@ const Container = styled.div`
 	width: 90%;
 `;
 
-const Root = styled.div`
-	min-height: 100%;
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	overflow-y: scroll;
+	padding-top: 16px;
+	padding-bottom: calc(${BottomNavigationBar.BOTTOM_BAR_HEIGHT} + 72px);
+
 `;
 
 class BasketView extends React.Component {
@@ -39,18 +50,21 @@ class BasketView extends React.Component {
 		return (
 			<Root>
 				<BackActionBar to={'/' + (this.props.destination || "") } title={"Panier"}/>
-				<ToggleBasketItemsLayout/>
 				<Container>
-					{this.props.itemsLayout === EnumToggleItems.CLASSIC.value ?
-						<ListClassicBasketItems/> :
-						<ListPerTravelerBasketItems/>
+					<ToggleBasketItemsLayout/>
+					<BasketDetails>
+						{this.props.itemsLayout === EnumToggleItems.CLASSIC.value ?
+							<ListClassicBasketItems/> :
+							<ListPerTravelerBasketItems/>
+						}
+						<BasketRecap/>
+					</BasketDetails>
+					{this.props.isNewBasket ?
+						<BasketCreateButton/> :
+						<BasketUpdateButton/>
 					}
-					<BasketRecap/>
 				</Container>
-				{this.props.isNewBasket ?
-					<BasketCreateButton/> :
-					<BasketUpdateButton/>
-				}
+				<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>
 			</Root>
 		)
 	}
