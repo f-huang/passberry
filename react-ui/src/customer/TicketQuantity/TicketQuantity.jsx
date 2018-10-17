@@ -9,54 +9,84 @@ import { addToBasket, removeFromBasket } from "../Basket/basketActions";
 import Button from "../../component/Button/Button";
 import theme from "../../app/theme";
 
-const Container = styled.div`
-	display: ${props => props.isShowing ? 'flex' : 'none'};
+const Background = styled.div`
+	display: ${props => props.isShowing ? 'block' : 'none'};
 	position: fixed;
+	top: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 3;
+	width: 100vw;
+	height: 100vh;
+`;
+
+const Container = styled.div`
+	position: fixed;
+	overflow: hidden;
+	z-index: 4;
 	top: 20%;
 	left: 50%;
 	transform: translateX(-50%);
 	z-index: 3;
 	background-color: ${theme.colorInverse};
 	border: 1px solid ${theme.borderColor};
-	box-shadow: 0 0 0 99999px rgba(0, 0, 0, .3);
+	border-radius: 6px;
+	box-shadow: 0 2px 10px #000;
 	flex-direction: column;
 	width: 80vw;
-	max-height: 400px
+	min-height: 280px;
+	max-height: 400px;
+	max-width: 300px;
 `;
 
 const TravelerView = styled.table`
+	border-collapse: separate;
+	border-spacing: 4px;
+	vertical-align: middle;
+	width: 100%;
+	padding: 16px;
 `;
 
 const ButtonAddMinus = styled(Button)`
+	box-shadow: 0 0 0;
+	color: ${theme.borderColor};
 	background-color: ${theme.colorInverse};
-	color: ${theme.textColor};
 	border: 1px solid ${theme.borderColor};
-	border-radius: 4px;
+	border-radius: 50%;
+	font-size: 10px;
+	text-align: center;
 	padding: 0;
-	width: 48px;
-	height: 48px;
+	width: 20px;
+	height: 20px;
 `;
 
 const Title = styled.div`
-	font-size: 14px;
+	font-size: 18px;
+	font-weight: bold;
 	text-align: center;
 	padding: 8px 0;
-	background-color: ${theme.colorDarkBlue};
-	color: ${theme.colorInverse};
-	border: 1px solid ${theme.borderColor};
+`;
+
+const SelectorContainer = styled.div`
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 `;
 
 const ButtonClose = styled(Button)`
-	margin: 12px auto;
+	position: absolute;
+	bottom: 0;
+	margin: 12px auto 0 auto;
 	background-color: ${theme.colorDarkBlue};
 	border-color: ${theme.colorDarkBlue};
 	font-size: 12px;
-	width: 30%;
-	max-width: 100px;
+	width: 100%;
+	min-height: 48px;
+	border-radius: 0;
 `;
 
 const Quantity = styled.span`
 	font-size: 12px;
+	font-weight: bold;
 `;
 
 const Name = styled.span`
@@ -99,37 +129,33 @@ class TicketQuantity extends React.Component {
 
 	render() {
 		return (
-			<Container isShowing={this.props.isShowing}>
-				<Title>{"Combien de tickets ?"}</Title>
-				<TravelerView >
-					<tbody>
-					{
-						this.props.travelers.map((traveler, index) => {
-							const travelerItemState = this.props.basket.items ? this.props.basket.items.find(item => {
-									return item.travelerId === traveler.id &&
-										item.product.id === this.props.product.id
-								}
-							) : null;
-							return (
-								<tr key={index}>
-									<td><Name>{traveler.name}</Name></td>
-									<td>
-										<ButtonAddMinus onClick={(e) => this.removeItem(e, traveler.id) }>-</ButtonAddMinus>
+			<Background isShowing={this.props.isShowing}>
+				<Container>
+					<Title>{"Attribuer les tickets"}</Title>
+					<TravelerView >
+						<tbody> {
+							this.props.travelers.map((traveler, index) => {
+								const travelerItemState = this.props.basket.items ? this.props.basket.items.find(item => {
+										return item.travelerId === traveler.id &&
+											item.product.id === this.props.product.id
+									}
+								) : null;
+								return <tr key={index}>
+									<td colSpan="3"><Name>{traveler.name}</Name></td>
+									<td colSpan="1">
+										<SelectorContainer>
+											<ButtonAddMinus onClick={(e) => this.removeItem(e, traveler.id) }>-</ButtonAddMinus>
+											<Quantity>{travelerItemState ? travelerItemState.quantity : 0}</Quantity>
+											<ButtonAddMinus onClick={(e) => this.addItem(e, traveler.id) }>+</ButtonAddMinus>
+										</SelectorContainer>
 									</td>
-									<td>
-										<Quantity>{travelerItemState ? travelerItemState.quantity : 0}</Quantity>
-									</td>
-									<td>
-										<ButtonAddMinus onClick={(e) => this.addItem(e, traveler.id) }>+</ButtonAddMinus>
-									</td>
-								</tr>
-							);
-						})
-					}
-					</tbody>
-				</TravelerView>
-				<ButtonClose onClick={this.closeView}>{"Ok"}</ButtonClose>
-			</Container>
+								</tr>;
+							})
+						}</tbody>
+					</TravelerView>
+					<ButtonClose onClick={this.closeView}>{"Ok"}</ButtonClose>
+				</Container>
+			</Background>
 		)
 	}
 }
