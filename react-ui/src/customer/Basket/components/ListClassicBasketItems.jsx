@@ -1,7 +1,17 @@
 import React from "react";
+import styled from "styled-components";
+
 import { connect } from "react-redux";
 import { emptyTravelerBasket } from "../basketActions";
+
 import BasketItem from "./BasketItem";
+
+
+const Table = styled.table`
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 8px;
+`;
 
 class ListClassicBasketItems extends React.Component {
 	constructor(props) {
@@ -31,7 +41,7 @@ class ListClassicBasketItems extends React.Component {
 				isSelected: true
 			}));
 		return (
-			<table>
+			<Table>
 				<tbody>
 				{
 					items.map((item, index) => (
@@ -39,7 +49,7 @@ class ListClassicBasketItems extends React.Component {
 					))
 				}
 				</tbody>
-			</table>
+			</Table>
 		)
 	}
 }
