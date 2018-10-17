@@ -8,6 +8,7 @@ import { UPDATE_BASKET} from "../../../queries";
 import { setBasketId } from "../basketActions";
 
 import Button from "../../../component/Button/Button";
+import ButtonNextStep from "../../ButtonNextStep";
 
 class BasketUpdateButton extends React.Component {
 	render() {
@@ -34,11 +35,9 @@ class BasketUpdateButton extends React.Component {
 			          }}
 			>
 				{(mutate) => { return (
-					<div>
-						<Button onClick={e => mutate(variables)}>
-							{ "Valider" }
-						</Button>
-					</div>
+					<ButtonNextStep onClick={e => mutate(variables)}>
+						{ "Valider" }
+					</ButtonNextStep>
 				)}}
 			</Mutation>
 		);

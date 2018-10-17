@@ -12,6 +12,7 @@ import TravelRecap from "./components/TravelRecap";
 
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import ButtonNextStep from "../ButtonNextStep";
 
 const Root = styled.div`
 	width: 100%;
@@ -24,17 +25,6 @@ const Root = styled.div`
 const Container = styled.div`
 	overflow-y: scroll;
 	padding-bottom: calc(${BottomNavigationBar.BOTTOM_BAR_HEIGHT} + 72px);
-`;
-
-const ButtonBasket = styled(Button)`
-	background-color: ${theme.colorYellow};
-	position: fixed;
-	bottom: calc(${BottomNavigationBar.BOTTOM_BAR_HEIGHT} + 24px);
-	left: 50%;
-	transform: translateX(-50%);
-	width: 80vw;
-	font-size: 13px;
-	max-width: 280px;
 `;
 
 class Destination extends React.Component {
@@ -59,7 +49,7 @@ class Destination extends React.Component {
 				<Container>
 					{middleContainer}
 					<NavLink to={'/basket'}>
-						<ButtonBasket>{`Panier : ${this.props.total}€`}</ButtonBasket>
+						<ButtonNextStep>{`Panier : ${this.props.total}€`}</ButtonNextStep>
 					</NavLink>
 				</Container>
 				<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>
