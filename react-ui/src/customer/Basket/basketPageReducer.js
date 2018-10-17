@@ -1,18 +1,25 @@
 import {
 	EMPTY_TRAVELER_BASKET,
 	SWITCH_TRAVELER_BASKET,
-	TOGGLE_ITEMS_LAYOUT
+	TOGGLE_ITEMS_LAYOUT,
+	SWITCH_TRAVELER_IS_SHOWING
 } from "./basketActions";
 
-import { TRAVELERS_BASKET_CHECKED } from "../localStorageKeys";
+import {TRAVELERS, TRAVELERS_BASKET_CHECKED} from "../localStorageKeys";
 import EnumToggleItems from "./EnumItemsLayout";
 
-const travelersBasketChecked = localStorage.getItem(TRAVELERS_BASKET_CHECKED);
+let travelers = localStorage.getItem(TRAVELERS);
+travelers = travelers ? JSON.parse(travelers) : [];
+
+let travelersBasketChecked = localStorage.getItem(TRAVELERS_BASKET_CHECKED);
+travelersBasketChecked = travelersBasketChecked ? JSON.parse(travelersBasketChecked) : {};
 
 const initialState = {
 	itemsLayout: EnumToggleItems.CLASSIC.value,
-	travelers: travelersBasketChecked ? JSON.parse(travelersBasketChecked) : {}
+	travelers: travelersBasketChecked,
+	travelerIsShowing: new Array(Object.keys(travelers).length).fill(true),
 };
+
 
 function basketPageReducer(state = initialState, action) {
 	switch (action.type) {
@@ -25,6 +32,10 @@ function basketPageReducer(state = initialState, action) {
 			const newTravelers = { ...state.travelers, ...action.pair };
 			localStorage.setItem(TRAVELERS_BASKET_CHECKED, JSON.stringify(newTravelers));
 			return {...state, travelers:  newTravelers};
+		case SWITCH_TRAVELER_IS_SHOWING:
+			const tmp = [...state.travelerIsShowing];
+			tmp[action.index] = !tmp[action.index];
+			return {...state, travelerIsShowing: tmp};
 		default:
 			return state;
 	}

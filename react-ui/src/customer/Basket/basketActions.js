@@ -6,6 +6,7 @@ export const SET_BASKET_ID = 'SET_BASKET_ID';
 export const TOGGLE_ITEMS_LAYOUT = 'TOGGLE_ITEMS_LAYOUT';
 export const SWITCH_TRAVELER_BASKET = 'SWITCH_TRAVELER_BASKET';
 export const EMPTY_TRAVELER_BASKET = 'EMPTY_TRAVELER_BASKET';
+export const SWITCH_TRAVELER_IS_SHOWING = 'SWITCH_TRAVELER_IS_SHOWING';
 
 export const addToBasket = (item) => ({
 	type: ADD_TO_BASKET, item
@@ -37,4 +38,8 @@ export const switchTravelerBasket = (pair) => ({
 
 export const emptyTravelerBasket = () => ({
 	type: EMPTY_TRAVELER_BASKET
+});
+
+export const switchTravelerIsShowing = (index) => ({
+	type: SWITCH_TRAVELER_IS_SHOWING, index
 });
