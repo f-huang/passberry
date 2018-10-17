@@ -8,12 +8,20 @@ import { toggleItemsLayout } from "../basketActions";
 import EnumToggleItems from "../EnumItemsLayout";
 
 const Container = styled.div`
+	display: flex;
+	flex-direction: row;
+	margin: 0 auto;
 	border: 1px solid ${theme.colorPrimary};
+	width: 50vw;
 `;
 
 const ButtonLayout = styled.div`
 	background-color: ${ props => props.isSelected ? theme.colorPrimary : theme.colorInverse };
 	color: ${ props => props.isSelected ? theme.colorInverse : theme.colorPrimary };
+	font-size: 13px;
+	text-align: center;
+	padding: 8px 12px;
+	width: 50%;
 `;
 
 const layouts = [...Object.values(EnumToggleItems)];
