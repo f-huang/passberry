@@ -4,9 +4,29 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { switchTravelerBasket } from "../basketActions";
 
-import BasketItem from "./BasketItem";
+import ListBasketItems from "./ListBasketItems";
 
-const Traveler = styled.p``;
+const TravelerRow = styled.div`
+	margin-top: 24px;
+	
+	&:first-child {
+		margin-top: 0;
+	}
+`;
+
+const TravelerDetailsRow = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+const Traveler = styled.span`
+	font-weight: bold;
+	font-style: italic;
+	font-size: 13px;
+`;
+
 
 class ListPerTravelerBasketItems extends React.Component {
 	constructor(props) {
@@ -23,9 +43,9 @@ class ListPerTravelerBasketItems extends React.Component {
 			<ul>
 				{this.props.travelers.map((traveler, index) => (
 					this.props.basket.items.find(item => item.travelerId === traveler.id) &&
-					<div key={`basket-row-${index}`}>
+					<TravelerRow key={`basket-row-${index}`}>
 						<li>
-							<div>
+							<TravelerDetailsRow>
 								<Traveler>{traveler.name}</Traveler>
 								<input type="checkbox"
 								       checked={this.props.travelersBasket[traveler.id] ? 'checked' : ''}
@@ -34,19 +54,10 @@ class ListPerTravelerBasketItems extends React.Component {
 									       !this.props.travelersBasket[traveler.id]
 								       )}
 								/>
-							</div>
+							</TravelerDetailsRow>
 						</li>
-						<table>
-							<tbody>
-							{this.props.basket.items
-								.filter(item => item.travelerId === traveler.id)
-								.map((item, index) =>
-									<BasketItem key={`per-traveler${traveler.id}-${index}`} item={item}/>
-								)
-							}
-							</tbody>
-						</table>
-					</div>
+						<ListBasketItems items={this.props.basket.items.filter(item => item.travelerId === traveler.id)}/>
+					</TravelerRow>
 				))}
 			</ul>
 		);
