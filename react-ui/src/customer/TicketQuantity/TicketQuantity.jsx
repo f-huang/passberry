@@ -13,7 +13,8 @@ const Background = styled.div`
 	display: block;
 	position: fixed;
 	top: 0;
-	background-color: rgba(0, 0, 0, 0.5);
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.2);
 	z-index: 3;
 	width: 100vw;
 	height: 100vh;

@@ -12,6 +12,7 @@ import TicketQuantity from "../../TicketQuantity/TicketQuantity";
 
 const Container = styled.div`
 	display: block;
+	position: relative;
 	box-shadow: 0px 0px 1px 1px ${theme.lightGrey};
 	overflow: hidden;
 	margin: 16px auto;
@@ -31,20 +32,22 @@ const TopContainer = styled.div`
 `;
 
 const BottomContainer = styled.div`
+	position: relative;
 	overflow: hidden;
 	padding: 8px;
 	user-select: none;
 `;
 
 const ButtonAdd = styled(Button)`
+	background-color: ${theme.colorPurple};
+	border-color: ${theme.colorPurple};
+	border-radius: 6px;
 	position: absolute;
 	z-index: 1;
-	top: 8px
-	right: 8px;
-	width: 24px;
-	height: 24px;
-	padding: 0;
-	border-radius: 50%;
+	top: 50%;
+	right: 16px;
+	padding: 12px 8px;
+	transform: translateY(-50%);
 `;
 
 const Name = styled.h2`
@@ -60,23 +63,24 @@ const Price = styled.span`
 `;
 
 const onClickAdd = (event, onClickShowView) => {
+	event.preventDefault();
 	event.stopPropagation();
+	event.nativeEvent.stopImmediatePropagation();
 	onClickShowView();
 };
 
 const OfferLargeSized = ({offer, onClick, onClickShowView}) => {
 	const image = offer.images && offer.images.length > 0 ? offer.images[0] : monacoImg;
 	return (
-		<Container onClick={onClick} >
-			<TopContainer backgroundImage={image}>
-				<ButtonAdd onClick={e => onClickAdd(e, onClickShowView)}>
-					+
-				</ButtonAdd>
-				<TicketQuantity product={offer}/>
-			</TopContainer>
-			<BottomContainer>
+		<Container onClick={onClick}>
+			<TicketQuantity product={offer}/>
+			<TopContainer backgroundImage={image}/>
+			<BottomContainer >
 				<Name><b>{offer.name}</b></Name>
 				<Price>{`Tarif adulte : ${offer.price.adult.toFixed(2)}€`}</Price>
+				<ButtonAdd onClick={e => onClickAdd(e, onClickShowView)}>
+					{"Ajouter"}
+				</ButtonAdd>
 			</BottomContainer>
 		</Container>
 	);
