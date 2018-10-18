@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import backIcon from "../../assets/icons/arrow_left_white.svg";
+import backIcon from "../../assets/icons/back_white.svg";
 import { NavLink } from "react-router-dom";
 import ActionBarContainer from "./ActionBarContainer";
 
 const Root = styled(ActionBarContainer)`
+	z-index: 1;	
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -30,7 +31,8 @@ const BackActionBar = ({ to, onBackClick }) =>
 
 
 BackActionBar.propTypes = {
-	to: PropTypes.string.isRequired,
+	to: PropTypes.string,
+	onBackClick: PropTypes.func,
 	title: PropTypes.string
 };
 

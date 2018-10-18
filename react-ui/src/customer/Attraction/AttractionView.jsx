@@ -144,7 +144,7 @@ class AttractionView extends Component {
 						<Root>
 							<ImageContainer image={defaultImg}>
 							</ImageContainer>
-							<TransparentActionBar to={''} history={this.props.history} onBackClick={this.onBackClick}/>
+							<TransparentActionBar onBackClick={this.onBackClick}/>
 							<FloatingContainer>
 								<Container>
 									<TitleContainer><Title>{attraction.name}</Title></TitleContainer>

@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import backIcon from "../../assets/icons/arrow_left_white.svg";
+import backIcon from "../../assets/icons/back_white.svg";
 import theme from "../../app/theme";
 import { NavLink } from "react-router-dom";
 import ActionBarContainer from "./ActionBarContainer";
 
 const Icon = styled.img`
+	z-index: 1;
 	width: 20px;
 	height: 20px;
 `;
