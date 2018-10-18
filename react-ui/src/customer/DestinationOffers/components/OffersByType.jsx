@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import OfferMediumSized from "./OfferMediumSized";
-import { NavLink, withRouter} from "react-router-dom";
+import { withRouter} from "react-router-dom";
 import { connect } from "react-redux";
 import theme from "../../../app/theme";
 import EnumAttractionType from "../EnumAttractionType";
+import Link from "../../../Link";
 
 const Container = styled.div`
 	display: flex;
@@ -45,7 +46,7 @@ const Type = styled.h3`
 	margin: 4px;
 `;
 
-const SeeAllLink = styled(NavLink)`
+const SeeAllLink = styled(Link)`
 	font-size: 13px;
 	color: ${theme.colorPurple};
 `;
@@ -71,10 +72,10 @@ class OffersByType extends React.Component {
 		const search = `?type=${this.props.type.value.toLocaleLowerCase()}`;
 		const attractions = this.props.attractions.map(attraction => (
 			<ListItem key={attraction.id}>
-				<NavLink to={{pathname: `/attraction/${attraction.id}-${attraction.name}`, search}}>
+				<Link to={{pathname: `/attraction/${attraction.id}-${attraction.name}`, search}}>
 					<OfferMediumSized
 						offer={attraction}/>
-				</NavLink>
+				</Link>
 			</ListItem>
 		));
 		return (
