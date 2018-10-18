@@ -1,0 +1,95 @@
+import React from "react";
+import styled from "styled-components";
+import { switchDetailsAreShowing } from "../attractionActions";
+import {hideAttractionKeyFrame, showAttractionKeyFrame} from "./KeyFrames";
+import { connect } from "react-redux";
+import AttractionDetailsLayout from "./AttractionDetailsLayout";
+import ButtonNextStep from "../../ButtonNextStep";
+import ShowHideArrow from "./ShowHideArrow";
+import theme from "../../../app/theme";
+import AttractionDescription from "./AttractionDescription";
+import AttractionPrice from "./AttractionPrice.jsx";
+import AttractionAddress from "./AttractionAddress";
+import TicketQuantity from "../../TicketQuantity/TicketQuantity";
+
+const Root = styled(AttractionDetailsLayout)`
+	height: 80vh;
+	animation: ${showAttractionKeyFrame}  0.6s ease-in-out 0s;
+`;
+
+const Arrow = styled(ShowHideArrow)`
+	z-index: 1;
+	transform: rotate(270deg) translate(0, -50%);
+`;
+
+const Container = styled.div`
+	position: relative;
+	display: block;
+	margin-top: 20px;
+	padding: 24px;
+`;
+
+const AttractionName = styled.h1`
+	font-size: 20px;
+	font-weight: 900;
+`;
+
+const Line = styled.div`
+	width: 100%;
+	height: 8px;
+	padding: 12px 0;
+	box-shadow: 0 2px 2px -2px ${theme.borderColor};
+`;
+
+const Title = styled.h2`
+	font-size: 16px;
+`;
+
+const DetailsContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	font-size: 12px;
+`;
+
+const ExpandedAttractionDetails = ({ attraction, onClick, onClickSwitchDetailsAreShowing }) => {
+	return (
+		<Root>
+			<Container>
+				<AttractionName>{ attraction.name }</AttractionName>
+
+				<DetailsContainer>
+					<AttractionDescription description={"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident…"}/>
+				</DetailsContainer>
+				<Line/>
+
+				<DetailsContainer>
+					<Title>{"Tarifs"}</Title>
+					<AttractionPrice price={attraction.price}/>
+				</DetailsContainer>
+				<Line/>
+
+				{/*<div>*/}
+				{/*<Title>{"Horaires"}</Title>*/}
+				{/*</div>*/}
+				{/*<Line/>*/}
+				<DetailsContainer>
+					<Title>{"Adresse"}</Title>
+					<AttractionAddress address={attraction.address}/>
+				</DetailsContainer>
+				{attraction.link &&
+				<DetailsContainer>
+					<Title>{"Contact"}</Title>
+					<p>{attraction.link}</p>
+				</DetailsContainer>
+				}
+			</Container>
+			<Arrow onClick={onClickSwitchDetailsAreShowing}/>
+		</Root>
+	)
+};
+
+const mapDispatchToProps = dispatch => ({
+	onClickSwitchDetailsAreShowing: () => { console.log('click'); dispatch(switchDetailsAreShowing())}
+});
+
+export default connect(null, mapDispatchToProps)(ExpandedAttractionDetails);
