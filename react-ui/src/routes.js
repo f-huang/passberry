@@ -9,7 +9,7 @@ import ProfilePage from "./customer/ProfilePage";
 import ParametersPage from "./customer/ParametersPage";
 import SelectionsPage from "./customer/SelectionsPage";
 import Error404 from "./Error404";
-import Attraction from "./customer/Attraction";
+import Attraction from "./customer/Attraction/AttractionView";
 import AttractionCreateView from "./admin/attraction/create/AttractionCreateView";
 import AttractionManage from "./admin/attraction/manage/AttractionManage";
 import TravelView from "./customer/Travel/TravelView";
