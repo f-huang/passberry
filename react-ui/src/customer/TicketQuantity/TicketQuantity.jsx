@@ -10,7 +10,7 @@ import Button from "../../component/Button/Button";
 import theme from "../../app/theme";
 
 const Background = styled.div`
-	display: ${props => props.isShowing ? 'block' : 'none'};
+	display: block;
 	position: fixed;
 	top: 0;
 	background-color: rgba(0, 0, 0, 0.5);
@@ -129,7 +129,8 @@ class TicketQuantity extends React.Component {
 
 	render() {
 		return (
-			<Background isShowing={this.props.isShowing}>
+			this.props.isShowing ?
+			<Background>
 				<Container>
 					<Title>{"Attribuer les tickets"}</Title>
 					<TravelerView >
@@ -150,12 +151,12 @@ class TicketQuantity extends React.Component {
 										</SelectorContainer>
 									</td>
 								</tr>;
-							})
-						}</tbody>
+							})}
+						</tbody>
 					</TravelerView>
 					<ButtonClose onClick={this.closeView}>{"Ok"}</ButtonClose>
 				</Container>
-			</Background>
+			</Background> : ""
 		)
 	}
 }
