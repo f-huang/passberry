@@ -1,16 +1,15 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { switchDetailsAreShowing } from "../attractionActions";
-import {hideAttractionKeyFrame, showAttractionKeyFrame} from "./KeyFrames";
+import { showAttractionKeyFrame} from "./KeyFrames";
 import { connect } from "react-redux";
 import AttractionDetailsLayout from "./AttractionDetailsLayout";
-import ButtonNextStep from "../../ButtonNextStep";
 import ShowHideArrow from "./ShowHideArrow";
 import theme from "../../../app/theme";
 import AttractionDescription from "./AttractionDescription";
 import AttractionPrice from "./AttractionPrice.jsx";
 import AttractionAddress from "./AttractionAddress";
-import TicketQuantity from "../../TicketQuantity/TicketQuantity";
 
 const Root = styled(AttractionDetailsLayout)`
 	height: 80vh;
@@ -86,6 +85,28 @@ const ExpandedAttractionDetails = ({ attraction, onClick, onClickSwitchDetailsAr
 			<Arrow onClick={onClickSwitchDetailsAreShowing}/>
 		</Root>
 	)
+};
+
+ExpandedAttractionDetails.propTypes = {
+	attraction: {
+		name: PropTypes.string.isRequired,
+		link: PropTypes.string,
+		description: PropTypes.string,
+		price: PropTypes.shape({
+			adult: PropTypes.number.isRequired,
+			child: PropTypes.number,
+			student: PropTypes.number,
+			maxAgeForChild: PropTypes.number
+		}),
+		address: PropTypes.shape({
+			street: PropTypes.string.isRequired,
+			supplement: PropTypes.string,
+			postcode: PropTypes.string.isRequired,
+			city: PropTypes.string.isRequired,
+			countryCode: PropTypes.string.isRequired
+		})
+	},
+	onClick: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
