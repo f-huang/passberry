@@ -35,7 +35,7 @@ const Preview = styled.div`
 	position: relative;
 	background: url(${props => props.backgroundImage ? props.backgroundImage : imgMonaco}) no-repeat;
 	background-size: cover;
-	border-radius: 11px;
+	border-radius: 6px;
 	overflow: hidden;
 	box-shadow: 0px 0px 1px 1px ${theme.lightGrey};
 	height: 24vh;

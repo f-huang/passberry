@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const Input = styled.input`
-	border-radius: 8px;
+	border-radius: 6px;
 	padding: 2px 6px;
 	font-size: 0.7em;
 	-webkit-appearance: none; -moz-appearance: none;
