@@ -36,11 +36,6 @@ const PersonImg = styled.img`
 `;
 
 class TravelRecap extends React.Component {
-
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		return (
 			<Container>

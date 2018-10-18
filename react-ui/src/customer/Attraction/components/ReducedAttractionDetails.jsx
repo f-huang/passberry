@@ -27,7 +27,7 @@ const ReducedAttractionDetails = ({ attraction, onClick, onClickSwitchDetailsAre
 };
 
 ReducedAttractionDetails.propTypes = {
-	attraction: {
+	attraction: PropTypes.shape({
 		name: PropTypes.string.isRequired,
 		link: PropTypes.string,
 		description: PropTypes.string,
@@ -44,7 +44,7 @@ ReducedAttractionDetails.propTypes = {
 			city: PropTypes.string.isRequired,
 			countryCode: PropTypes.string.isRequired
 		})
-	},
+	}),
 	onClick: PropTypes.func.isRequired
 };
 

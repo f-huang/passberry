@@ -5,7 +5,6 @@ import styled from "styled-components";
 import DestinationOffersSeeByTypeView from "./DestinationOffersSeeByTypeView";
 import DestinationOffers from "./DestinationOffersSeeAll";
 import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
-import Button from "../../component/Button/Button";
 import theme from "../../app/theme";
 import DestinationActionBar from "../../component/ActionBar/DestinationActionBar";
 import TravelRecap from "./components/TravelRecap";

@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import { Query } from "react-apollo";
 import { GET_ATTRACTION_BY_ID } from "../../queries";
 import { showView } from "../TicketQuantity/ticketQuantityActions";
-import { switchDetailsAreShowing } from "./attractionActions";
 
 import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
 import Error404 from "../../Error404";
@@ -87,28 +86,9 @@ const Price = styled.div`
 	text-align: end;
 `;
 
-const Category = styled.p`
-	font-size: 4vmin;
-	font-weight: bold;
-`;
-
-const Description = styled.p`
-	font-size: 3vmin;
-`;
-
 class AttractionView extends Component {
-	state = { attraction: {} };
-
 	constructor(props) {
 		super(props);
-		this.state = {
-			attraction: {
-				name: "",
-				price: 0,
-				description: "",
-				type: "Unknown"
-			},
-		};
 		this.onClickAddToCart = this.onClickAddToCart.bind(this);
 		this.onBackClick = this.onBackClick.bind(this);
 	}

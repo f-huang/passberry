@@ -1,9 +1,8 @@
 import React from "react";
 import TextInput from "../../../component/TextInput/TextInput";
 import AddressInput from "../../../component/AddressInput/AddressInput";
-import ButtonSubmit from "../../../component/Button/ButtonSubmit/ButtonSubmit";
 import { connect } from "react-redux";
-import {setInput, setImages, setPriceInput, setAddressInput} from "./attractionCreateActions";
+import { setInput, setImages, setPriceInput, setAddressInput } from "./attractionCreateActions";
 import AttractionCreateButton from "./component/AttractionCreateButton";
 
 
@@ -115,25 +114,6 @@ class AttractionCreateView extends React.Component {
 		);
 	}
 }
-//
-// const mapStateToProps = (state) => {
-// 	return ({
-// 		images: state.createAttraction.images,
-// 		name: state.createAttraction.name,
-// 		priceAdult: state.createAttraction.priceAdult,
-// 		priceChild: state.createAttraction.priceChild,
-// 		priceStudent: state.createAttraction.priceStudent,
-// 		priceMaxAgeForChild: state.createAttraction.priceMaxAgeForChild,
-// 		type: state.createAttraction.type,
-// 		description: state.createAttraction.description,
-// 		link: state.createAttraction.link,
-// 		addressStreet: state.createAttraction.addressStreet,
-// 		addressSupplement: state.createAttraction.addressSupplement,
-// 		addressCity: state.createAttraction.addressCity,
-// 		addressPostcode: state.createAttraction.addressPostcode,
-// 		addressCountryCode: state.createAttraction.addressCountryCode,
-// 	})
-// };
 
 const mapDispatchToProps = (dispatch) => {
 	return ({
@@ -143,7 +123,6 @@ const mapDispatchToProps = (dispatch) => {
 		onChangeImages: (images) => { dispatch(setImages(images)) }
 	})
 };
-
 
 
 export default connect(null, mapDispatchToProps)(AttractionCreateView);

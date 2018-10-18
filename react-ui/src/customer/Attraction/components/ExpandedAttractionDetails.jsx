@@ -88,7 +88,7 @@ const ExpandedAttractionDetails = ({ attraction, onClick, onClickSwitchDetailsAr
 };
 
 ExpandedAttractionDetails.propTypes = {
-	attraction: {
+	attraction:  PropTypes.shape({
 		name: PropTypes.string.isRequired,
 		link: PropTypes.string,
 		description: PropTypes.string,
@@ -105,7 +105,7 @@ ExpandedAttractionDetails.propTypes = {
 			city: PropTypes.string.isRequired,
 			countryCode: PropTypes.string.isRequired
 		})
-	},
+	}),
 	onClick: PropTypes.func.isRequired
 };
 

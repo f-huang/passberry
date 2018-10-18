@@ -23,7 +23,6 @@ class QRView extends React.Component {
 	};
 
 	render() {
-		const variables = { token: this.props.token };
 		return (
 			<div className="QRView">
 				<div className="QRView-background">

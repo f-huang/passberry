@@ -7,7 +7,6 @@ import { withRouter } from "react-router-dom";
 import { CREATE_BASKET } from "../../../queries";
 import { setBasketId } from "../basketActions";
 
-import Button from "../../../component/Button/Button";
 import ButtonNextStep from "../../ButtonNextStep";
 
 class BasketCreateButton extends React.Component {

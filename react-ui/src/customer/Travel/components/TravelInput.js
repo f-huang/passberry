@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import theme from "../../../app/theme";
 
 const Input = styled.input`
 	-webkit-appearance: none; -moz-appearance: none;

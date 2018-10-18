@@ -2,7 +2,7 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { compose, graphql, withApollo } from "react-apollo";
+import { compose, graphql } from "react-apollo";
 import { emptyBasket, reinitializeBasket } from "../Basket/basketActions";
 import { VALIDATE_BASKET, CREATE_PASS } from "../../queries";
 
@@ -27,7 +27,7 @@ class PaymentButton extends React.Component {
 					state: this.props.basketState.value
 				}
 			}
-		}).then((data) => {
+		}).then(() => {
 			this.props.basketState === EnumBasketState.PAID ?
 				this.props.emptyBasket() :
 				this.props.reinitializeBasket(this.props.basket);

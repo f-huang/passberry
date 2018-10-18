@@ -44,38 +44,30 @@ const Container = styled.div`
 
 `;
 
-class BasketView extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
-	render() {
-		return (
-			<Root>
-				<div>
-					<BackActionBar to={'/' + (this.props.destination || "") } title={"Panier"}/>
-				</div>
-				<Container>
-					<Wrapper>
-						<ToggleBasketItemsLayout/>
-					</Wrapper>
-					<BasketDetails>
-						{this.props.itemsLayout === EnumToggleItems.CLASSIC.value ?
-							<ListClassicBasketItems/> :
-							<ListPerTravelerBasketItems/>
-						}
-						<BasketRecap/>
-					</BasketDetails>
-					{this.props.isNewBasket ?
-						<BasketCreateButton/> :
-						<BasketUpdateButton/>
-					}
-				</Container>
-				<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>
-			</Root>
-		)
-	}
-}
+const BasketView = (props) => (
+	<Root>
+		<div>
+			<BackActionBar to={'/' + (props.destination || "") } title={"Panier"}/>
+		</div>
+		<Container>
+			<Wrapper>
+				<ToggleBasketItemsLayout/>
+			</Wrapper>
+			<BasketDetails>
+				{props.itemsLayout === EnumToggleItems.CLASSIC.value ?
+					<ListClassicBasketItems/> :
+					<ListPerTravelerBasketItems/>
+				}
+				<BasketRecap/>
+			</BasketDetails>
+			{props.isNewBasket ?
+				<BasketCreateButton/> :
+				<BasketUpdateButton/>
+			}
+		</Container>
+		<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>
+	</Root>
+);
 
 const mapStateToProps = state => {
 	return ({
