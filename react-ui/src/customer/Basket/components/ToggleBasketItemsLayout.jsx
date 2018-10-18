@@ -12,7 +12,7 @@ const Container = styled.div`
 	flex-direction: row;
 	margin: 0 auto;
 	border: 1px solid ${theme.colorPrimary};
-	width: 50vw;
+	width: 60vw;
 `;
 
 const ButtonLayout = styled.div`

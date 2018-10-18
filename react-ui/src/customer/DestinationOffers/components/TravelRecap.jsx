@@ -9,10 +9,12 @@ import theme from "../../../app/theme";
 const Container = styled.div`
 	position: relative;
 	padding: 0px 8px;
+	font-size: 12px;
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	align-items: space-between;
+	justify-content: space-around;
+	align-items: center;
 	background-color: ${theme.colorInverse};
 	border-bottom: 1px solid ${theme.borderColor};
 	border-top: 1px solid ${theme.borderColor};
@@ -25,7 +27,6 @@ const NumberContainer = styled.div`
 `;
 
 const Number = styled.span`
-	font-size: 4vmin;
 	padding: 4px;
 `;
 

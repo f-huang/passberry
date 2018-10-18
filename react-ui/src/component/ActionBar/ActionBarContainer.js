@@ -6,6 +6,7 @@ const Bar = styled.div`
 	background-color: ${theme.colorPrimary};
 	overflow: hidden;
 	height: 7vh;
+	max-height: 86px;
 	width: 100vw;
 `;
 
@@ -13,6 +14,7 @@ const Container = styled.div`
 	position: relative;
 	display: flex;
 	align-items: center;
+	height: 100%;
 	padding: 12px;
 `;
 
