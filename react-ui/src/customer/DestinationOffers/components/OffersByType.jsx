@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import OfferMediumSized from "./OfferMediumSized";
-import { withRouter } from "react-router-dom";
+import { NavLink, withRouter} from "react-router-dom";
 import { connect } from "react-redux";
 import theme from "../../../app/theme";
 import EnumAttractionType from "../EnumAttractionType";
@@ -45,7 +45,7 @@ const Type = styled.h3`
 	margin: 4px;
 `;
 
-const SeeAllLink = styled.a`
+const SeeAllLink = styled(NavLink)`
 	font-size: 13px;
 	color: ${theme.colorPurple};
 `;
@@ -68,18 +68,20 @@ class OffersByType extends React.Component {
 	};
 
 	render() {
+		const search = `?type=${this.props.type.value.toLocaleLowerCase()}`;
 		const attractions = this.props.attractions.map(attraction => (
 			<ListItem key={attraction.id}>
-			<OfferMediumSized
-			       offer={attraction}
-			       onClick={(e) => this.props.history.push(`/attraction/${attraction.id}-${attraction.name}`)}/>
+				<NavLink to={{pathname: `/attraction/${attraction.id}-${attraction.name}`, search}}>
+					<OfferMediumSized
+						offer={attraction}/>
+				</NavLink>
 			</ListItem>
 		));
 		return (
 			<Container>
 				<TopContainer>
 					<Type>{this.props.type.display}</Type>
-					<SeeAllLink href={`/${this.props.destination}?type=${this.props.type.value.toLocaleLowerCase()}`}>{"Voir tout"}</SeeAllLink>
+					<SeeAllLink to={{pathname: `/${this.props.destination}`, search}}>{"Voir tout"}</SeeAllLink>
 				</TopContainer>
 				<BottomContainer>
 					<ListOffers>

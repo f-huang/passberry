@@ -1,10 +1,12 @@
 import React from "react";
+import qs from "query-string";
 import { Query } from "react-apollo";
-import { withRouter } from "react-router-dom";
+import { withRouter} from "react-router-dom";
 import { GET_ATTRACTION_BY_TYPE } from "../../queries";
 import Error404 from "../../Error404";
 import EnumAttractionType from "./EnumAttractionType";
 import OfferLargeSized from "./components/OfferLargeSized";
+import Link from "../../Link";
 
 class DestinationOffersSeeByTypeView extends React.Component {
 	constructor(props) {
@@ -17,10 +19,11 @@ class DestinationOffersSeeByTypeView extends React.Component {
 	}
 
 	onAttractionClick = (attraction) => {
-		this.props.history.push(`/attraction/${attraction.id}-${attraction.name}`)
+
 	};
 
 	render() {
+		const params = qs.parse(this.props.location.search);
 		if (!this.attractionType)
 			return <Error404/>;
 		return (
@@ -30,10 +33,11 @@ class DestinationOffersSeeByTypeView extends React.Component {
 					if (error) return <p>Error</p>;
 					const attractions = data.getAttractionByType;
 					return attractions.map(attraction =>
-						<OfferLargeSized key={attraction.id}
-						                 offer={attraction}
-						                 onClick={ e => this.onAttractionClick(attraction) }
-						/>
+						<Link to={{pathname:  `/attraction/${attraction.id}-${attraction.name}`, search: `?type=${params.type}`}}>
+							<OfferLargeSized key={attraction.id}
+							                 offer={attraction}
+							/>
+						</Link>
 					);
 				}}
 			</Query>
