@@ -19,7 +19,7 @@ import MyTravelsView from "./customer/MyTravels/MyTravelsView";
 import MyTravelsDestinationView from "./customer/MyTravelsDestination/MyTravelsDestinationView";
 import ScanProfileView from "./partner/scan/ScanProfileView";
 import ScannedProfileView from "./partner/scan/ScannedProfileView";
-import Destination from "./customer/DestinationOffers/Destination";
+import Destination from "./customer/DestinationOffers/DestinationView";
 
 const routes = (
     <BrowserRouter forceRefresh={true}>

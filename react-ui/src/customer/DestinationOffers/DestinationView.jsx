@@ -3,7 +3,7 @@ import qs from "query-string";
 import styled from "styled-components";
 
 import DestinationOffersSeeByTypeView from "./DestinationOffersSeeByTypeView";
-import DestinationOffers from "./DestinationOffers";
+import DestinationOffers from "./DestinationOffersSeeAll";
 import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
 import Button from "../../component/Button/Button";
 import theme from "../../app/theme";
@@ -27,7 +27,7 @@ const Container = styled.div`
 	padding-bottom: calc(${BottomNavigationBar.BOTTOM_BAR_HEIGHT} + 72px);
 `;
 
-class Destination extends React.Component {
+class DestinationView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.queryParams = qs.parse(this.props.location.search);
@@ -68,4 +68,4 @@ const mapStateToProps = state => {
 	})
 };
 
-export default connect(mapStateToProps)(Destination);
+export default connect(mapStateToProps)(DestinationView);

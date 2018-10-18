@@ -10,7 +10,7 @@ import VuegoMustDoPass from "./components/VuegoMustDoPass";
 import EnumAttractionType from "./EnumAttractionType";
 
 
-class DestinationOffers extends React.Component {
+class DestinationOffersSeeAll extends React.Component {
 	render() {
 		return (
 			<div>
@@ -38,4 +38,4 @@ const mapDispatchToProps = (dispatch) => {
 	});
 };
 
-export default connect(null, mapDispatchToProps)(DestinationOffers);
+export default connect(null, mapDispatchToProps)(DestinationOffersSeeAll);
