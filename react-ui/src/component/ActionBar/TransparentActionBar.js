@@ -2,33 +2,31 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import backIcon from "../../assets/icons/arrow_left_white.svg";
-import theme from "../../app/theme";
 import { NavLink } from "react-router-dom";
 import ActionBarContainer from "./ActionBarContainer";
 
 const Root = styled(ActionBarContainer)`
-	background-color: ${theme.primaryColor};
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: transparent;
 `;
 
 const Icon = styled.img`
 	width: 20px;
 	height: 20px;
 `;
-const Title = styled.h1`
-	font-size: 18px;
-	color: ${theme.colorInverse};
-	margin: 0;
-	padding: 0 8px;
-`;
 
-const BackActionBar = (props) =>
+const BackActionBar = ({ to, onBackClick }) =>
 	<Root>
-			<NavLink to={props.to}>
-				<Icon src={backIcon} alt="back-arrow"/>
-			</NavLink>
-			<Title>{props.title}</Title>
-	</Root>
-;
+			{to ?
+				<NavLink to={to}>
+					<Icon src={backIcon} alt="back-arrow"/>
+				</NavLink>
+				:
+				<Icon src={backIcon} alt="back-arrow" onClick={onBackClick}/>
+			}
+	</Root>;
 
 
 BackActionBar.propTypes = {
