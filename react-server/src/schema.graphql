@@ -20,6 +20,7 @@ enum UserType {
 enum ProductType {
 	ATTRACTION
 	RESTAURANT
+	EVENT
 }
 
 enum PassDiscountType {
@@ -204,7 +205,7 @@ type GetPassPayload {
 type Query {
     getAddressById(id: ID!): Address
     getAttractionById(id: ID!): Attraction
-    getAttractionByType(type: ProductType!): [Attraction]
+    getAttractionsByType(type: ProductType!): [Attraction]
     getAllAttractions(limit: Int, sortField: String, sortOrder: String): [Attraction]
 
     getUserById(id: ID!): User

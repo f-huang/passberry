@@ -36,7 +36,7 @@ const resolver = {
 				return rows[0] ? (rows[0]) : null;
 			});
 		},
-		getAttractionByType: (_, { type }) => {
+		getAttractionsByType: (_, { type }) => {
 			return Attraction.get({ type: type }).then(rows =>
 				rows.map(row => (row))
 			);

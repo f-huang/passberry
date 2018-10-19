@@ -25,9 +25,9 @@ export const GET_QR_BY_USER_ID = gql`
 	}
 `;
 
-export const GET_ATTRACTION_BY_TYPE = gql`
-	query getAttractionByType($type: ProductType!) {
-		getAttractionByType(type: $type) {
+export const GET_ATTRACTIONS_BY_TYPE = gql`
+	query getAttractionsByType($type: ProductType!) {
+		getAttractionsByType(type: $type) {
 			id
 			name
 			link

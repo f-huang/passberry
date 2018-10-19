@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS
         `address_postcode` VARCHAR(12),
         `address_country_code` CHAR(2),
         `partner_id` INT UNSIGNED,
-        `type` VARCHAR(48) DEFAULT NULL,
+        `type` ENUM('ATTRACTION', 'RESTAURANT', 'EVENT') DEFAULT 'ATTRACTION',
         FOREIGN KEY(`partner_id`) REFERENCES partner(`id`),
         FOREIGN KEY(`address_country_code`) REFERENCES country(`code`),
         PRIMARY KEY (`id`)

@@ -2,7 +2,7 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { Query } from "react-apollo";
-import { GET_ATTRACTION_BY_TYPE } from "../../queries";
+import { GET_ATTRACTIONS_BY_TYPE } from "../../queries";
 import { addToBasket, removeFromBasket } from "../Basket/basketActions";
 
 import OffersByType from "./components/OffersByType";
@@ -17,11 +17,14 @@ class DestinationOffersSeeAll extends React.Component {
 				<VuegoMustDoPass/>
 				{ Object.values(EnumAttractionType).map(attractionType => (
 					<div key={attractionType.value}>
-						<Query query={GET_ATTRACTION_BY_TYPE} variables={{ type: attractionType.value }}>
+						<Query query={GET_ATTRACTIONS_BY_TYPE} variables={{ type: attractionType.value }}>
 							{({ loading, error, data }) => {
 								if (loading) return <p> Loading </p>;
 								if (error) return <p> Error </p>;
-								return <OffersByType type={ attractionType } attractions={data.getAttractionByType}/>;
+								const attractions = data.getAttractionsByType;
+								return attractions && attractions.length > 0 ?
+									<OffersByType type={ attractionType } attractions={data.getAttractionsByType}/> :
+									"";
 							}}
 						</Query>
 					</div>

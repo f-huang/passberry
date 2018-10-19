@@ -1,4 +1,8 @@
 const EnumAttractionType = {
+	EVENT: {
+		value: 'EVENT',
+		display: 'Evènements'
+	},
 	ATTRACTION: {
 		value: 'ATTRACTION',
 		display: 'Visites'
@@ -7,10 +11,6 @@ const EnumAttractionType = {
 		value: 'RESTAURANT',
 		display: 'Restaurants'
 	},
-	// EVENT: {
-	// 	value: 'EVENT',
-	// 	display: 'Evènements'
-	// },
 };
 
 export default EnumAttractionType;

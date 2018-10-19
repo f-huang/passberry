@@ -2,7 +2,7 @@ import React from "react";
 import qs from "query-string";
 import { Query } from "react-apollo";
 import { withRouter} from "react-router-dom";
-import { GET_ATTRACTION_BY_TYPE } from "../../queries";
+import { GET_ATTRACTIONS_BY_TYPE } from "../../queries";
 import Error404 from "../../Error404";
 import EnumAttractionType from "./EnumAttractionType";
 import OfferLargeSized from "./components/OfferLargeSized";
@@ -27,11 +27,11 @@ class DestinationOffersSeeByTypeView extends React.Component {
 		if (!this.attractionType)
 			return <Error404/>;
 		return (
-			<Query query={GET_ATTRACTION_BY_TYPE} variables={{ type: this.attractionType.value }}>
+			<Query query={GET_ATTRACTIONS_BY_TYPE} variables={{ type: this.attractionType.value }}>
 				{ ({ loading, error, data }) => {
 					if (loading) return <p>Loading</p>;
 					if (error) return <p>Error</p>;
-					const attractions = data.getAttractionByType;
+					const attractions = data.getAttractionsByType;
 					return attractions.map(attraction =>
 						<Link to={{pathname:  `/attraction/${attraction.id}-${attraction.name}`, search: `?type=${params.type}`}}>
 							<OfferLargeSized key={attraction.id}
