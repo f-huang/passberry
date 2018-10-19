@@ -143,6 +143,9 @@ CREATE TABLE IF NOT EXISTS
         `address_city` VARCHAR(48) DEFAULT NULL,
         `address_postcode` VARCHAR(12) DEFAULT NULL,
         `address_country_code` CHAR(2) DEFAULT NULL,
+        `student` TINYINT(1) NOT NULL DEFAULT 0,
+        `student_validated` TINYINT(1) NOT NULL DEFAULT 0,
+        `student_expiration_date` DATE DEFAULT NULL,
         `newsletters` TINYINT(1) NOT NULL DEFAULT 0,
         `is_activated` TINYINT(1) NOT NULL  DEFAULT 0,
         `is_deleted` TINYINT(1) NOT NULL DEFAULT 0,
@@ -155,7 +158,6 @@ CREATE TABLE IF NOT EXISTS
         FOREIGN KEY(`address_country_code`) REFERENCES country(`code`),
 		PRIMARY KEY(`id`)
     ) ENGINE=InnoDB;
-
 
 CREATE TABLE IF NOT EXISTS
 	token(

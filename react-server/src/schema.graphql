@@ -110,6 +110,11 @@ type Attraction {
 	images: [String]
 }
 
+type StudentStatus {
+	isValidated: Boolean!
+	expirationDate: Date!
+}
+
 type User {
 	id: ID!
 	email: String!
@@ -118,6 +123,8 @@ type User {
 	birthdate: Date
 	gender: Gender
 	type: UserType
+	address: Address
+	studentStatus: StudentStatus
 }
 
 type BasketItem {

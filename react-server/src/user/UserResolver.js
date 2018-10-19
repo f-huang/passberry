@@ -53,6 +53,26 @@ const resolver = {
 				})
 				.catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e), token: null }));
 		}
+	},
+	User: {
+		id: parent => parent.id,
+		email: parent => parent.email,
+		firstName: parent => parent.firstName,
+		lastName: parent => parent.lastName,
+		birthdate: parent => parent.birthdate,
+		gender: parent => parent.gender,
+		type: parent => parent.type,
+		studentStatus: parent => parent.student ? ({
+			isValidated: parent.studentIsValidated,
+			expirationDate: parent.studentExpirationDate
+		}) : null,
+		address: parent => parent.addressStreet ? ({
+			street: parent.addressStreet,
+			supplement: parent.addressSupplement,
+			postcode: parent.addressPostcode,
+			city: parent.addressCity,
+			country: parent.addressCountry
+		}) : null
 	}
 };
 

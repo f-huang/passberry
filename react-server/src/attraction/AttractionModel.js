@@ -3,15 +3,16 @@
 const pool = require('../database/pool');
 
 const TABLE_NAME = "attraction";
+const COUNTRY_TABLE_NAME = "country";
 const IMAGE_TABLE_NAME = "attraction_image";
 
-const COLUMNS = `\`${TABLE_NAME}\`.\`id\`, \`name\`, \`link\`, \`description\`, \`type\`,
+const COLUMNS = `\`${TABLE_NAME}\`.\`id\`, ${TABLE_NAME}.\`name\`, \`link\`, \`description\`, \`type\`,
 		\`no_queuing\` as \`noQueuing\`,
 		\`price_adult\` AS \`priceAdult\`, \`price_child\` AS \`priceChild\`,
 		\`price_max_age_for_child\` AS \`priceMaxAgeForChild\`,
 		\`address_street\` AS \`addressStreet\`, \`address_supplement\` AS \`addressSupplement\`,
 		\`address_city\` AS \`addressCity\`, \`address_postcode\` AS \`addressPostcode\`,
-		\`address_country_code\` AS \`addressCountryCode\`,
+		${COUNTRY_TABLE_NAME}.\`name\` AS \`addressCountry\`,
 		\`opening_times_monday\` AS \`openingTimesMonday\`,
 		\`opening_times_monday_2\` AS \`openingTimesMonday2\`,
 		\`opening_times_tuesday\` AS \`openingTimesTuesday\`,
@@ -35,6 +36,8 @@ exports.get = (filters) => new Promise((resolve, reject) => {
 		FROM \`${TABLE_NAME}\`
 		LEFT JOIN ${IMAGE_TABLE_NAME} 
 		ON \`${TABLE_NAME}\`.\`id\`=\`${IMAGE_TABLE_NAME}\`.\`attraction_id\`
+		INNER JOIN ${COUNTRY_TABLE_NAME}
+		ON ${COUNTRY_TABLE_NAME}.\`code\`=${TABLE_NAME}.\`address_country_code\`
 		${filters ? "WHERE ?" : ""}
 		GROUP BY \`${TABLE_NAME}\`.\`id\`
 	`;
@@ -73,6 +76,8 @@ exports.getAll = (limit) => new Promise((resolve, reject) => {
 	const sql = `SELECT
 		${COLUMNS} 
 		FROM \`${TABLE_NAME}\`
+		INNER JOIN ${COUNTRY_TABLE_NAME}
+		ON ${COUNTRY_TABLE_NAME}.\`code\`=${TABLE_NAME}.\`address_country_code\`
 		${limit ? `LIMIT ${limit}` : ""}
 	`;
 	pool.query(sql, limit, (error, rows) => {
