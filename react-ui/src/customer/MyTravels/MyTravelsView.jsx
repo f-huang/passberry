@@ -1,11 +1,12 @@
 import React from "react";
+import App from "../../App";
+import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
 
 class MyTravelsView extends React.Component {
 	render() {
 		return (
-			<div>
-				My Travels
-			</div>
+			<App itemSelected={BottomNavigationBar.items.myTravels} title={"Mes voyages"} homeBtn>
+			</App>
 		)
 	}
 }

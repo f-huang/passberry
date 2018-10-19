@@ -7,6 +7,7 @@ import styled from "styled-components";
 import ButtonSubmit from "../../component/Button/ButtonSubmit/ButtonSubmit";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
+import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
 
 const style = {
 	overflow: 'hidden',
@@ -31,6 +32,7 @@ const TravelView = (props) => (
 				</ButtonSubmit>
 			</NavLink>
 		</Form>
+		<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>
 	</div>
 );
 

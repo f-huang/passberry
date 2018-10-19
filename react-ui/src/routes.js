@@ -7,7 +7,6 @@ import Login from "./customer/Credentials/Login";
 import QRPage from "./customer/Qr/QRView";
 import ProfilePage from "./customer/ProfilePage";
 import ParametersPage from "./customer/ParametersPage";
-import SelectionsPage from "./customer/SelectionsPage";
 import Error404 from "./Error404";
 import Attraction from "./customer/Attraction/AttractionView";
 import AttractionCreateView from "./admin/attraction/create/AttractionCreateView";
@@ -27,7 +26,6 @@ const routes = (
 		    <Route exact path="/" component={TravelView}/>
 		    <Route exact path="/admin-add-activity" component={AttractionCreateView}/>
 		    <Route exact path="/admin-manage-activity" component={AttractionManage}/>
-		    <Route exact path="/selections" component={SelectionsPage}/>
 		    <Route exact path="/profile" component={ProfilePage}/>
 		    <Route exact path="/parameters" component={ParametersPage}/>
 		    <Route exact path="/my-travels" component={MyTravelsView}/>

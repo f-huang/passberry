@@ -15,7 +15,8 @@ import iconProfile from "../../assets/icons/user_black.svg";
 import iconProfileSelected from "../../assets/icons/profile-full.svg";
 import iconParameters from "../../assets/icons/gears_black.svg";
 import iconParametersSelected from "../../assets/icons/gears_black.svg";
-
+import iconSearch from "../../assets/icons/search-empty.svg"
+import iconSearchSelected from "../../assets/icons/search-full.svg"
 
 //ITEM
 import BottomNavigationItem from "./BottomNavigationBarItem";
@@ -51,10 +52,10 @@ const MiddleButton = styled.div`
 
 class BottomNavigationBar extends React.Component {
 	static items = {
-		currentTrip: "Mes voyages",
-		mySelections: "Mes sélections ",
-		qr: "QRPage",
-		profile: "Profil",
+		currentTrip: "Recherche",
+		myTravels: "Mes voyages ",
+		qr: "Mes QR codes",
+		profile: "Mon profil",
 		parameters: "Paramètres",
 	};
 
@@ -67,17 +68,17 @@ class BottomNavigationBar extends React.Component {
 	navigationBtns = [
 		{
 			name: BottomNavigationBar.items.currentTrip,
-			alt: "trip-icon",
+			alt: "search-icon",
+			location: "/",
+			icon: iconSearch,
+			iconSelected: iconSearchSelected
+		},
+		{
+			name: BottomNavigationBar.items.myTravels,
+			alt: "travel-icon",
 			location: "/my-travels",
 			icon: iconTrip,
 			iconSelected: iconTripSelected
-		},
-		{
-			name: BottomNavigationBar.items.mySelections,
-			alt: "selections-icon",
-			location: "/selections",
-			icon: iconWishList,
-			iconSelected: iconWishListSelected
 		},
 		{
 			name: BottomNavigationBar.items.qr,
