@@ -184,7 +184,6 @@ export const GET_TRAVELERS_BY_USER_ID = gql`
 	query getTravelersByUserId($userId: ID!){
 		getTravelersByUserId(userId: $userId) {
 			id
-			userId
 			firstName
 			lastName
 		}
