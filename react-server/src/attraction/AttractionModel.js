@@ -5,14 +5,31 @@ const pool = require('../database/pool');
 const TABLE_NAME = "attraction";
 const IMAGE_TABLE_NAME = "attraction_image";
 
-
-exports.get = (filters) => new Promise((resolve, reject) => {
-	const sql = `SELECT \`${TABLE_NAME}\`.\`id\`, \`name\`, \`link\`, \`description\`, \`type\`,
+const COLUMNS = `\`${TABLE_NAME}\`.\`id\`, \`name\`, \`link\`, \`description\`, \`type\`,
 		\`price_adult\` AS \`priceAdult\`, \`price_child\` AS \`priceChild\`,
 		\`price_max_age_for_child\` AS \`priceMaxAgeForChild\`,
 		\`address_street\` AS \`addressStreet\`, \`address_supplement\` AS \`addressSupplement\`,
 		\`address_city\` AS \`addressCity\`, \`address_postcode\` AS \`addressPostcode\`,
 		\`address_country_code\` AS \`addressCountryCode\`,
+		\`opening_times_monday\` AS \`openingTimesMonday\`,
+		\`opening_times_monday_2\` AS \`openingTimesMonday2\`,
+		\`opening_times_tuesday\` AS \`openingTimesTuesday\`,
+		\`opening_times_tuesday_2\` AS \`openingTimesTuesday2\`,
+		\`opening_times_wednesday\` AS \`openingTimesWednesday\`,
+		\`opening_times_wednesday_2\` AS \`openingTimesWednesday2\`,
+		\`opening_times_thursday\` AS \`openingTimesThursday\`,
+		\`opening_times_thursday_2\` AS \`openingTimesThursday2\`,
+		\`opening_times_friday\` AS \`openingTimesFriday\`,
+		\`opening_times_friday_2\` AS \`openingTimesFriday2\`,
+		\`opening_times_saturday\` AS \`openingTimesSaturday\`,
+		\`opening_times_saturday_2\` AS \`openingTimesSaturday2\`,
+		\`opening_times_sunday\` AS \`openingTimesSunday\`,
+		\`opening_times_sunday_2\` AS \`openingTimesSunday2\`
+`;
+
+
+exports.get = (filters) => new Promise((resolve, reject) => {
+	const sql = `SELECT ${COLUMNS},
 		GROUP_CONCAT(\`${IMAGE_TABLE_NAME}\`.\`path\`) AS \`images\` 
 		FROM \`${TABLE_NAME}\`
 		LEFT JOIN ${IMAGE_TABLE_NAME} 
@@ -32,12 +49,7 @@ exports.get = (filters) => new Promise((resolve, reject) => {
 
 
 exports.getMustDos = (destination) => new Promise((resolve, reject) => {
-	const sql = `SELECT \`${TABLE_NAME}\`.\`id\`, \`name\`, \`link\`, \`description\`, \`type\`,
-		\`price_adult\` AS \`priceAdult\`, \`price_child\` AS \`priceChild\`,
-		\`price_max_age_for_child\` AS \`priceMaxAgeForChild\`,
-		\`address_street\` AS \`addressStreet\`, \`address_supplement\` AS \`addressSupplement\`,
-		\`address_city\` AS \`addressCity\`, \`address_postcode\` AS \`addressPostcode\`,
-		\`address_country_code\` AS \`addressCountryCode\`,
+	const sql = `SELECT ${COLUMNS},
 		GROUP_CONCAT(\`${IMAGE_TABLE_NAME}\`.\`path\`) AS \`images\` 
 		FROM \`${TABLE_NAME}\`
 		LEFT JOIN ${IMAGE_TABLE_NAME} 
@@ -58,9 +70,7 @@ exports.getMustDos = (destination) => new Promise((resolve, reject) => {
 
 exports.getAll = () => new Promise((resolve, reject) => {
 	const sql = `SELECT
-		\`id\`, \`name\`, \`link\`, \`description\`, \`type\`,
-		\`price_adult\` AS \`priceAdult\`, \`price_child\` AS \`priceChild\`,
-		\`price_max_age_for_child\` AS \`priceMaxAgeForChild\`   
+		${COLUMNS} 
 		FROM \`${TABLE_NAME}\``;
 	pool.query(sql, undefined, (error, rows) => {
 		if (error) {

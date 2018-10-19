@@ -46,6 +46,10 @@ export const GET_ATTRACTIONS_BY_TYPE = gql`
 				postcode
 				countryCode
 			}
+			openingTimes {
+				timeSlot
+				secondTimeSlot
+			}
 		}
 	}
 `;
@@ -71,6 +75,10 @@ export const GET_ATTRACTION_BY_ID = gql`
 				city
 				postcode
 				countryCode
+			}
+			openingTimes {
+				timeSlot
+				secondTimeSlot
 			}
 		}
 	}
@@ -299,6 +307,10 @@ export const CREATE_ATTRACTION = gql`
 					city
 					postcode
 					countryCode
+				}
+				openingTimes {
+					timeSlot
+					secondTimeSlot
 				}
 			}
 		}
