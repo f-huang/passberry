@@ -214,6 +214,8 @@ type Query {
     getAttractionsByType(type: ProductType!): [Attraction]
     getAllAttractions(limit: Int, sortField: String, sortOrder: String): [Attraction]
 
+    getTravelDestinations(limit: Int): [String]!
+
     getUserById(id: ID!): User
     getTravelersByUserId(userId: ID!): [Traveler]!
     getAllUsers(limit: Int, sortField: String, sortOrder: String): [User]

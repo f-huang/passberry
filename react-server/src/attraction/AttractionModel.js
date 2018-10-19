@@ -69,11 +69,27 @@ exports.getMustDos = (destination) => new Promise((resolve, reject) => {
 });
 
 
-exports.getAll = () => new Promise((resolve, reject) => {
+exports.getAll = (limit) => new Promise((resolve, reject) => {
 	const sql = `SELECT
 		${COLUMNS} 
-		FROM \`${TABLE_NAME}\``;
-	pool.query(sql, undefined, (error, rows) => {
+		FROM \`${TABLE_NAME}\`
+		${limit ? `LIMIT ${limit}` : ""}
+	`;
+	pool.query(sql, limit, (error, rows) => {
+		if (error) {
+			console.error(error);
+			reject(error);
+			return null;
+		}
+		resolve(rows);
+	})
+});
+
+exports.getTravelDestinations = (limit) => new Promise((resolve, reject) => {
+	const sql = `SELECT DISTINCT \`address_city\` as \`destination\` FROM ${TABLE_NAME}
+		${limit ? `LIMIT ${limit}` : ""}
+	`;
+	pool.query(sql, limit, (error, rows) => {
 		if (error) {
 			console.error(error);
 			reject(error);

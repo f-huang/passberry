@@ -58,10 +58,11 @@ const resolver = {
 			);
 		},
 		getAllAttractions: (_, { limit = 0, sortField = "", sortOrder = "" }) => {
-			return Attraction.getAll().then(rows =>
-				rows.map(row => (row))
-			);
+			return Attraction.getAll(limit).then(rows => rows);
 		},
+		getTravelDestinations: (_, { limit = 0}) => {
+			return Attraction.getTravelDestinations(limit).then(rows => rows.map(row => row.destination))
+		}
 	},
 	Mutation: {
 		createAttraction: (_, { input }) => {
