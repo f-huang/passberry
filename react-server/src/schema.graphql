@@ -329,6 +329,7 @@ input CreatePassInput {
 	basketId: ID!
 	startDate: Date!
 	endDate: Date!
+	destination: String!
 	pass: PassInput
 }
 

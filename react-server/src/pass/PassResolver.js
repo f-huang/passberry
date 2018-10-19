@@ -10,7 +10,8 @@ const pass = (input) => ({
 	"traveler_id": input.pass.travelerId,
 	"basket_id": input.basketId,
 	"start_date": input.startDate,
-	"end_date": input.endDate
+	"end_date": input.endDate,
+	"destination": input.destination
 });
 
 const ticketInput = (insertId, attractionId) => ({

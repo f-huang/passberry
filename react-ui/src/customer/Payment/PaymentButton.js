@@ -50,6 +50,7 @@ class PaymentButton extends React.Component {
 						basketId: this.props.basket.id,
 						startDate: this.props.startDate,
 						endDate: this.props.endDate,
+						destination: this.props.destination,
 						pass: {
 							userId: this.props.userId,
 							travelerId: travelerId,
@@ -96,6 +97,7 @@ const mapStateToProps = state => {
 		basketState: state.basket.items.length === items.length ? EnumBasketState.PAID : EnumBasketState.HALF_PAID,
 		startDate: state.travelDetails.travelDates.startDate.format("YYYY-MM-DD"),
 		endDate: state.travelDetails.travelDates.endDate.format("YYYY-MM-DD"),
+		destination: state.travelDetails.destination,
 		basket: { ...state.basket, items: items },
 		userId: 1
 	})
