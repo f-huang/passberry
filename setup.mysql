@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS
         `description` TEXT,
         `link` VARCHAR(256),
         `is_a_must_do` TINYINT(1) NOT NULL DEFAULT 0,
+        `no_queuing` TINYINT(1) NOT NULL DEFAULT 0,
         `price_adult` DECIMAL(8, 3) UNSIGNED NOT NULL DEFAULT 0.0,
         `price_child` DECIMAL(8, 3) UNSIGNED DEFAULT NULL,
         `price_student` DECIMAL(8, 3) UNSIGNED DEFAULT NULL,

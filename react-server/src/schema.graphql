@@ -102,6 +102,7 @@ type Attraction {
 	name: String!
 	description: String
 	price: AttractionPrice!
+	noQueuing: Boolean!
 	link: String
 	type: String!
 	address: Address!
@@ -282,6 +283,7 @@ input CreateAttractionInput {
 	type: ProductType!
 	description: String
 	link: String
+	noQueuing: Boolean
 	isAMustDo: Boolean
 	images: [Upload]
 }
@@ -397,7 +399,6 @@ type UserCredentials {
 
 type CreateAttractionPayload {
 	status: Status!
-	attraction: Attraction
 }
 
 type GenerateQrPayload {

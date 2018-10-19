@@ -11,6 +11,7 @@ const parent = (input) => ({
 	"name": input.name,
 	...(input.description ? {"description": input.description} : {}),
 	...(input.link ? {"link": input.link} : {}),
+	...(input.noQueuing ? {"no_queuing": input.noQueuing} : {}),
 	"price_adult": input.price.adult,
 	...(input.price.child ? {"price_child": input.price.child} : {}),
 	...(input.price.maxAgeForChild ? {"price_max_age_for_child": input.price.maxAgeForChild} : {}),
@@ -63,6 +64,7 @@ const resolver = {
 	},
 	Mutation: {
 		createAttraction: (_, { input }) => {
+			//TODO: check openingTimes format (xxhxx-xxhxx)
 			if (input.openingTimes.length !== 7)
 				return {
 					status: getStatus(StatusCodeEnum.clientSideError, 'openingTimes.length !== 7'),
@@ -97,6 +99,7 @@ const resolver = {
 		description: parent => parent.description,
 		link: parent => parent.link,
 		type: parent => parent.type,
+		noQueuing: parent => parent.noQueuing === 1,
 		price: parent => ({
 			adult: parseFloat(parent.priceAdult),
 			child: parent.priceChild ? parseFloat(parent.priceChild) : null,

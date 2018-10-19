@@ -6,6 +6,7 @@ const TABLE_NAME = "attraction";
 const IMAGE_TABLE_NAME = "attraction_image";
 
 const COLUMNS = `\`${TABLE_NAME}\`.\`id\`, \`name\`, \`link\`, \`description\`, \`type\`,
+		\`no_queuing\` as \`noQueuing\`,
 		\`price_adult\` AS \`priceAdult\`, \`price_child\` AS \`priceChild\`,
 		\`price_max_age_for_child\` AS \`priceMaxAgeForChild\`,
 		\`address_street\` AS \`addressStreet\`, \`address_supplement\` AS \`addressSupplement\`,

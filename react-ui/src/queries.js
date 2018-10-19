@@ -33,6 +33,7 @@ export const GET_ATTRACTIONS_BY_TYPE = gql`
 			link
 			description
 			type
+			noQueuing
 			images
 			price {
 				adult
@@ -63,6 +64,7 @@ export const GET_ATTRACTION_BY_ID = gql`
 			link
 			description
 			type
+			noQueuing
 			images
 			price {
 				adult
@@ -292,26 +294,6 @@ export const CREATE_ATTRACTION = gql`
 			status {
 				code
 				message
-			}
-			attraction {
-				id
-				name
-				price {
-					adult
-				}
-				description
-				type
-				address {
-					street
-					supplement
-					city
-					postcode
-					countryCode
-				}
-				openingTimes {
-					timeSlot
-					secondTimeSlot
-				}
 			}
 		}
 	}
