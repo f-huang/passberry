@@ -35,6 +35,9 @@ const resolver = {
 			return Pass.getByQr(qr).then(passes => {
 				return { passes: passes };
 			}).catch(e => { console.error(e); return { passes: null } })
+		},
+		getUserTravels: (_, { userId }) => {
+			return Pass.getUserTravels(userId).then(rows => rows);
 		}
 	},
 	Mutation: {

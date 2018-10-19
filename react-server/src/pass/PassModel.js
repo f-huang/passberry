@@ -136,3 +136,24 @@ exports.getByQr = (qr) => new Promise((resolve, reject) => {
 });
 
 
+
+
+exports.getUserTravels = (userId) => new Promise((resolve, reject) => {
+	const sql = `SELECT DISTINCT 
+	\`destination\`, \`start_date\` AS \`startDate\`, \`end_date\` AS \`endDate\`, COUNT(*) AS \`numberOfTravelers\`
+	FROM ${TABLE_NAME} WHERE \`user_id\`=?
+	GROUP BY \`destination\`, \`start_date\`, \`end_date\`
+`;
+	pool.query(sql, userId, (error, rows) => {
+		if (error) {
+			console.error(error);
+			reject(error);
+			return null;
+		}
+		if (!rows || rows.length === 0) {
+			resolve([]);
+			return ;
+		}
+		resolve(rows);
+	});
+});

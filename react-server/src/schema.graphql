@@ -170,6 +170,13 @@ type VuegoPass {
 	attractions: [Attraction]!
 }
 
+type TravelDetails {
+	destination: String!
+	startDate: Date!
+	endDate: Date!
+	numberOfTravelers: Int!
+}
+
 type Traveler {
 	id: ID!
 	firstName: String!
@@ -231,6 +238,8 @@ type Query {
 
 	getTicketByQrAndAttractionId(qr: String!, attractionId: ID!): AttractionTicket
 	getTicketByTravelerIdAndAttractionId(travelerId: ID!, attractionId: ID!): AttractionTicket
+
+	getUserTravels(userId: ID!): [TravelDetails]!
 
 	getPassesByUserId(userId: ID!): GetPassPayload!
 	getPassesByTravelerId(travelerId: ID!): GetPassPayload!
