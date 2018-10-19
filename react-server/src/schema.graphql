@@ -82,7 +82,7 @@ type Address {
 	supplement: String
 	city: String!
 	postcode: String!
-	countryCode: String
+	country: String
 }
 
 type AttractionOpeningTimes {
@@ -210,7 +210,6 @@ type GetPassPayload {
 # --------------------------------------------------------
 
 type Query {
-    getAddressById(id: ID!): Address
     getAttractionById(id: ID!): Attraction
     getAttractionsByType(type: ProductType!): [Attraction]
     getAllAttractions(limit: Int, sortField: String, sortOrder: String): [Attraction]
@@ -272,7 +271,7 @@ input AddressInput {
 	supplement: String
 	city: String!
 	postcode: String!
-	countryCode: String!
+	country: String!
 }
 
 input CreateAttractionInput {

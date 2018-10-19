@@ -1,5 +1,6 @@
 const Attraction = require("./AttractionModel");
 const AttractionImage = require('./AttractionImageModel');
+const Country = require('../country/CountryModel');
 const GraphqlUpload = require('graphql-upload');
 
 const { convertPathToImage } = require("../imageUtils");
@@ -70,27 +71,31 @@ const resolver = {
 					status: getStatus(StatusCodeEnum.clientSideError, 'openingTimes.length !== 7'),
 					attraction: input
 				};
-			return Attraction.create(parent(input))
-				.then(insertId => {
-					input.id = insertId;
-					input.images && input.images.map(async (image, index) => {
-						saveImage(image, index).then(storingPath => {
-							console.log("end --", storingPath);
-							AttractionImage.create(attractionImage({
-								attractionId: insertId,
-								path: storingPath
-							}))
-						})
-					});
-					return {
-						status: getStatus(StatusCodeEnum.success, 'OK'),
+			return Country.getCountryByName(input.address.country).then(countryCode => {
+				input.address.countryCode = countryCode;
+				return Attraction.create(parent(input))
+					.then(insertId => {
+						console.log(countryCode);
+						input.id = insertId;
+						input.images && input.images.map(async (image, index) => {
+							saveImage(image, index).then(storingPath => {
+								console.log("end --", storingPath);
+								AttractionImage.create(attractionImage({
+									attractionId: insertId,
+									path: storingPath
+								}))
+							})
+						});
+						return {
+							status: getStatus(StatusCodeEnum.success, 'OK'),
+							attraction: input
+						};
+					})
+					.catch(e => ({
+						status: getStatus(StatusCodeEnum.serverSideError, e),
 						attraction: input
-					};
-				})
-				.catch(e => ({
-					status: getStatus(StatusCodeEnum.serverSideError, e),
-					attraction: input
-				}));
+					}))
+			});
 		}
 	},
 	Attraction: {
@@ -111,7 +116,7 @@ const resolver = {
 			supplement: parent.addressSupplement,
 			city: parent.addressCity,
 			postcode: parent.addressPostcode,
-			countryCode: parent.addressCountryCode,
+			country: parent.addressCountry,
 		}),
 		openingTimes: parent => ([
 			{ timeSlot: parent.openingTimesMonday, secondTimeSlot: parent.openingTimesMonday2 },

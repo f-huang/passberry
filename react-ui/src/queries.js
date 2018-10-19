@@ -45,7 +45,7 @@ export const GET_ATTRACTIONS_BY_TYPE = gql`
 				supplement
 				city
 				postcode
-				countryCode
+				country
 			}
 			openingTimes {
 				timeSlot
@@ -76,7 +76,7 @@ export const GET_ATTRACTION_BY_ID = gql`
 				supplement
 				city
 				postcode
-				countryCode
+				country
 			}
 			openingTimes {
 				timeSlot
@@ -85,20 +85,6 @@ export const GET_ATTRACTION_BY_ID = gql`
 		}
 	}
 `;
-
-export const GET_ADDRESS_BY_ID = gql`
-	query getAddressById($id: ID!) {
-	    getAddressById(id:$id) {
-			id
-			street
-			supplement
-			city
-			postcode
-			countryCode
-		}
-	}
-`;
-
 
 export const CREATE_BASKET = gql`
 	mutation createBasket($input: CreateBasketInput!) {
