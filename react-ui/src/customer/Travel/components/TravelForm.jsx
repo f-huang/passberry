@@ -9,12 +9,13 @@ import TravelDateInput from "./TravelDateInput";
 import theme from "../../../app/theme";
 
 const Container = styled.div`
-	background-color: ${theme.colorPrimary};
+	border: 1px solid ${theme.colorPrimary};
 	width: 100%;
 `;
 
 const FormContainer = styled.div`
 	display:flex;
+	font-size: 12px;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -23,12 +24,13 @@ const FormContainer = styled.div`
 `;
 
 const BottomContainer = styled.div`
+	position: relative;
+	width: 100%;
 	display: flex;
 	flex-direction: row;
-	justify-content: stretch; 
-	width: 100%;
+	flex-wrap: wrap;
+	align-items: center;
 `;
-
 
 const TopContainer = styled.div`
 	display: flex;
@@ -37,9 +39,17 @@ const TopContainer = styled.div`
 	width: 100%;
 `;
 
-const destStyle = {
-	width: '100%'
-};
+const Wrap = styled.div`
+	width: 100%;
+	flex: 1;
+	border: 1px solid ${theme.colorPrimary};
+	background-color: ${theme.colorInverse};
+`;
+
+const NumberWrap = styled(Wrap)`
+	padding: 3px 0;
+	flex: 0.4;
+`;
 
 class TravelForm extends React.Component {
 
@@ -81,20 +91,22 @@ class TravelForm extends React.Component {
 			<Container>
 				<FormContainer>
 					<TopContainer>
-						<TravelInput
-							name="destination"
-							placeholder={"Trouver une destination..."}
-							onChange={e => this.props.onChangeDestination(e.target.name, e.target.value)}
-							style={destStyle}
-							value={this.state.destination}
-						/>
+						<Wrap>
+							<TravelInput
+								name="destination"
+								placeholder={"Trouver une destination..."}
+								onChange={e => this.props.onChangeDestination(e.target.name, e.target.value)}
+								value={this.state.destination}
+							/>
+						</Wrap>
 					</TopContainer>
 					<BottomContainer>
-						<TravelNumberTravelersInput
-							name={"nTravelers"}
-							value={this.state.nTravelers}
-						/>
-						<TravelDateInput/>
+						<Wrap>
+							<TravelDateInput/>
+						</Wrap>
+						<NumberWrap>
+						<TravelNumberTravelersInput value={this.state.nTravelers}/>
+						</NumberWrap>
 					</BottomContainer>
 				</FormContainer>
 			</Container>

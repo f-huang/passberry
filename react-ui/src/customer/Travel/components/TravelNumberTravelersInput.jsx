@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 
 const Container = styled.div`
 	display: flex;
+	height: 100%;
 	flex-wrap: wrap;
 	flex-direction: row;
 	justify-content: center;
@@ -16,7 +17,7 @@ const Container = styled.div`
 `;
 
 const MinusPlusButton = styled.button`
-	padding: 6px;
+	padding: 14px 6px;
 	text-align: center;
 	background-color: ${theme.colorInverse};
 	border: 0;
