@@ -10,6 +10,7 @@ import theme from "../../../app/theme";
 import ActivityDescription from "./ActivityDescription";
 import ActivityPrice from "./ActivityPrice.jsx";
 import ActivityAddress from "./ActivityAddress";
+import BottomNavigationBar from "../../../component/BottomNavigationBar/BottomNavigationBar";
 
 const Root = styled(ActivityDetailsLayout)`
 	height: 80vh;
@@ -24,8 +25,10 @@ const Arrow = styled(ShowHideArrow)`
 const Container = styled.div`
 	position: relative;
 	display: block;
-	margin-top: 20px;
-	padding: 24px;
+	overflow-y: scroll;
+	height: calc(100% - ${BottomNavigationBar.BOTTOM_BAR_HEIGHT});
+	margin-top: 52px;
+	padding: 0px 24px 120px 24px;
 `;
 
 const ActivityName = styled.h1`
@@ -103,7 +106,7 @@ ExpandedActivityDetails.propTypes = {
 			supplement: PropTypes.string,
 			postcode: PropTypes.string.isRequired,
 			city: PropTypes.string.isRequired,
-			countryCode: PropTypes.string.isRequired
+			country: PropTypes.string
 		})
 	}),
 	onClick: PropTypes.func.isRequired

@@ -26,7 +26,7 @@ ActivityAddress.propTypes = {
 		supplement: PropTypes.string,
 		postcode: PropTypes.string.isRequired,
 		city: PropTypes.string.isRequired,
-		countryCode: PropTypes.string.isRequired
+		country: PropTypes.string.isRequired
 	})
 };
 
