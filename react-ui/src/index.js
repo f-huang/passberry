@@ -16,6 +16,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 import "./app/base.css";
 import routes from './routes'
+import InitComponent from "./customer/InitComponent";
 
 const authLink = setContext((_, { headers }) => {
 	const token = localStorage.getItem(TOKEN);
@@ -46,7 +47,10 @@ const store = createStore(reducer);
 const root =
 	<ApolloProvider client={ client }>
 		<ReduxProvider store={ store }>
-			<CookiesProvider>{ routes }</CookiesProvider>
+			<CookiesProvider>
+				<InitComponent/>
+				{ routes }
+			</CookiesProvider>
 		</ReduxProvider>
 	</ApolloProvider>;
 

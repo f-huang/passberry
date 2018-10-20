@@ -25,6 +25,36 @@ export const GET_QR_BY_USER_ID = gql`
 	}
 `;
 
+export const GET_ALL_ACTIVITIES = gql`
+	query getAllActivities($limit: Int) {
+		getAllActivities(limit: $limit) {
+			id
+			name
+			link
+			noQueuing
+			description
+			price {
+				adult
+				child
+				maxAgeForChild
+			}
+			address {
+				street
+				supplement
+				city
+				postcode
+				country
+			}
+			openingTimes {
+				timeSlot
+				secondTimeSlot
+			}
+			type
+		}
+	}
+`;
+
+
 export const GET_ACTIVITIES_BY_TYPE = gql`
 	query getActivitiesByType($type: ActivityType!) {
 		getActivitiesByType(type: $type) {
