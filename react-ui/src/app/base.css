@@ -4,6 +4,30 @@
 }
 
 @font-face {
+	font-family: "Lato";
+	font-weight: 300;
+	src: url("../assets/fonts/Lato/Lato-Light.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Lato";
+	font-weight: 100;
+	src: url("../assets/fonts/Lato/Lato-Hairline.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Lato";
+	font-weight: 600;
+	src: url("../assets/fonts/Lato/Lato-Bold.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Lato";
+	font-weight: 900;
+	src: url("../assets/fonts/Lato/Lato-Black.ttf") format("truetype");
+}
+
+@font-face {
 	font-family: "Nunito";
 	src: url("../assets/fonts/Nunito/Nunito-Regular.ttf") format("truetype");
 }
