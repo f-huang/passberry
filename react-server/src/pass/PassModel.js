@@ -20,6 +20,7 @@ const addTicketsToPass = (rows) => {
 
 
 exports.create = (pass) => new Promise((resolve, reject) => {
+	pass.destination = pass.destination[0].toLocaleUpperCase() + pass.destination.slice(1).toLocaleLowerCase();
 	const sql = `INSERT INTO ${TABLE_NAME} SET ?`;
 	pool.query(sql, pass, (error, row) => {
 		if (error) {

@@ -29,7 +29,7 @@ const routes = (
 		    <Route exact path="/profile" component={ProfilePage}/>
 		    <Route exact path="/parameters" component={ParametersPage}/>
 		    <Route exact path="/my-travels" component={MyTravelsView}/>
-		    <Route exact path="/my-travels/:destination" component={MyTravelsDestinationView}/>
+		    <Route exact path="/my-travels/details" component={MyTravelsDestinationView}/>
 		    <Route exact path="/qr" component={QRPage}/>
 		    <Route exact path="/login" component={Login}/>
 		    <Route exact path="/sign-up" component={SignUp}/>

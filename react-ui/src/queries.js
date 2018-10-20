@@ -196,6 +196,17 @@ export const GET_TRAVELER_BY_QR = gql`
 	}
 `;
 
+export const GET_USER_TRAVELS = gql`
+	query getUserTravels($userId: ID!) {
+		getUserTravels(userId: $userId) {
+			destination
+			startDate
+			endDate
+			numberOfTravelers
+		}
+	}
+`;
+
 export const GET_TICKET_BY_QR_AND_ACTIVITY_ID = gql`
 	query getTicketByQrAndActivityId($qrValue: String!, $activityId: ID!) {
 		getTicketByQrAndActivityId(qr: $qrValue, activityId: $activityId) {
