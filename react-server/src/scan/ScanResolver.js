@@ -2,7 +2,7 @@ const Scan = require('./ScanModel');
 const { getStatus, StatusCodeEnum } = require("../status");
 
 const scan = (input) => ({
-	'attraction_id': input.attractionId,
+	'activity_id': input.activityId,
 	'staff_user_id': input.userId,
 	'qr_code': input.qr,
 	'state': input.state,

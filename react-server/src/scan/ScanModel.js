@@ -38,7 +38,7 @@ exports.update = (scan) => new Promise((resolve, reject) => {
 exports.getById = (scanId) => new Promise((resolve, reject) => {
 	const sql = `SELECT
 		\`id\`, \`timestamp\`,
-		\`staff_user_id\` AS \`userId\`, \`attraction_id\` AS \`attractionId\`,
+		\`staff_user_id\` AS \`userId\`, \`activity_id\` AS \`activityId\`,
 		\`qr_code\` AS \`qr\`, \`state\` 
 		FROM ${TABLE_NAME}
 		WHERE \`id\`=?

@@ -8,7 +8,7 @@ const Container = styled.div`
 const Ticket = ({ ticket, onClick, quantity }) => {
 	return (
 		<Container onClick={ onClick } isUsed={ ticket.usedTime !== null }>
-			{ quantity } x { ticket.id } @{ ticket.attractionId }
+			{ quantity } x { ticket.id } @{ ticket.activityId }
 		</Container>
 	)
 };

@@ -43,7 +43,7 @@ class ScannedProfileView extends React.Component {
 					{traveler.lastName}
 				</div>
 				<Query query={ GET_TICKET_BY_TRAVELER_ID_AND_ACTIVITY_ID }
-				       variables={{ travelerId: this.props.traveler.id, attractionId: this.props.attractionId }}>
+				       variables={{ travelerId: this.props.traveler.id, activityId: this.props.activityId }}>
 					{ ({ loading, error, data }) => {
 						if (loading) return <p>Loading</p>;
 						if (error) return <p>Error</p>;
@@ -55,7 +55,7 @@ class ScannedProfileView extends React.Component {
 						else if (state  === EnumScanState.ALREADY_USED)
 							return <p>Ticket already used</p>;
 						else if (state === EnumScanState.SUCCESS)
-							return <p>{ticket.id} @ {ticket.attractionId}</p>
+							return <p>{ticket.id} @ {ticket.activityId}</p>
 					}}
 				</Query>
 				<Button>x</Button>
@@ -68,7 +68,7 @@ class ScannedProfileView extends React.Component {
 const mapStateToProps = state => {
 	return ({
 		traveler: state.scan.traveler,
-		attractionId: 1,
+		activityId: 1,
 		userId: 10
 	})
 };

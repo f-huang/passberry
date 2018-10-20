@@ -41,7 +41,7 @@ class PaymentButton extends React.Component {
 			const tickets = [];
 			const travelerItems = this.props.basket.items.filter(item => item.travelerId === travelerId && item.quantity > 0);
 			travelerItems.forEach(travelerItem => tickets.push({
-				attractionId: travelerItem.product.id,
+				activityId: travelerItem.product.id,
 				quantity: travelerItem.quantity
 			}));
 			const variables = {

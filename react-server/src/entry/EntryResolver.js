@@ -5,7 +5,7 @@ const entry = (input) => ({
 	'id': input.id,
 	'timestamp': input.timestamp,
 	'staff_user_id': input.userId,
-	'attraction_id': input.attractionId,
+	'activity_id': input.activityId,
 	'scan_id': input.scanId,
 	'state': input.state,
 	...(input.comment ? { 'comment': input.comment } : {})

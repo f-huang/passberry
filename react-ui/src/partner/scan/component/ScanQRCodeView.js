@@ -59,7 +59,7 @@ class ScanQRCodeView extends React.Component {
 				console.log("Data", data.getTravelerByQr);
 				const variables = {variables: {
 					input: {
-						attractionId: this.props.attractionId,
+						activityId: this.props.activityId,
 							userId: this.props.userId,
 							qr: result,
 							state: (data.getTravelerByQr === null ? EnumScanState.NOT_FOUND : EnumScanState.PENDING).value,
@@ -105,7 +105,7 @@ class ScanQRCodeView extends React.Component {
 
 const mapStateToProps = state => {
 	return ({
-		attractionId: 1,
+		activityId: 1,
 		userId: 10
 	})
 };

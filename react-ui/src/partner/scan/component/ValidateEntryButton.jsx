@@ -21,7 +21,7 @@ const onClick = (e, props, mutate) => {
 				timestamp: moment().format('YYYY-MM-DD hh:mm:ss'),
 				state: EnumEntryState.ACCEPTED.value,
 				userId: props.userId,
-				attractionId: props.attractionId,
+				activityId: props.activityId,
 				scanId: props.match.params.scanId
 			}
 		}
@@ -45,7 +45,7 @@ const ValidateEntryButton = (props) => (
 const mapStateToProps = state => {
 	return ({
 		userId: 10,
-		attractionId: 1
+		activityId: 1
 	})
 };
 

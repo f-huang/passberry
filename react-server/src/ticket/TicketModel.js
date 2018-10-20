@@ -27,7 +27,7 @@ exports.update = (ticket) => new Promise((resolve, reject) => {
 });
 
 exports.getPassTickets = (passId) =>  new Promise((resolve, reject) => {
-	const sql = `SELECT \`id\`, \`attraction_id\` AS \`attractionId\`, \`pass_id\` AS \`passId\`,
+	const sql = `SELECT \`id\`, \`activity_id\` AS \`activityId\`, \`pass_id\` AS \`passId\`,
 		\`used_time\` AS \`usedTime\` FROM ${TABLE_NAME} WHERE \`pass_id\`=?`;
 	pool.query(sql, passId, (error, rows) => {
 		if (error) {

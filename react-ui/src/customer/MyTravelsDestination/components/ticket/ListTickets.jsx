@@ -6,8 +6,8 @@ const ListTickets = ({ tickets }) => {
 		return "";
 
 	const list = tickets.reduce((memo, current) => {
-		if (!memo.find(ticket => ticket.attractionId === current.attractionId)) {
-			current.quantity = tickets.filter(listItem => listItem.attractionId === current.attractionId).length;
+		if (!memo.find(ticket => ticket.activityId === current.activityId)) {
+			current.quantity = tickets.filter(listItem => listItem.activityId === current.activityId).length;
 			memo.push(current);
 		}
 		return memo;
@@ -15,7 +15,7 @@ const ListTickets = ({ tickets }) => {
 
 	return list.map(item => {
 		return <Ticket
-			key={ `${item.id}-${item.attractionId}` }
+			key={ `${item.id}-${item.activityId}` }
 			quantity={ item.quantity }
 			ticket={ item }
 			onClick={ e => { e.preventDefault(); console.log('clicked on ticket') }}
