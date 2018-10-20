@@ -10,39 +10,37 @@ import theme from "../../../app/theme";
 const Container = styled.div`
 	position: relative;
 	display: flex;
+	width: 100%;
 	flex-direction: row;
-	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
 `;
 
-const buttonStyle = {
-	position: 'absolute',
-	right: '8px',
-	backgroundColor: theme.colorPurple,
-	width: '24px',
-	height: '24px',
-	borderRadius: '50%',
-	padding: 0,
-};
+const Wrap = styled.div`
+	width: 100%;
+	border: 1px solid ${theme.colorPrimary};
+`;
 
-const InputContainer = styled.div`
-	flex: 5;
+const ButtonRemove = styled(Button)`
+	flex: 0.2;
+	padding: 12px 12px;
+	border-radius: 0;
 `;
 
 const Traveler = ({traveler, removable, index, onClick, onChange}) => (
 	<Container>
-		<InputContainer>
+		<Wrap>
 			<TravelInput
 				name={"travelers"}
 				placeholder={"Visiteur " + (index + 1)}
 				value={traveler ? traveler.name || "" : ""}
 				onChange={onChange}
 			/>
-		</InputContainer>
+		</Wrap>
 		{removable &&
-		<Button onClick={onClick} style={buttonStyle}>x</Button>
+		<ButtonRemove onClick={onClick}>x</ButtonRemove>
 		}
+
 	</Container>
 );
 

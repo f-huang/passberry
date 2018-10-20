@@ -15,7 +15,26 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: space-around;
+	
+	.DateRangePickerInput {
+		overflow: hidden;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+	
+	.DateInput {
+		width: 40%;
+	}
+	
+	.DateInput_input {
+		width: 100%;
+	}
+`;
+
+const Wrap = styled.div`
+	padding: 0 2px 0 8px;
 `;
 
 const CalendarImg = styled.img`
@@ -40,7 +59,9 @@ class TravelDateInput extends React.Component {
 	render() {
 		return (
 			<Container>
-				<CalendarImg src={iconCalendar} alt="icon-calendar"/>
+				<Wrap>
+					<CalendarImg src={iconCalendar} alt="icon-calendar"/>
+				</Wrap>
 				<DateRangePicker
 					startDate={this.props.startDate}
 					startDateId={"startDateId"}
