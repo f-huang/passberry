@@ -7,7 +7,6 @@ const app = express();
 const bodyParser = require("body-parser");
 const graphqlHTTP = require('express-graphql');
 const { graphqlUploadExpress } = require('graphql-upload');
-const session = require("express-session");
 const schema = require('./src/schema');
 const jwt = require('express-jwt');
 
@@ -20,12 +19,6 @@ const middlewares = [
 	express.static(require('path').join(__dirname, '../')),
 	express.json(),
 	express.urlencoded({extended: true}),
-	session({
-		secret: JWT_SECRET,
-		resave: false,
-		saveUninitialized: true,
-		// cookie: { secure: true }
-	})
 ];
 
 // =====================================
@@ -41,13 +34,13 @@ app.use(apiEndPoint, graphqlUploadExpress({
 	maxFiles: 10
 }));
 
-app.use(apiEndPoint, bodyParser.json(), (req, res) => {
-	return graphqlHTTP({
+app.use(apiEndPoint, bodyParser.json(), graphqlHTTP(req =>
+	({
 		schema: schema,
-		context: { user: req.user  },
+		context: {user: req.user},
 		graphiql: true,
-	}) (req, res);
-});
+	})
+));
 
 app.listen(port);
 console.log(`Listening app at http://localhost:${port}`);
