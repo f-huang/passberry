@@ -44,8 +44,9 @@ class BasketUpdateButton extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+	const ids = state.travelDetails.travelers.map(traveler => traveler.id);
 	return ({
-		basket: state.basket
+		basket: {...state.basket, items: state.basket.items.filter(item => ids.includes(item.travelerId))}
 	})
 };
 

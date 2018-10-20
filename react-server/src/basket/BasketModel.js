@@ -24,7 +24,10 @@ exports.getUserIdById = (basketId) => new Promise((resolve, reject) => {
 			reject(error);
 			return null;
 		}
-		console.log(rows[0]);
+		if (!rows || !rows[0]) {
+			resolve(-1);
+			return ;
+		}
 		resolve(rows[0].userId);
 	});
 });

@@ -31,14 +31,14 @@ const Line = styled.div`
 `;
 
 const propTypes = {
-	subTotal: PropTypes.number.isRequired,
-	discounts: {
+	subTotal: PropTypes.string.isRequired,
+	discounts: PropTypes.shape({
 		name: PropTypes.string.isRequired,
 		value: PropTypes.number.isRequired,
 		type: PropTypes.shape({
 			value: PropTypes.string.isRequired
 		}),
-	}
+	})
 };
 
 const BasketRecap = ({discounts = [], subTotal}) => {
@@ -72,19 +72,18 @@ const BasketRecap = ({discounts = [], subTotal}) => {
 BasketRecap.propTypes = propTypes;
 
 const mapStateToProps = state => {
-	const ids = state.basketPage.travelers ?
+	const ids = state.basketPage.travelers && Object.keys(state.basketPage.travelers).length > 0 ?
 		Object.keys(state.basketPage.travelers).filter(id =>
-			state.basketPage.travelers[id] === true
-		) : null;
-	const items = state.basketPage.itemsLayout === EnumToggleItems.CLASSIC.value ?
-		state.basket.items :
-		state.basket.items.filter(item =>
-			ids.find(id => parseInt(item.travelerId, 10) === parseInt(id, 10))
-		);
+			state.basketPage.travelers[id] === true &&
+			state.travelDetails.travelers.find(traveler => traveler.id.toString() === id.toString())
+		) : state.travelDetails.travelers.map(traveler => traveler.id.toString());
+	const items = state.basket.items.filter(item =>
+		ids.includes(item.travelerId.toString()) && item.quantity > 0
+	);
 	const quantities = items ? items.map(item => item.quantity) : [];
 	const prices = items ? items.map(item => item.product.price.adult) : [];
 	return ({
-		subTotal: prices.length === 0 ? 0 :
+		subTotal: prices.length === 0 ? "0.00" :
 			prices.reduce((total, currentPrice, index) => total + quantities[index] * currentPrice).toFixed(2)
 	});
 };

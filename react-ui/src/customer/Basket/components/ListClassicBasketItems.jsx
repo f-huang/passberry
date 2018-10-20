@@ -16,8 +16,8 @@ class ListClassicBasketItems extends React.Component {
 		const counts = {};
 		if (items)
 			for (let i = 0; i < items.length; i++) {
-				let num = items[i].product.id;
-				counts[num] = (counts[num] || 0) + 1;
+				let key = items[i].product.id;
+				counts[key] = (counts[key] !== undefined && counts[key] !== null ? counts[key] : 0) + items[i].quantity;
 			}
 		return counts;
 	};
@@ -40,8 +40,9 @@ class ListClassicBasketItems extends React.Component {
 }
 
 const mapStateToProps = state => {
+	const ids = state.travelDetails.travelers.map(traveler => traveler.id);
 	return ({
-		basket: state.basket,
+		basket: {...state.basket, items: state.basket.items.filter(item => ids.includes(item.travelerId) && item.quantity > 0)}
 	})
 };
 

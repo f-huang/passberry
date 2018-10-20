@@ -82,12 +82,11 @@ class PaymentButton extends React.Component {
 const mapStateToProps = state => {
 	const ids = state.basketPage.travelers ?
 		Object.keys(state.basketPage.travelers).filter(id =>
-			state.basketPage.travelers[id] === true
-		) : null;
-	const items = !ids || ids.length === 0 ?
-		state.basket.items :
-		state.basket.items.filter(item =>
-			ids.find(id => parseInt(item.travelerId, 10) === parseInt(id, 10))
+			state.basketPage.travelers[id] === true &&
+			state.travelDetails.travelers.find(traveler => traveler.id === parseInt(id, 10))
+		) : state.travelDetails.travelers.map(traveler => traveler.id);
+	const items = state.basket.items.filter(item =>
+			ids.includes(item.travelerId) && item.quantity > 0
 		);
 	const quantities = items ? items.map(item => item.quantity) : [];
 	const prices = items ? items.map(item => item.product.price.adult) : [];
