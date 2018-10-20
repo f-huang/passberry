@@ -5,7 +5,9 @@ import Ticket from "./TicketView";
 const Root = styled.div`
 	width: 100%;
 	min-height: 100%;
-	padding: 24px;
+	padding: 18px;
+	max-width: 500px;
+	margin: 0 auto;
 `;
 
 
@@ -28,7 +30,6 @@ const ListTickets = ({ tickets }) => {
 					key={ `${item.id}-${item.activityId}` }
 					quantity={ item.quantity }
 					ticket={ item }
-					onClick={ e => { e.preventDefault(); console.log('clicked on ticket') }}
 				/>;
 			})}
 		</Root>

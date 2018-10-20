@@ -13,7 +13,6 @@ const addTicketsToPass = (rows) => {
 			)
 		));
 	return Promise.all(promises).then (() => {
-		console.log(rows);
 		return (rows);
 	})
 };

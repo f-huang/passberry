@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import theme from "../../../../app/theme";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 const Root = styled.div`
 	display: flex;
@@ -25,7 +26,7 @@ const NumberOfTicketsContainer = styled.div`
 	text-align: center;
 	align-items: center;
 	justify-content: center;
-	padding: 8px;
+	padding: 8px 12px;
 `;
 
 const Quantity = styled.span`
@@ -55,11 +56,14 @@ const NoQueuingTIcket = styled.span`
 	font-weight: 300;
 `;
 
-const Ticket = ({ ticket, activity, onClick, quantity }) => {
+const Ticket = ({ ticket, activity, quantity, history }) => {
 	if (!activity)
 		return <div>Loading</div>;
 	return (
-		<Root onClick={ onClick } isUsed={ ticket.usedTime !== null }>
+		<Root
+			onClick={e => history.push(`/activity/${activity.id}-${activity.name}`)}
+			isUsed={ ticket.usedTime !== null}
+		>
 			<NumberOfTicketsContainer>
 				<Quantity>{ quantity }</Quantity>
 				{"tickets"}
@@ -79,10 +83,9 @@ const Ticket = ({ ticket, activity, onClick, quantity }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-	console.log(state);
 	return ({
 		activity: (state.activities && state.activities.filter(activity => activity.id === ownProps.ticket.activityId)[0]) || null
 	});
 };
 
-export default connect(mapStateToProps)(Ticket);
+export default withRouter(connect(mapStateToProps)(Ticket));

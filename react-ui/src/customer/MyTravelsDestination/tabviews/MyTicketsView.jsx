@@ -6,9 +6,11 @@ import { Query } from "react-apollo";
 import { GET_PASSES_BY_USER_ID } from "../../../queries";
 import ListTickets from "../components/ticket/ListTickets";
 import Error404 from "../../../Error404";
+import TicketLabel from "../components/ticket/TicketLabel";
 
 const Root = styled.div`
 	width: 100vw;
+	padding-top: 12px;
 `;
 
 class MyTicketsView extends React.Component {
@@ -23,10 +25,22 @@ class MyTicketsView extends React.Component {
 						if (!passes || passes.length === 0)
 							return <Error404/>;
 						const tickets = [].concat.apply([], passes.map(pass => pass.tickets));
+						const unusedTickets = tickets.filter(ticket=> ticket.usedTime === null);
+						const usedTickets = tickets.filter(ticket=> ticket.usedTime !== null);
 						return (
 							<div>
-								<ListTickets tickets={ tickets.filter(ticket=> ticket.usedTime === null) }/>
-								<ListTickets tickets={ tickets.filter(ticket=> ticket.usedTime !== null) }/>
+								{unusedTickets && unusedTickets.length > 0 &&
+								<div>
+									<TicketLabel>{"Tickets valides"}</TicketLabel>
+									<ListTickets tickets={unusedTickets}/>
+								</div>
+								}
+								{usedTickets && usedTickets.length > 0 &&
+								<div>
+									<TicketLabel>{"Tickets utilisées"}</TicketLabel>
+									<ListTickets tickets={ usedTickets }/>
+								</div>
+								}
 							</div>
 						);
 					}}
