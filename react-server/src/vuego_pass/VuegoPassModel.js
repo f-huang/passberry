@@ -1,9 +1,9 @@
 const pool = require("../database/pool");
-const Attraction = require("../attraction/AttractionModel");
+const Activity = require("../activity/ActivityModel");
 
 const TABLE_NAME = 'vuego_pass';
-const VUEGO_ATTRACTION_TABLE_NAME = 'vuego_pass_attraction';
-const ATTRACTION_TABLE_NAME = 'attraction';
+const VUEGO_ACTIVITY_TABLE_NAME = 'vuego_pass_activity';
+const ACTIVITY_TABLE_NAME = 'activity';
 const IMAGE_TABLE_NAME = "attraction_image";
 
 
@@ -17,13 +17,13 @@ const mustDoPassDetails = {
 };
 
 exports.getPassMustDo = (destination) => new Promise((resolve, reject) => {
-	Attraction.getMustDos(destination).then(attractions => {
+	Activity.getMustDos(destination).then(activities => {
 		resolve({
 			name: mustDoPassDetails.name,
 			description: mustDoPassDetails.description,
 			destination: destination,
-			attractions: attractions.map(attraction => attraction),
-			price: attractions.reduce((sum, current) => sum + current.priceAdult, 0),
+			activities: activities.map(activity => activity),
+			price: activities.reduce((sum, current) => sum + current.priceAdult, 0),
 			discount: mustDoPassDetails.discount
 		});
 	});

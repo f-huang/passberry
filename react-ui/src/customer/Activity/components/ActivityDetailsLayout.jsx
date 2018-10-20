@@ -14,6 +14,6 @@ const Layout = styled.div`
 	box-shadow: 0 -1px 10px #000;
 `;
 
-const AttractionDetailsLayout = (props) => <Layout {...props}/>;
+const ActivityDetailsLayout = (props) => <Layout {...props}/>;
 
-export default AttractionDetailsLayout;
+export default ActivityDetailsLayout;

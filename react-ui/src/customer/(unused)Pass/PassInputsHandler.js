@@ -58,7 +58,7 @@ export default class PassInputsHandler {
 	saveCity = (city) => setCookie(KEY_CITY, city);
 	getCity = () => getCookie(KEY_CITY);
 
-	saveAttractions = () => {
+	saveActivities = () => {
 
 	};
 

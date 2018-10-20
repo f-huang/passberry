@@ -17,7 +17,7 @@ enum UserType {
 	TOURIST
 }
 
-enum ProductType {
+enum ActivityType {
 	ATTRACTION
 	RESTAURANT
 	EVENT
@@ -32,6 +32,7 @@ enum ItemType {
 	PASS
 	ATTRACTION
 	RESTAURANT
+	EVENT
 	TASTING_SESSION
 }
 
@@ -85,28 +86,28 @@ type Address {
 	country: String
 }
 
-type AttractionOpeningTimes {
+type ActivityOpeningTimes {
 	timeSlot: String
 	secondTimeSlot: String
 }
 
-type AttractionPrice {
+type ActivityPrice {
 	adult: Float!
 	child: Float
 	student: Float
 	maxAgeForChild: Int
 }
 
-type Attraction {
+type Activity {
 	id: ID!
 	name: String!
 	description: String
-	price: AttractionPrice!
+	price: ActivityPrice!
 	noQueuing: Boolean!
 	link: String
 	type: String!
 	address: Address!
-	openingTimes: [AttractionOpeningTimes]
+	openingTimes: [ActivityOpeningTimes]
 	images: [String]
 }
 
@@ -148,9 +149,9 @@ type Payment {
 	basketID: ID!
 }
 
-type AttractionTicket {
+type ActivityTicket {
 	id: ID!
-	attractionId: ID!
+	activityId: ID!
 	usedTime: Date
 	passId: ID
 }
@@ -159,7 +160,7 @@ type Pass {
 	id: ID!
 	userId: ID!
 	travelerId: ID!
-	tickets: [AttractionTicket]!
+	tickets: [ActivityTicket]!
 }
 
 type PassDiscount {
@@ -174,7 +175,7 @@ type VuegoPass {
 	destination: String!
 	discount: PassDiscount
 	price: Float!
-	attractions: [Attraction]!
+	activities: [Activity]!
 }
 
 type TravelDetails {
@@ -199,7 +200,7 @@ type TokenToId {
 type Scan {
 	id: ID!
 	userId: ID!
-	attractionId: ID!
+	activityId: ID!
 	timestamp: Date!
 	state: ScanState!
 	qr: String!
@@ -209,7 +210,7 @@ type Entry {
 	id: ID!
 	timestamp: Date!
 	userId: ID!
-	attractionId: ID!
+	activityId: ID!
 	scanId: ID!
 	state: EntryState!
 	comment: String
@@ -224,9 +225,9 @@ type GetPassPayload {
 # --------------------------------------------------------
 
 type Query {
-    getAttractionById(id: ID!): Attraction
-    getAttractionsByType(type: ProductType!): [Attraction]
-    getAllAttractions(limit: Int, sortField: String, sortOrder: String): [Attraction]
+    getActivityById(id: ID!): Activity
+    getActivitiesByType(type: ActivityType!): [Activity]
+    getAllActivities(limit: Int, sortField: String, sortOrder: String): [Activity]
 
     getTravelDestinations(limit: Int): [String]!
 
@@ -243,8 +244,8 @@ type Query {
 
 	convertTokenToId(token: String): TokenToId
 
-	getTicketByQrAndAttractionId(qr: String!, attractionId: ID!): AttractionTicket
-	getTicketByTravelerIdAndAttractionId(travelerId: ID!, attractionId: ID!): AttractionTicket
+	getTicketByQrAndActivityId(qr: String!, activityId: ID!): ActivityTicket
+	getTicketByTravelerIdAndActivityId(travelerId: ID!, activityId: ID!): ActivityTicket
 
 	getUserTravels(userId: ID!): [TravelDetails]!
 
@@ -273,13 +274,13 @@ input SignUpInput {
 	birthdate: Date
 }
 
-input AttractionPriceInput {
+input ActivityPriceInput {
 	adult: Float!
 	child: Float
 	student: Float
 	maxAgeForChild: Int
 }
-input AttractionOpeningTimesInput {
+input ActivityOpeningTimesInput {
 	timeSlot: String
 	secondTimeSlot: String
 }
@@ -292,12 +293,12 @@ input AddressInput {
 	country: String!
 }
 
-input CreateAttractionInput {
+input CreateActivityInput {
 	name: String!
-	price: AttractionPriceInput!
+	price: ActivityPriceInput!
 	address: AddressInput!
-	openingTimes: [AttractionOpeningTimesInput]!
-	type: ProductType!
+	openingTimes: [ActivityOpeningTimesInput]!
+	type: ActivityType!
 	description: String
 	link: String
 	noQueuing: Boolean
@@ -345,7 +346,7 @@ input ValidateBasketInput {
 }
 
 input PassTicketInput {
-	attractionId: ID!
+	activityId: ID!
 	quantity: Int!
 }
 
@@ -363,7 +364,7 @@ input CreatePassInput {
 	pass: PassInput
 }
 
-input BurnAttractionTicketInput {
+input BurnActivityTicketInput {
 	timestamp: Date!
 	ticketId: ID!
 	passId: ID!
@@ -382,7 +383,7 @@ input GetPassByTravelerIdInput {
 }
 
 input CreateScanInput {
-	attractionId: ID!
+	activityId: ID!
 	userId: ID!
 	qr: String!
 	state: ScanState!
@@ -397,7 +398,7 @@ input UpdateScanStateInput {
 input CreateEntryInput {
 	timestamp: Date!
 	userId: ID!
-	attractionId: ID!
+	activityId: ID!
 	scanId: ID!
 	state: EntryState!
 	comment: String
@@ -414,7 +415,7 @@ type UserCredentials {
 	errorMessage: String
 }
 
-type CreateAttractionPayload {
+type CreateActivityPayload {
 	status: Status!
 }
 
@@ -450,7 +451,7 @@ type CreatePassPayload {
 	pass: Pass!
 }
 
-type BurnAttractionTicketPayload {
+type BurnActivityTicketPayload {
 	status: Status!
 	pass: Pass!
 }
@@ -478,7 +479,7 @@ type Mutation {
 	signIn(input: SignInInput!): UserCredentials!
 	signUp(input: SignUpInput!): UserCredentials!
 
-	createAttraction(input: CreateAttractionInput!): CreateAttractionPayload!
+	createActivity(input: CreateActivityInput!): CreateActivityPayload!
     
     generateQr(input: GenerateQrInput!): GenerateQrPayload!
 
@@ -489,7 +490,7 @@ type Mutation {
 	createPayment(input: CreatePaymentInput!): CreatePaymentPayload!
 
 	createPass(input: CreatePassInput!): CreatePassPayload!
-	burnAttractionTicket(input: BurnAttractionTicketInput!): BurnAttractionTicketPayload!
+	burnActivityTicket(input: BurnActivityTicketInput!): BurnActivityTicketPayload!
 
 	createScan(input: CreateScanInput!): CreateScanPayload!
 	updateScanState(input: UpdateScanStateInput!): UpdateScanStatePayload!

@@ -20,7 +20,7 @@ const mergeResolvers = (resolvers) => {
 
 const userResolver = require("./user/UserResolver");
 const travelerResolver = require("./traveler/TravelerResolver");
-const attractionResolver = require("./attraction/AttractionResolver");
+const attractionResolver = require("./activity/ActivityResolver");
 const qrResolver = require("./qr/QrResolver");
 const scanResolver = require("./scan/ScanResolver");
 const entryResolver = require("./entry/EntryResolver");

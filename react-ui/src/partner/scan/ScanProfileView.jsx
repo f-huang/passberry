@@ -4,7 +4,7 @@ import ScanQRCodeView from './component/ScanQRCodeView';
 import AppBar from "../../component/AppBar/AppBar";
 import '../../app/base.css'
 
-const title = "Scan attraction";
+const title = "Scan activity";
 
 class ScanProfileView extends React.Component {
     render() {

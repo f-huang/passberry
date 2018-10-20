@@ -1,5 +1,5 @@
-const Attraction = require("./AttractionModel");
-const AttractionImage = require('./AttractionImageModel');
+const Activity = require("./ActivityModel");
+const ActivityImage = require('./ActivityImageModel');
 const Country = require('../country/CountryModel');
 const GraphqlUpload = require('graphql-upload');
 
@@ -38,68 +38,68 @@ const parent = (input) => ({
 	...(input.openingTimes[6].secondTimeSlot ? { "opening_times_sunday2": input.openingTimes[6].secondTimeSlot } : {}),
 });
 
-const attractionImage = (input) => ({
+const activityImage = (input) => ({
 	"path": input.path,
-	"attraction_id": input.attractionId
+	"activity_id": input.activityId
 });
 
 
 const resolver = {
 	Upload: GraphqlUpload,
 	Query: {
-		getAttractionById: (_, { id }) => {
-			return Attraction.get({ id: id }).then(rows => {
+		getActivityById: (_, { id }) => {
+			return Activity.get({ id: id }).then(rows => {
 				return rows[0] ? (rows[0]) : null;
 			});
 		},
-		getAttractionsByType: (_, { type }) => {
-			return Attraction.get({ type: type }).then(rows =>
+		getActivitiesByType: (_, { type }) => {
+			return Activity.get({ type: type }).then(rows =>
 				rows.map(row => (row))
 			);
 		},
-		getAllAttractions: (_, { limit = 0, sortField = "", sortOrder = "" }) => {
-			return Attraction.getAll(limit).then(rows => rows);
+		getAllActivities: (_, { limit = 0, sortField = "", sortOrder = "" }) => {
+			return Activity.getAll(limit).then(rows => rows);
 		},
 		getTravelDestinations: (_, { limit = 0}) => {
-			return Attraction.getTravelDestinations(limit).then(rows => rows.map(row => row.destination))
+			return Activity.getTravelDestinations(limit).then(rows => rows.map(row => row.destination))
 		}
 	},
 	Mutation: {
-		createAttraction: (_, { input }) => {
+		createActivity: (_, { input }) => {
 			//TODO: check openingTimes format (xxhxx-xxhxx)
 			if (input.openingTimes.length !== 7)
 				return {
 					status: getStatus(StatusCodeEnum.clientSideError, 'openingTimes.length !== 7'),
-					attraction: input
+					activity: input
 				};
 			return Country.getCountryByName(input.address.country).then(countryCode => {
 				input.address.countryCode = countryCode;
-				return Attraction.create(parent(input))
+				return Activity.create(parent(input))
 					.then(insertId => {
 						console.log(countryCode);
 						input.id = insertId;
 						input.images && input.images.map(async (image, index) => {
 							saveImage(image, index).then(storingPath => {
 								console.log("end --", storingPath);
-								AttractionImage.create(attractionImage({
-									attractionId: insertId,
+								ActivityImage.create(activityImage({
+									activityId: insertId,
 									path: storingPath
 								}))
 							})
 						});
 						return {
 							status: getStatus(StatusCodeEnum.success, 'OK'),
-							attraction: input
+							activity: input
 						};
 					})
 					.catch(e => ({
 						status: getStatus(StatusCodeEnum.serverSideError, e),
-						attraction: input
+						activity: input
 					}))
 			});
 		}
 	},
-	Attraction: {
+	Activity: {
 		id: parent => parseInt(parent.id, 10),
 		name: parent => parent.name,
 		description: parent => parent.description,

@@ -3,7 +3,7 @@ const Pass = require('../pass/PassModel');
 
 const resolver = {
 	Query: {
-		getTicketByQrAndAttractionId: (_, { qr, attractionId }) => {
+		getTicketByQrAndActivityId: (_, { qr, attractionId }) => {
 			let ticket = null;
 			return Pass.getByQr(qr).then(passes => {
 				passes.forEach(pass => {
@@ -14,7 +14,7 @@ const resolver = {
 				return ticket;
 			}).catch(e => { console.error(e); return ticket});
 		},
-		getTicketByTravelerIdAndAttractionId: (_, { travelerId, attractionId }) => {
+		getTicketByTravelerIdAndActivityId: (_, { travelerId, attractionId }) => {
 			let ticket = null;
 			return Pass.getByTravelerId(travelerId).then(passes => {
 				passes.forEach(pass => {

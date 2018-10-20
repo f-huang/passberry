@@ -1,14 +1,14 @@
 import {
 	SHOW_MORE_DESCRIPTION,
 	SWITCH_DETAILS_ARE_SHOWING
-} from "./attractionActions";
+} from "./activityActions";
 
 const initialState = {
 	detailsAreShowing: false,
 	showMoreDescription: false
 };
 
-const AttractionReducer = (state = initialState, action) => {
+const ActivityReducer = (state = initialState, action) => {
 	switch(action.type) {
 		case SWITCH_DETAILS_ARE_SHOWING:
 			const value = !state.detailsAreShowing;
@@ -20,4 +20,4 @@ const AttractionReducer = (state = initialState, action) => {
 	}
 };
 
-export default AttractionReducer;
+export default ActivityReducer;

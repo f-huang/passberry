@@ -14,9 +14,9 @@ const pass = (input) => ({
 	"destination": input.destination
 });
 
-const ticketInput = (insertId, attractionId) => ({
+const ticketInput = (insertId, activityId) => ({
 	"pass_id": insertId,
-	"attraction_id": attractionId
+	"activity_id": activityId
 });
 
 const resolver = {
@@ -52,10 +52,10 @@ const resolver = {
 				ret.id = insertId;
 				input.pass.tickets.forEach(ticket => {
 					for (let i = 0; i < ticket.quantity; i++) {
-						promises.push(Ticket.create(ticketInput(insertId, ticket.attractionId)).then(insertId =>
+						promises.push(Ticket.create(ticketInput(insertId, ticket.activityId)).then(insertId =>
 							ret.tickets.push({
 								id: insertId,
-								attractionId: ticket.attractionId,
+								activityId: ticket.activityId,
 								usedTime: null
 							})
 						));
@@ -66,7 +66,7 @@ const resolver = {
 				}));
 			}).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
 		},
-		burnAttractionTicket: (_, { input }) => {
+		burnActivityTicket: (_, { input }) => {
 			return Ticket.update({
 				'id': input.ticketId,
 				'used_time': input.timestamp

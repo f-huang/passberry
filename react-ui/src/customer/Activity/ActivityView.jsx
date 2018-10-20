@@ -5,7 +5,7 @@ import qs from "query-string";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Query } from "react-apollo";
-import { GET_ATTRACTION_BY_ID } from "../../queries";
+import { GET_ACTIVITY_BY_ID } from "../../queries";
 import { showView } from "../TicketQuantity/ticketQuantityActions";
 
 import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
@@ -15,8 +15,8 @@ import theme from "../../app/theme";
 
 import defaultImg from "../../assets/monaco.jpg";
 
-import AttractionDetails from "./components/ReducedAttractionDetails";
-import ExpandedAttractionDetails from "./components/ExpandedAttractionDetails";
+import ActivityDetails from "./components/ReducedActivityDetails";
+import ExpandedActivityDetails from "./components/ExpandedActivityDetails";
 import ButtonNextStep from "../ButtonNextStep";
 import TicketQuantity from "../TicketQuantity/TicketQuantity";
 
@@ -86,7 +86,7 @@ const Price = styled.div`
 	text-align: end;
 `;
 
-class AttractionView extends Component {
+class ActivityView extends Component {
 	constructor(props) {
 		super(props);
 		this.onClickAddToCart = this.onClickAddToCart.bind(this);
@@ -113,12 +113,12 @@ class AttractionView extends Component {
 	render() {
 		const id = this.props.match.params.id;
 		return (
-			<Query query={GET_ATTRACTION_BY_ID} variables={{id: id}}>
+			<Query query={GET_ACTIVITY_BY_ID} variables={{id: id}}>
 				{({loading, error, data }) => {
 					if (loading) return <p> Loading </p>;
 					if (error) return <p> Error </p>;
-					const attraction = data.getAttractionById;
-					if (!attraction)
+					const activity = data.getActivityById;
+					if (!activity)
 						return <Error404/>;
 					return (
 						<Root>
@@ -127,18 +127,18 @@ class AttractionView extends Component {
 							<TransparentActionBar onBackClick={this.onBackClick}/>
 							<FloatingContainer>
 								<Container>
-									<TitleContainer><Title>{attraction.name}</Title></TitleContainer>
+									<TitleContainer><Title>{activity.name}</Title></TitleContainer>
 									<PriceContainer>
 										<StartingFrom>{"à partir de"}</StartingFrom>
-										<Price>{attraction.price.child.toFixed(2) + '€'}</Price>
+										<Price>{activity.price.child.toFixed(2) + '€'}</Price>
 									</PriceContainer>
 								</Container>
 							</FloatingContainer>
 							{this.props.detailsAreShowing ?
-								<ExpandedAttractionDetails attraction={attraction} onClick={this.onClickAddToCart}/> :
-								<AttractionDetails attraction={attraction} onClick={this.onClickAddToCart}/>
+								<ExpandedActivityDetails activity={activity} onClick={this.onClickAddToCart}/> :
+								<ActivityDetails activity={activity} onClick={this.onClickAddToCart}/>
 							}
-							<TicketQuantity product={attraction}/>
+							<TicketQuantity product={activity}/>
 							<ButtonNextStep onClick={this.onClickAddToCart}>{"Ajouter dans le panier"}</ButtonNextStep>
 							<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>
 						</Root>
@@ -159,4 +159,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AttractionView));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ActivityView));

@@ -25,9 +25,9 @@ export const GET_QR_BY_USER_ID = gql`
 	}
 `;
 
-export const GET_ATTRACTIONS_BY_TYPE = gql`
-	query getAttractionsByType($type: ProductType!) {
-		getAttractionsByType(type: $type) {
+export const GET_ACTIVITIES_BY_TYPE = gql`
+	query getActivitiesByType($type: ActivityType!) {
+		getActivitiesByType(type: $type) {
 			id
 			name
 			link
@@ -56,9 +56,9 @@ export const GET_ATTRACTIONS_BY_TYPE = gql`
 `;
 
 
-export const GET_ATTRACTION_BY_ID = gql`
-	query getAttractionById($id: ID!) {
-		getAttractionById(id: $id) {
+export const GET_ACTIVITY_BY_ID = gql`
+	query getActivityById($id: ID!) {
+		getActivityById(id: $id) {
 			id
 			name
 			link
@@ -151,7 +151,7 @@ export const CREATE_PASS = gql`
 			userId
 			travelerId
 			tickets {
-				attractionId
+				activityId
 				usedTime
 			}
 		}
@@ -168,7 +168,7 @@ export const GET_PASSES_BY_USER_ID = gql`
 				travelerId
 				tickets {
 					id
-					attractionId
+					activityId
 					usedTime
 				}
 			}
@@ -196,25 +196,24 @@ export const GET_TRAVELER_BY_QR = gql`
 	}
 `;
 
-export const GET_TICKET_BY_QR_AND_ATTRACTION_ID = gql`
-	query getTicketByQrAndAttractionId($qrValue: String!, $attractionId: ID!) {
-		getTicketByQrAndAttractionId(qr: $qrValue, attractionId: $attractionId) {
+export const GET_TICKET_BY_QR_AND_ACTIVITY_ID = gql`
+	query getTicketByQrAndActivityId($qrValue: String!, $activityId: ID!) {
+		getTicketByQrAndActivityId(qr: $qrValue, activityId: $activityId) {
 			id
 			passId
 			usedTime
-			attractionId
+			activityId
 		}
 	}
 `;
 
-
-export const GET_TICKET_BY_TRAVELER_ID_AND_ATTRACTION_ID = gql`
-	query getTicketByTravelerIdAndAttractionId($travelerId: ID!, $attractionId: ID!) {
-		getTicketByTravelerIdAndAttractionId(travelerId: $travelerId, attractionId: $attractionId) {
+export const GET_TICKET_BY_TRAVELER_ID_AND_ACTIVITY_ID = gql`
+	query getTicketByTravelerIdAndActivityId($travelerId: ID!, $activityId: ID!) {
+		getTicketByTravelerIdAndActivityId(travelerId: $travelerId, activityId: $activityId) {
 			id
 			passId
 			usedTime
-			attractionId
+			activityId
 		}
 	}
 `;
@@ -230,7 +229,7 @@ export const CREATE_SCAN = gql`
 			scan {
 				id
 				qr
-				attractionId
+				activityId
 				state
 			}
 		}
@@ -247,7 +246,7 @@ export const UPDATE_SCAN_STATE =  gql`
 			scan {
 				id
 				qr
-				attractionId
+				activityId
 				state
 			}
 		}
@@ -265,7 +264,7 @@ export const CREATE_ENTRY = gql`
 				id
 				timestamp
 				state
-				attractionId
+				activityId
 				userId
 				scanId
 				comment
@@ -274,9 +273,9 @@ export const CREATE_ENTRY = gql`
 	}
 `;
 
-export const CREATE_ATTRACTION = gql`
-	mutation createAttraction($input: CreateAttractionInput!) {
-		createAttraction(input: $input) {
+export const CREATE_ACTIVITY = gql`
+	mutation createActivity($input: CreateActivityInput!) {
+		createActivity(input: $input) {
 			status {
 				code
 				message

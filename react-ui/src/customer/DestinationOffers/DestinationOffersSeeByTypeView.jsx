@@ -2,23 +2,23 @@ import React from "react";
 import qs from "query-string";
 import { Query } from "react-apollo";
 import { withRouter} from "react-router-dom";
-import { GET_ATTRACTIONS_BY_TYPE } from "../../queries";
+import { GET_ACTIVITIES_BY_TYPE } from "../../queries";
 import Error404 from "../../Error404";
-import EnumAttractionType from "./EnumAttractionType";
+import EnumActivityType from "./EnumActivityType";
 import OfferLargeSized from "./components/OfferLargeSized";
 import Link from "../../Link";
 
 class DestinationOffersSeeByTypeView extends React.Component {
 	constructor(props) {
 		super(props);
-		const found = Object.values(EnumAttractionType).filter(
+		const found = Object.values(EnumActivityType).filter(
 			type => type.value === this.props.type.toLocaleUpperCase()
 		);
 		this.attractionType = found.length === 0 ? null : found[0];
-		this.onAttractionClick = this.onAttractionClick.bind(this);
+		this.onActivityClick = this.onActivityClick.bind(this);
 	}
 
-	onAttractionClick = (attraction) => {
+	onActivityClick = (activity) => {
 
 	};
 
@@ -27,15 +27,15 @@ class DestinationOffersSeeByTypeView extends React.Component {
 		if (!this.attractionType)
 			return <Error404/>;
 		return (
-			<Query query={GET_ATTRACTIONS_BY_TYPE} variables={{ type: this.attractionType.value }}>
+			<Query query={GET_ACTIVITIES_BY_TYPE} variables={{ type: this.attractionType.value }}>
 				{ ({ loading, error, data }) => {
 					if (loading) return <p>Loading</p>;
 					if (error) return <p>Error</p>;
-					const attractions = data.getAttractionsByType;
-					return attractions.map(attraction =>
-						<Link to={{pathname:  `/attraction/${attraction.id}-${attraction.name}`, search: `?type=${params.type}`}}>
-							<OfferLargeSized key={attraction.id}
-							                 offer={attraction}
+					const activities = data.getActivitiesByType;
+					return activities.map(activity =>
+						<Link to={{pathname:  `/activity/${activity.id}-${activity.name}`, search: `?type=${params.type}`}}>
+							<OfferLargeSized key={activity.id}
+							                 offer={activity}
 							/>
 						</Link>
 					);

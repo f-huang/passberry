@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { showMoreDescription } from "../attractionActions";
+import { showMoreDescription } from "../activityActions";
 import theme from "../../../app/theme";
 
 const Description = styled.p`
@@ -19,7 +19,7 @@ const SeeMore = styled.span`
 
 const MAX_CHAR = 150;
 
-const AttractionDescription = ({ description, showMore, onClickShowMore }) =>
+const ActivityDescription = ({ description, showMore, onClickShowMore }) =>
 	<div>
 		<Description>
 			{ showMore ? description : description.substring(0, MAX_CHAR) + '...'  }
@@ -27,7 +27,7 @@ const AttractionDescription = ({ description, showMore, onClickShowMore }) =>
 		</Description>
 	</div>;
 
-AttractionDescription.propTypes = {
+ActivityDescription.propTypes = {
 	description: PropTypes.string.isRequired
 };
 
@@ -41,4 +41,4 @@ const mapDispatchToProps = dispatch => ({
 	onClickShowMore: () => dispatch(showMoreDescription())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AttractionDescription);
+export default connect(mapStateToProps, mapDispatchToProps)(ActivityDescription);

@@ -2,11 +2,11 @@ import React from "react";
 import TextInput from "../../../component/TextInput/TextInput";
 import AddressInput from "../../../component/AddressInput/AddressInput";
 import { connect } from "react-redux";
-import { setInput, setImages, setPriceInput, setAddressInput } from "./attractionCreateActions";
-import AttractionCreateButton from "./component/AttractionCreateButton";
+import { setInput, setImages, setPriceInput, setAddressInput } from "./activityCreateActions";
+import ActivityCreateButton from "./component/ActivityCreateButton";
 
 
-class AttractionCreateView extends React.Component {
+class ActivityCreateView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.onSubmit = this.onSubmit.bind(this);
@@ -39,7 +39,7 @@ class AttractionCreateView extends React.Component {
 	render() {
 		return (
 			<div className="AddActivity">
-				<h1>{"Nouvelle attraction"}</h1>
+				<h1>{"Nouvelle activite"}</h1>
 				<form method="POST" encType="multipart/form-data" onSubmit={this.onSubmit} autoComplete="off">
 					<TextInput
 						id="AddActivity-name"
@@ -108,7 +108,7 @@ class AttractionCreateView extends React.Component {
 						       type="file"
 						       accept=".jpg, .jpeg, .png, .gif" multiple/>
 					</div>
-					<AttractionCreateButton/>
+					<ActivityCreateButton/>
 				</form>
 			</div>
 		);
@@ -125,4 +125,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default connect(null, mapDispatchToProps)(AttractionCreateView);
+export default connect(null, mapDispatchToProps)(ActivityCreateView);

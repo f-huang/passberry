@@ -1,19 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { switchDetailsAreShowing } from "../attractionActions";
-import { showAttractionKeyFrame} from "./KeyFrames";
+import { switchDetailsAreShowing } from "../activityActions";
+import { showActivityKeyFrame} from "./KeyFrames";
 import { connect } from "react-redux";
-import AttractionDetailsLayout from "./AttractionDetailsLayout";
+import ActivityDetailsLayout from "./ActivityDetailsLayout";
 import ShowHideArrow from "./ShowHideArrow";
 import theme from "../../../app/theme";
-import AttractionDescription from "./AttractionDescription";
-import AttractionPrice from "./AttractionPrice.jsx";
-import AttractionAddress from "./AttractionAddress";
+import ActivityDescription from "./ActivityDescription";
+import ActivityPrice from "./ActivityPrice.jsx";
+import ActivityAddress from "./ActivityAddress";
 
-const Root = styled(AttractionDetailsLayout)`
+const Root = styled(ActivityDetailsLayout)`
 	height: 80vh;
-	animation: ${showAttractionKeyFrame}  0.6s ease-in-out 0s;
+	animation: ${showActivityKeyFrame}  0.6s ease-in-out 0s;
 `;
 
 const Arrow = styled(ShowHideArrow)`
@@ -28,7 +28,7 @@ const Container = styled.div`
 	padding: 24px;
 `;
 
-const AttractionName = styled.h1`
+const ActivityName = styled.h1`
 	font-size: 20px;
 	font-weight: 900;
 `;
@@ -50,20 +50,20 @@ const DetailsContainer = styled.div`
 	font-size: 12px;
 `;
 
-const ExpandedAttractionDetails = ({ attraction, onClick, onClickSwitchDetailsAreShowing }) => {
+const ExpandedActivityDetails = ({ activity, onClick, onClickSwitchDetailsAreShowing }) => {
 	return (
 		<Root>
 			<Container>
-				<AttractionName>{ attraction.name }</AttractionName>
+				<ActivityName>{ activity.name }</ActivityName>
 
 				<DetailsContainer>
-					<AttractionDescription description={"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident…"}/>
+					<ActivityDescription description={"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident…"}/>
 				</DetailsContainer>
 				<Line/>
 
 				<DetailsContainer>
 					<Title>{"Tarifs"}</Title>
-					<AttractionPrice price={attraction.price}/>
+					<ActivityPrice price={activity.price}/>
 				</DetailsContainer>
 				<Line/>
 
@@ -73,12 +73,12 @@ const ExpandedAttractionDetails = ({ attraction, onClick, onClickSwitchDetailsAr
 				{/*<Line/>*/}
 				<DetailsContainer>
 					<Title>{"Adresse"}</Title>
-					<AttractionAddress address={attraction.address}/>
+					<ActivityAddress address={activity.address}/>
 				</DetailsContainer>
-				{attraction.link &&
+				{activity.link &&
 				<DetailsContainer>
 					<Title>{"Contact"}</Title>
-					<p>{attraction.link}</p>
+					<p>{activity.link}</p>
 				</DetailsContainer>
 				}
 			</Container>
@@ -87,8 +87,8 @@ const ExpandedAttractionDetails = ({ attraction, onClick, onClickSwitchDetailsAr
 	)
 };
 
-ExpandedAttractionDetails.propTypes = {
-	attraction:  PropTypes.shape({
+ExpandedActivityDetails.propTypes = {
+	activity:  PropTypes.shape({
 		name: PropTypes.string.isRequired,
 		link: PropTypes.string,
 		description: PropTypes.string,
@@ -113,4 +113,4 @@ const mapDispatchToProps = dispatch => ({
 	onClickSwitchDetailsAreShowing: () => { console.log('click'); dispatch(switchDetailsAreShowing())}
 });
 
-export default connect(null, mapDispatchToProps)(ExpandedAttractionDetails);
+export default connect(null, mapDispatchToProps)(ExpandedActivityDetails);

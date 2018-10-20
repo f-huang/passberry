@@ -5,7 +5,7 @@ import OfferMediumSized from "./OfferMediumSized";
 import { withRouter} from "react-router-dom";
 import { connect } from "react-redux";
 import theme from "../../../app/theme";
-import EnumAttractionType from "../EnumAttractionType";
+import EnumActivityType from "../EnumActivityType";
 import Link from "../../../Link";
 
 const Container = styled.div`
@@ -57,24 +57,24 @@ class OffersByType extends React.Component {
 			value: PropTypes.string.isRequired,
 			display: PropTypes.string.isRequired
 		}),
-		attractions: PropTypes.arrayOf(PropTypes.shape({
+		activities: PropTypes.arrayOf(PropTypes.shape({
 			id: PropTypes.string.isRequired,
 			name: PropTypes.string.isRequired,
 		}))
 	};
 
 	static defaultProps = {
-		type: EnumAttractionType.ATTRACTION,
-		attractions: [{ id: 0, name: '' }]
+		type: EnumActivityType.ATTRACTION,
+		activities: [{ id: 0, name: '' }]
 	};
 
 	render() {
 		const search = `?type=${this.props.type.value.toLocaleLowerCase()}`;
-		const attractions = this.props.attractions.map(attraction => (
-			<ListItem key={attraction.id}>
-				<Link to={{pathname: `/attraction/${attraction.id}-${attraction.name}`, search}}>
+		const activities = this.props.activities.map(activity => (
+			<ListItem key={activity.id}>
+				<Link to={{pathname: `/activity/${activity.id}-${activity.name}`, search}}>
 					<OfferMediumSized
-						offer={attraction}/>
+						offer={activity}/>
 				</Link>
 			</ListItem>
 		));
@@ -86,7 +86,7 @@ class OffersByType extends React.Component {
 				</TopContainer>
 				<BottomContainer>
 					<ListOffers>
-						{attractions}
+						{activities}
 					</ListOffers>
 				</BottomContainer>
 			</Container>

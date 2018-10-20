@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Query, withApollo, compose } from "react-apollo";
-import { GET_TICKET_BY_TRAVELER_ID_AND_ATTRACTION_ID, UPDATE_SCAN_STATE } from "../../queries";
+import { GET_TICKET_BY_TRAVELER_ID_AND_ACTIVITY_ID, UPDATE_SCAN_STATE } from "../../queries";
 import EnumScanState from "./EnumScanState";
 import Button from "../../component/Button/Button";
 import ValidateEntryButton from "./component/ValidateEntryButton";
@@ -42,12 +42,12 @@ class ScannedProfileView extends React.Component {
 					{traveler.firstName}
 					{traveler.lastName}
 				</div>
-				<Query query={ GET_TICKET_BY_TRAVELER_ID_AND_ATTRACTION_ID }
+				<Query query={ GET_TICKET_BY_TRAVELER_ID_AND_ACTIVITY_ID }
 				       variables={{ travelerId: this.props.traveler.id, attractionId: this.props.attractionId }}>
 					{ ({ loading, error, data }) => {
 						if (loading) return <p>Loading</p>;
 						if (error) return <p>Error</p>;
-						const ticket = data.getTicketByTravelerIdAndAttractionId;
+						const ticket = data.getTicketByTravelerIdAndActivityId;
 						const state = this.getScanState(ticket);
 						this.updateScan(state);
 						if (state === EnumScanState.NOT_FOUND)

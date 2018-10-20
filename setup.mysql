@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS
 
 
 CREATE TABLE IF NOT EXISTS
-    attraction(
+    activity(
         `id` INT UNSIGNED UNIQUE NOT NULL AUTO_INCREMENT,
         `name` VARCHAR(128) NOT NULL,
         `description` TEXT,
@@ -88,12 +88,12 @@ CREATE TABLE IF NOT EXISTS
 
 
 CREATE TABLE IF NOT EXISTS
-	vuego_pass_attraction(
-		`attraction_id` INT UNSIGNED NOT NULL,
+	vuego_pass_activity(
+		`activity_id` INT UNSIGNED NOT NULL,
 		`vuego_pass_id` INT UNSIGNED NOT NULL,
-		FOREIGN KEY(`attraction_id`) REFERENCES attraction(`id`),
+		FOREIGN KEY(`activity_id`) REFERENCES activity(`id`),
 		FOREIGN KEY(`vuego_pass_id`) REFERENCES vuego_pass(`id`),
-		PRIMARY KEY(`attraction_id`, `vuego_pass_id`)
+		PRIMARY KEY(`activity_id`, `vuego_pass_id`)
 	) ENGINE=InnoDB;
 
 
@@ -150,10 +150,10 @@ CREATE TABLE IF NOT EXISTS
         `is_activated` TINYINT(1) NOT NULL  DEFAULT 0,
         `is_deleted` TINYINT(1) NOT NULL DEFAULT 0,
         `role_id` INT UNSIGNED,
-        `attraction_id` INT UNSIGNED,
+        `activity_id` INT UNSIGNED,
         `partner_id` INT UNSIGNED,
         FOREIGN KEY(`role_id`) REFERENCES role(`id`),
-        FOREIGN KEY(`attraction_id`) REFERENCES attraction(`id`),
+        FOREIGN KEY(`activity_id`) REFERENCES activity(`id`),
         FOREIGN KEY(`partner_id`) REFERENCES partner(`id`),
         FOREIGN KEY(`address_country_code`) REFERENCES country(`code`),
 		PRIMARY KEY(`id`)
@@ -191,10 +191,10 @@ CREATE TABLE IF NOT EXISTS
     ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS
-    attraction_image(
+    activity_image(
         `path` VARCHAR(256) UNIQUE NOT NULL,
-        `attraction_id` INT UNSIGNED NOT NULL,
-        FOREIGN KEY (`attraction_id`) REFERENCES attraction(`id`),
+        `activity_id` INT UNSIGNED NOT NULL,
+        FOREIGN KEY (`activity_id`) REFERENCES activity(`id`),
         PRIMARY KEY(`path`)
     ) ENGINE=InnoDB;
 
@@ -258,10 +258,10 @@ CREATE TABLE IF NOT EXISTS
 	ticket(
 		`id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
 		`pass_id` INT UNSIGNED NOT NULL,
-		`attraction_id` INT UNSIGNED NOT NULL,
+		`activity_id` INT UNSIGNED NOT NULL,
 		`used_time` TIMESTAMP NULL DEFAULT NULL,
 		FOREIGN KEY (`pass_id`) REFERENCES pass(`id`),
-		FOREIGN KEY (`attraction_id`) REFERENCES attraction(`id`),
+		FOREIGN KEY (`activity_id`) REFERENCES activity(`id`),
         PRIMARY KEY(`id`)
 	) ENGINE=InnoDB;
 
@@ -290,11 +290,11 @@ CREATE TABLE IF NOT EXISTS
 		`id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
 		`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 		`staff_user_id` INT UNSIGNED NOT NULL,
-		`attraction_id` INT UNSIGNED NOT NULL,
+		`activity_id` INT UNSIGNED NOT NULL,
 		`qr_code` VARCHAR(255) NOT NULL,
 		`state` ENUM('SUCCESS', 'PENDING', 'NOT_FOUND', 'ALREADY_USED', 'ERROR'),
         FOREIGN KEY (`staff_user_id`) REFERENCES user(`id`),
-        FOREIGN KEY (`attraction_id`) REFERENCES attraction(`id`),
+        FOREIGN KEY (`activity_id`) REFERENCES activity(`id`),
         FOREIGN KEY (`qr_code`) REFERENCES qr_code(`value`),
 		PRIMARY KEY(`id`)
 	) ENGINE=InnoDB;
@@ -305,13 +305,13 @@ CREATE TABLE IF NOT EXISTS
 		`id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
 		`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 		`staff_user_id` INT UNSIGNED NOT NULL,
-		`attraction_id` INT UNSIGNED NOT NULL,
+		`activity_id` INT UNSIGNED NOT NULL,
 		`scan_id` INT UNSIGNED NOT NULL,
 		`state` ENUM('ACCEPTED', 'WRONG_PERSON', 'WRONG_DETAILS', 'NO_IDENTITY_PROOF', 'IN_BAD_STATE', 'OTHER'),
 		`comment` TEXT DEFAULT NULL,
         FOREIGN KEY (`staff_user_id`) REFERENCES user(`id`),
         FOREIGN KEY (`scan_id`) REFERENCES scan(`id`),
-        FOREIGN KEY (`attraction_id`) REFERENCES attraction(`id`),
+        FOREIGN KEY (`activity_id`) REFERENCES activity(`id`),
 		PRIMARY KEY(`id`)
 	) ENGINE=InnoDB;
 
@@ -331,8 +331,8 @@ LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_partner.csv'
    	IGNORE 1 LINES;
 
 
-LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_attraction.csv'
-   	INTO TABLE dev_passberry.attraction
+LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_activity.csv'
+   	INTO TABLE dev_passberry.activity
    	FIELDS TERMINATED BY ','
    	OPTIONALLY ENCLOSED BY '"'
    	LINES TERMINATED BY '\n'

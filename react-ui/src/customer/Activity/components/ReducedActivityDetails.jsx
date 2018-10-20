@@ -2,15 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { switchDetailsAreShowing } from "../attractionActions";
-import { hideAttractionKeyFrame } from "./KeyFrames";
+import { switchDetailsAreShowing } from "../activityActions";
+import { hideActivityKeyFrame } from "./KeyFrames";
 
-import AttractionDetailsLayout from "./AttractionDetailsLayout";
+import ActivityDetailsLayout from "./ActivityDetailsLayout";
 import ShowHideArrow from "./ShowHideArrow";
 
-const Root = styled(AttractionDetailsLayout)`
+const Root = styled(ActivityDetailsLayout)`
 	height: 20vh;
-	animation: ${hideAttractionKeyFrame} 0.6s ease-in-out 0s;
+	animation: ${hideActivityKeyFrame} 0.6s ease-in-out 0s;
 `;
 
 const Arrow = styled(ShowHideArrow)`
@@ -18,7 +18,7 @@ const Arrow = styled(ShowHideArrow)`
 `;
 
 
-const ReducedAttractionDetails = ({ attraction, onClick, onClickSwitchDetailsAreShowing }) => {
+const ReducedActivityDetails = ({ activity, onClick, onClickSwitchDetailsAreShowing }) => {
 	return (
 		<Root>
 			<Arrow onClick={onClickSwitchDetailsAreShowing}/>
@@ -26,8 +26,8 @@ const ReducedAttractionDetails = ({ attraction, onClick, onClickSwitchDetailsAre
 	)
 };
 
-ReducedAttractionDetails.propTypes = {
-	attraction: PropTypes.shape({
+ReducedActivityDetails.propTypes = {
+	activity: PropTypes.shape({
 		name: PropTypes.string.isRequired,
 		link: PropTypes.string,
 		description: PropTypes.string,
@@ -52,4 +52,4 @@ const mapDispatchToProps = dispatch => ({
 	onClickSwitchDetailsAreShowing: () => dispatch(switchDetailsAreShowing())
 });
 
-export default connect(null, mapDispatchToProps)(ReducedAttractionDetails);
+export default connect(null, mapDispatchToProps)(ReducedActivityDetails);

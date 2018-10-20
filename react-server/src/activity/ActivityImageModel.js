@@ -2,7 +2,7 @@
 
 const pool = require('../database/pool');
 
-const TABLE_NAME = "attraction_image";
+const TABLE_NAME = "activity_image";
 
 
 const mapForDb = (data) => {

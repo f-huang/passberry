@@ -2,7 +2,7 @@ import {
 	SET_ADDRESS_INPUT,
 	SET_IMAGES,
 	SET_INPUT, SET_PRICE_INPUT
-} from "./attractionCreateActions";
+} from "./activityCreateActions";
 
 
 const initialState = {

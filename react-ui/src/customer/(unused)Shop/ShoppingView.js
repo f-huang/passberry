@@ -1,5 +1,5 @@
 import React from "react";
-import AttractionPreviewGrid from "../(unused)Attraction/AttractionPreviewGrid/AttractionPreviewGrid";
+import ActivityPreviewGrid from "../(unused)Activity/ActivityPreviewGrid/ActivityPreviewGrid";
 import { withCookies } from "react-cookie";
 import { withRouter } from "react-router-dom";
 import Button from "../../component/Button/Button";
@@ -8,8 +8,8 @@ import "./ShoppingView.css";
 const api = '/graphql';
 
 const query = `
-	query AttractionGetAll {
-		AttractionGetAll {
+	query ActivityGetAll {
+		ActivityGetAll {
 			id
 			name
 			description
@@ -35,7 +35,7 @@ const fetchInit = () => ({
 class ShoppingView extends React.Component {
 
 	state = {
-		attractions: [],
+		activities: [],
 		editionMode: false
 	};
 
@@ -43,7 +43,7 @@ class ShoppingView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.updateData = this.updateData.bind(this);
-		this.saveAttractions = this.saveAttractions.bind(this);
+		this.saveActivities = this.saveActivities.bind(this);
 		this.addInChart = this.addInChart.bind(this);
 		this.switchState = this.switchState.bind(this);
 		this.switchSelect = this.switchSelect.bind(this);
@@ -53,8 +53,8 @@ class ShoppingView extends React.Component {
 
 
 	componentWillMount() {
-		this.setState({ attractions: this.props.cookies.get('attraction')
-			|| this.updateData().catch(() => { this.setState({ attractions: [] }); })
+		this.setState({ activities: this.props.cookies.get('activity')
+			|| this.updateData().catch(() => { this.setState({ activities: [] }); })
 		});
 	}
 
@@ -64,51 +64,51 @@ class ShoppingView extends React.Component {
 	};
 
 
-	saveAttractions = (attractions) => {
-		this.setState({ attractions: attractions });
-		this.props.cookies.set('attraction', attractions);
+	saveActivities = (activities) => {
+		this.setState({ activities: activities });
+		this.props.cookies.set('activity', activities);
 	};
 
 
 	updateData = async () => {
 		const result = await fetch(api, fetchInit())
 			.then(res => res.text())
-			.then(out => JSON.parse(out).touristData.getAllAttractions);
-		const finalAttractions = await result.map(attraction => {
-			const r = Object.assign({}, attraction);
+			.then(out => JSON.parse(out).touristData.getAllActivities);
+		const finalActivities = await result.map(activity => {
+			const r = Object.assign({}, activity);
 			r.selected = false;
 			r.wanted = true;
 			return r;
 		});
-		this.saveAttractions(await finalAttractions);
+		this.saveActivities(await finalActivities);
 	};
 
 
 	addInChart = (attractionName) => {
-		const i = this.state.attractions.findIndex((el) => el.name === attractionName);
-		const tmp = this.state.attractions;
+		const i = this.state.activities.findIndex((el) => el.name === attractionName);
+		const tmp = this.state.activities;
 		tmp[i].wanted = true;
-		this.saveAttractions(tmp);
+		this.saveActivities(tmp);
 	};
 
 
 	switchSelect = (attractionName, value) => {
-		const i = this.state.attractions.findIndex((el) => el.name === attractionName);
-		const tmp = this.state.attractions;
+		const i = this.state.activities.findIndex((el) => el.name === attractionName);
+		const tmp = this.state.activities;
 		tmp[i].selected = value;
-		this.saveAttractions(tmp);
+		this.saveActivities(tmp);
 	};
 
 
 	onDelete = () => {
-		const tmp = this.state.attractions.map((el) => {
+		const tmp = this.state.activities.map((el) => {
 			if (el.selected)
 				el.wanted = false;
 			el.selected = false;
 			return el;
 		});
 		this.switchState();
-		this.saveAttractions(tmp);
+		this.saveActivities(tmp);
 	};
 
 
@@ -121,13 +121,13 @@ class ShoppingView extends React.Component {
 	render() {
 		return (
 			<div className={"ShoppingView"}>
-				{ this.state.attractions ?
-					<AttractionPreviewGrid
+				{ this.state.activities ?
+					<ActivityPreviewGrid
 						switchState={ this.switchState }
 						switchSelect={ this.switchSelect }
 						addInChart={ this.addInChart }
 						editionMode={ this.state.editionMode }
-						attractions={ this.state.attractions }/> : <p/> }
+						activities={ this.state.activities }/> : <p/> }
 				<div className={"ShoppingView-button"}>
 					{ this.state.editionMode ?
 						<Button onClick={ this.onDelete } value={"Delete"}/> :

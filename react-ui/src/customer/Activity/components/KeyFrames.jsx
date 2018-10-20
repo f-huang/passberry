@@ -1,6 +1,6 @@
 import { keyframes } from 'styled-components';
 
-export const showAttractionKeyFrame = keyframes`
+export const showActivityKeyFrame = keyframes`
 	0% {
 		height: 20vh;
 	},
@@ -9,7 +9,7 @@ export const showAttractionKeyFrame = keyframes`
 	}
 `;
 
-export const hideAttractionKeyFrame = keyframes`
+export const hideActivityKeyFrame = keyframes`
 	0% {
 		height: 80vh;
 	}

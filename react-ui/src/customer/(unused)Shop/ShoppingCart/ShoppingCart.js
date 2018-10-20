@@ -24,7 +24,7 @@ class ShoppingCartItem extends Component {
 class ShoppingCart extends Component {
 
 	state = {
-		items: this.props.cookies.get('attraction'),
+		items: this.props.cookies.get('activity'),
 	};
 
 	render() {

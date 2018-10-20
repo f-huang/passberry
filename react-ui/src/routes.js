@@ -8,9 +8,9 @@ import QRPage from "./customer/Qr/QRView";
 import ProfilePage from "./customer/ProfilePage";
 import ParametersPage from "./customer/ParametersPage";
 import Error404 from "./Error404";
-import Attraction from "./customer/Attraction/AttractionView";
-import AttractionCreateView from "./admin/attraction/create/AttractionCreateView";
-import AttractionManage from "./admin/attraction/manage/AttractionManage";
+import Activity from "./customer/Activity/ActivityView";
+import ActivityCreateView from "./admin/activity/create/ActivityCreateView";
+import ActivityManage from "./admin/activity/manage/ActivityManage";
 import TravelView from "./customer/Travel/TravelView";
 import BasketView from "./customer/Basket/BasketView";
 import PaymentView from "./customer/Payment/PaymentView";
@@ -24,8 +24,8 @@ const routes = (
     <BrowserRouter forceRefresh={true}>
 	    <Switch>
 		    <Route exact path="/" component={TravelView}/>
-		    <Route exact path="/admin-add-activity" component={AttractionCreateView}/>
-		    <Route exact path="/admin-manage-activity" component={AttractionManage}/>
+		    <Route exact path="/admin-add-activity" component={ActivityCreateView}/>
+		    <Route exact path="/admin-manage-activity" component={ActivityManage}/>
 		    <Route exact path="/profile" component={ProfilePage}/>
 		    <Route exact path="/parameters" component={ParametersPage}/>
 		    <Route exact path="/my-travels" component={MyTravelsView}/>
@@ -37,7 +37,7 @@ const routes = (
 		    <Route exact path="/payment" component={PaymentView}/>
 		    <Route exact path="/scan-profile" component={ScanProfileView}/>
 		    <Route exact path="/scanned-profile/:scanId" component={ScannedProfileView}/>
-		    <Route exact path="/attraction/:id-:name" component={Attraction}/>
+		    <Route exact path="/activity/:id-:name" component={Activity}/>
 		    {/*<Route exact path="/partner-see-customer" component={PartnerSeeUser}/>*/}
 		    <Route exact path="/:destination" component={Destination}/>
 		    {/*<Route exact path="/profile" component={Profile}/>*/}

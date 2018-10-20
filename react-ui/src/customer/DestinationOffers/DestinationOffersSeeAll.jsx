@@ -2,12 +2,12 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { Query } from "react-apollo";
-import { GET_ATTRACTIONS_BY_TYPE } from "../../queries";
+import { GET_ACTIVITIES_BY_TYPE } from "../../queries";
 import { addToBasket, removeFromBasket } from "../Basket/basketActions";
 
 import OffersByType from "./components/OffersByType";
 import VuegoMustDoPass from "./components/VuegoMustDoPass";
-import EnumAttractionType from "./EnumAttractionType";
+import EnumActivityType from "./EnumActivityType";
 
 
 class DestinationOffersSeeAll extends React.Component {
@@ -15,15 +15,15 @@ class DestinationOffersSeeAll extends React.Component {
 		return (
 			<div>
 				<VuegoMustDoPass/>
-				{ Object.values(EnumAttractionType).map(attractionType => (
+				{ Object.values(EnumActivityType).map(attractionType => (
 					<div key={attractionType.value}>
-						<Query query={GET_ATTRACTIONS_BY_TYPE} variables={{ type: attractionType.value }}>
+						<Query query={GET_ACTIVITIES_BY_TYPE} variables={{ type: attractionType.value }}>
 							{({ loading, error, data }) => {
 								if (loading) return <p> Loading </p>;
 								if (error) return <p> Error </p>;
-								const attractions = data.getAttractionsByType;
-								return attractions && attractions.length > 0 ?
-									<OffersByType type={ attractionType } attractions={data.getAttractionsByType}/> :
+								const activities = data.getActivitiesByType;
+								return activities && activities.length > 0 ?
+									<OffersByType type={ attractionType } activities={data.getActivitiesByType}/> :
 									"";
 							}}
 						</Query>

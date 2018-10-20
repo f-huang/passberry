@@ -9,7 +9,7 @@ const Address = styled.p`
 	font-size: 12px;
 `;
 
-const AttractionAddress = ({ address }) => {
+const ActivityAddress = ({ address }) => {
 	return (
 		<Root>
 			<Address>
@@ -20,7 +20,7 @@ const AttractionAddress = ({ address }) => {
 	)
 };
 
-AttractionAddress.propTypes = {
+ActivityAddress.propTypes = {
 	address: PropTypes.shape({
 		street: PropTypes.string.isRequired,
 		supplement: PropTypes.string,
@@ -30,4 +30,4 @@ AttractionAddress.propTypes = {
 	})
 };
 
-export default AttractionAddress;
+export default ActivityAddress;

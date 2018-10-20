@@ -6,7 +6,7 @@ import ButtonSubmit from "../../../component/Button/ButtonSubmit/ButtonSubmit";
 import Button from "../../../component/Button/Button";
 import {withRouter} from "react-router-dom";
 import PassInputsHandler from "../PassInputsHandler";
-import Attraction from "../../Attraction.class";
+import Activity from "../../Activity.class";
 
 const CAPTION = (nDays) => `Nous vous recommandons ces activités pour ${nDays} jour${nDays > 1 ? 's' : ''} à Monaco.`;
 
@@ -48,10 +48,10 @@ class PassValidateActivities extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.attraction = new Attraction();
+		this.activity = new Activity();
 		this.passHandler = new PassInputsHandler();
 		this.numberOfDays = this.passHandler.getVuegoPassNumberOfDays();
-		this.events = this.attraction.getVuegoMadeAttractions(this.numberOfDays);
+		this.events = this.activity.getVuegoMadeActivities(this.numberOfDays);
 		this.finalCost = 30;
 		this.totalCost = this.events
 			.map(event => event.price.adult)

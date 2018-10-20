@@ -2,9 +2,9 @@
 
 const pool = require('../database/pool');
 
-const TABLE_NAME = "attraction";
+const TABLE_NAME = "activity";
 const COUNTRY_TABLE_NAME = "country";
-const IMAGE_TABLE_NAME = "attraction_image";
+const IMAGE_TABLE_NAME = "activity_image";
 
 const COLUMNS = `\`${TABLE_NAME}\`.\`id\`, ${TABLE_NAME}.\`name\`, \`link\`, \`description\`, \`type\`,
 		\`no_queuing\` as \`noQueuing\`,
@@ -35,7 +35,7 @@ exports.get = (filters) => new Promise((resolve, reject) => {
 		GROUP_CONCAT(\`${IMAGE_TABLE_NAME}\`.\`path\`) AS \`images\` 
 		FROM \`${TABLE_NAME}\`
 		LEFT JOIN ${IMAGE_TABLE_NAME} 
-		ON \`${TABLE_NAME}\`.\`id\`=\`${IMAGE_TABLE_NAME}\`.\`attraction_id\`
+		ON \`${TABLE_NAME}\`.\`id\`=\`${IMAGE_TABLE_NAME}\`.\`activity_id\`
 		INNER JOIN ${COUNTRY_TABLE_NAME}
 		ON ${COUNTRY_TABLE_NAME}.\`code\`=${TABLE_NAME}.\`address_country_code\`
 		${filters ? "WHERE ?" : ""}
@@ -57,7 +57,7 @@ exports.getMustDos = (destination) => new Promise((resolve, reject) => {
 		GROUP_CONCAT(\`${IMAGE_TABLE_NAME}\`.\`path\`) AS \`images\` 
 		FROM \`${TABLE_NAME}\`
 		LEFT JOIN ${IMAGE_TABLE_NAME} 
-		ON \`${TABLE_NAME}\`.\`id\`=\`${IMAGE_TABLE_NAME}\`.\`attraction_id\`
+		ON \`${TABLE_NAME}\`.\`id\`=\`${IMAGE_TABLE_NAME}\`.\`activity_id\`
 		WHERE \`address_city\`=? AND \`is_a_must_do\`=1
 		GROUP BY \`${TABLE_NAME}\`.\`id\`
 	`;
@@ -105,13 +105,13 @@ exports.getTravelDestinations = (limit) => new Promise((resolve, reject) => {
 });
 
 
-exports.create = (attraction) => new Promise((resolve, reject) => {
+exports.create = (activity) => new Promise((resolve, reject) => {
 	const sql = `INSERT INTO \`${TABLE_NAME}\` SET ?`;
-	if (!attraction) {
-		reject("attraction is not defined or null");
+	if (!activity) {
+		reject("activity is not defined or null");
 		return -1;
 	}
-	pool.query(sql, attraction, (error, result) => {
+	pool.query(sql, activity, (error, result) => {
 		if (error) {
 			console.error(error);
 			reject(error);
@@ -122,9 +122,9 @@ exports.create = (attraction) => new Promise((resolve, reject) => {
 });
 
 
-exports.update = (attraction) => new Promise((resolve, reject) => {
-	let sql = `UPDATE \`${TABLE_NAME}\` SET ? WHERE \`id\`=${attraction.id}`;
-	pool.query(sql, attraction, (error, rows) => {
+exports.update = (activity) => new Promise((resolve, reject) => {
+	let sql = `UPDATE \`${TABLE_NAME}\` SET ? WHERE \`id\`=${activity.id}`;
+	pool.query(sql, activity, (error, rows) => {
 		if (error) {
 			console.error(error);
 			reject(error);

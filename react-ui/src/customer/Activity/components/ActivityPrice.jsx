@@ -11,7 +11,7 @@ const Precision = styled.span`
 	font-style: italic;
 `;
 
-const AttractionPrice = ({ price }) => {
+const ActivityPrice = ({ price }) => {
 	return (
 		<Root>
 			{"Adulte : "}{price.adult.toFixed(2)+'€'}
@@ -35,7 +35,7 @@ const AttractionPrice = ({ price }) => {
 	);
 };
 
-AttractionPrice.propTypes = {
+ActivityPrice.propTypes = {
 	price: PropTypes.shape({
 		adult: PropTypes.number.isRequired,
 		child: PropTypes.number,
@@ -44,4 +44,4 @@ AttractionPrice.propTypes = {
 	})
 };
 
-export default AttractionPrice;
+export default ActivityPrice;

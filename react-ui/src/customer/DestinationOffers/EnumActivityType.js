@@ -1,4 +1,4 @@
-const EnumAttractionType = {
+const EnumActivityType = {
 	EVENT: {
 		value: 'EVENT',
 		display: 'Evènements'
@@ -13,4 +13,4 @@ const EnumAttractionType = {
 	},
 };
 
-export default EnumAttractionType;
+export default EnumActivityType;
