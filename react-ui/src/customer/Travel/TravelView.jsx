@@ -38,6 +38,8 @@ const Container = styled.div`
 
 const Form = styled.form`
 	padding: 8px;
+	margin: 0 auto;
+	max-width: 400px;
 `;
 
 const ButtonGo = styled(ButtonSubmit)`

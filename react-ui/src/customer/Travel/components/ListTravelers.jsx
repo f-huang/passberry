@@ -7,10 +7,10 @@ import { removeTraveler, editTraveler } from "../travelActions";
 import Traveler from "./Traveler";
 
 const Container = styled.div`
-	display: flex;
-	flex-direction: column;
 	width: 100%;
 	justify-content: space-around;
+	max-height: 30vh;
+	overflow-y: scroll;
 `;
 
 
