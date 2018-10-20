@@ -33,7 +33,7 @@ ActivityDescription.propTypes = {
 
 const mapStateToProps = state => {
 	return ({
-		showMore: state.attractionPage.showMoreDescription
+		showMore: state.activityPage.showMoreDescription
 	});
 };
 

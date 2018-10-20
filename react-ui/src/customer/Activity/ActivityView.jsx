@@ -151,7 +151,7 @@ class ActivityView extends Component {
 
 const mapStateToProps = state => ({
 	destination: state.travelDetails.destination,
-	detailsAreShowing: state.attractionPage.detailsAreShowing
+	detailsAreShowing: state.activityPage.detailsAreShowing
 });
 
 const mapDispatchToProps = dispatch => ({
