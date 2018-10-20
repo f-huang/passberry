@@ -206,6 +206,31 @@ export const GET_PASSES_BY_USER_ID = gql`
 	}
 `;
 
+export const GET_USER_BY_SCAN_ID = gql`
+	query getUserByScanId($scanId: ID!) {
+		getUserByScanId(scanId: $scanId) {
+			id
+			type
+			gender
+			birthdate
+			email
+			firstName
+			lastName
+			address{
+				street
+				supplement
+				postcode
+				city
+				country
+			}
+			studentStatus {
+				isValidated
+				expirationDate
+			}
+		}
+	}
+`;
+
 export const GET_TRAVELERS_BY_USER_ID = gql`
 	query getTravelersByUserId($userId: ID!){
 		getTravelersByUserId(userId: $userId) {

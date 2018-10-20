@@ -17,7 +17,7 @@ import PaymentView from "./customer/Payment/PaymentView";
 import MyTravelsView from "./customer/MyTravels/MyTravelsView";
 import MyTravelsDestinationView from "./customer/MyTravelsDestination/MyTravelsDestinationView";
 import ScanProfileView from "./partner/scan/ScanProfileView";
-import ScannedProfileView from "./partner/scan/ScannedProfileView";
+import ScannedProfileView from "./partner/scan/ScannedProfile/ScannedProfileView";
 import Destination from "./customer/DestinationOffers/DestinationView";
 
 const routes = (

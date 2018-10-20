@@ -1,9 +1,10 @@
-import { SET_TRAVELER } from "./scanActions";
-import {PARTNER_SCANNED} from "../../customer/localStorageKeys";
+import { SET_TRAVELER, SET_TICKET } from "./scanActions";
+import { PARTNER_SCANNED } from "../../customer/localStorageKeys";
 
 const traveler = localStorage.getItem(PARTNER_SCANNED);
 const initialState = {
-	traveler: (traveler !== undefined && traveler !== null ? JSON.parse(traveler).traveler : null)
+	traveler: (traveler !== undefined && traveler !== null ? JSON.parse(traveler).traveler : null),
+	ticket: null
 };
 
 function scanReducer(state = initialState, action) {
@@ -13,6 +14,8 @@ function scanReducer(state = initialState, action) {
 			console.log("saving : " , tmp);
 			localStorage.setItem(PARTNER_SCANNED, JSON.stringify(tmp));
 			return Object.assign({}, state, action.traveler);
+		case SET_TICKET:
+			return Object.assign({}, state, action.ticket);
 		default:
 			return state;
 	}
