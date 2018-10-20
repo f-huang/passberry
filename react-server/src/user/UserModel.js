@@ -6,6 +6,9 @@ const utils = require('../database/utils');
 
 const TABLE_NAME = "user";
 const COUNTRY_TABLE_NAME = "country";
+const SCAN_TABLE_NAME = "scan";
+const QR_TABLE_NAME = "qr_code";
+const ACTIVITY_TABLE_NAME = "activity";
 const EnumUserType = Object.freeze({
 	Tourist: "TOURIST",
 	Partner: "PARTNER",
@@ -22,10 +25,11 @@ const isMunicipality = (type) => type === EnumUserType.Municipality;
 
 const DEFAULT_USER_TYPE = EnumUserType.Tourist;
 
-const COLUMNS = `\`id\`, \`email\`, \`first_name\` AS \`firstName\`, \`last_name\` AS \`lastName\`, \`birthdate\`, \`gender\`, \`type\`, 
-	\`address_street\` AS \`addressStreet\`, \`address_supplement\` AS \`addressSupplement\`,
-	\`address_city\` AS \`addressCity\`, \`address_postcode\` AS \`addressPostcode\`, ${COUNTRY_TABLE_NAME}.\`name\` AS \`addressCountry\`,
-	\`student\`, \`student_validated\` AS \`studentValidated\`, \`student_expiration_date\` AS \`studentExpirationDate\`
+const COLUMNS = `\`${TABLE_NAME}\`.\`id\`, \`email\`, \`first_name\` AS \`firstName\`, \`last_name\` AS \`lastName\`,
+	\`birthdate\`, \`gender\`, \`${TABLE_NAME}\`.\`type\`, 
+	${TABLE_NAME}.\`address_street\` AS \`addressStreet\`, ${TABLE_NAME}.\`address_supplement\` AS \`addressSupplement\`,
+	${TABLE_NAME}.\`address_city\` AS \`addressCity\`, ${TABLE_NAME}.\`address_postcode\` AS \`addressPostcode\`, ${COUNTRY_TABLE_NAME}.\`name\` AS \`addressCountry\`,
+	${TABLE_NAME}.\`student\`, \`student_validated\` AS \`studentValidated\`, \`student_expiration_date\` AS \`studentExpirationDate\`
 	
 `;
 
@@ -114,12 +118,35 @@ exports.getById = (id) => new Promise((resolve, reject) => {
 				reject(error);
 				return null;
 			}
-			console.log(rows);
-			resolve(rows.length === 1 ? rows : null);
+			resolve(rows.length === 1 ? rows[0] : null);
 		}
 	)
 });
 
+
+exports.getByScanId = (scanId) => new Promise((resolve, reject) => {
+	const sql = `SELECT ${COLUMNS}, \`${QR_TABLE_NAME}\`.\`user_id\` FROM \`${SCAN_TABLE_NAME}\`
+		INNER JOIN \`${ACTIVITY_TABLE_NAME}\`
+		ON \`${ACTIVITY_TABLE_NAME}\`.\`id\`=\`${SCAN_TABLE_NAME}\`.\`activity_id\`
+		INNER JOIN ${QR_TABLE_NAME}
+		ON \`${SCAN_TABLE_NAME}\`.\`qr_code\`=\`${QR_TABLE_NAME}\`.\`value\`
+		INNER JOIN \`${TABLE_NAME}\`
+		ON \`${QR_TABLE_NAME}\`.\`user_id\`=\`${TABLE_NAME}\`.\`id\`
+		LEFT OUTER JOIN ${COUNTRY_TABLE_NAME}
+		ON ${COUNTRY_TABLE_NAME}.\`code\`=${TABLE_NAME}.\`address_country_code\`
+		WHERE \`${SCAN_TABLE_NAME}\`.\`id\`=?
+	`;
+	pool.query(sql, scanId,
+		(error, rows) => {
+			if (error) {
+				console.error(error);
+				reject(error);
+				return null;
+			}
+			resolve(rows.length === 1 ? rows[0] : null);
+		}
+	)
+});
 
 exports.create = (user) => new Promise((resolve, reject) => {
 	const sql = `INSERT INTO \`${TABLE_NAME}\` SET ?`;

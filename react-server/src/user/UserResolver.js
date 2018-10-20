@@ -18,13 +18,16 @@ const user = (input) => ({
 const resolver = {
 	Query: {
 		getUserById: (_, { id }) => {
-			return User.getById(id).then(rows => rows[0])
+			return User.getById(id).then(user => user)
 		},
 		getAllUsers: (_, { limit = 0, sortField = "", sortOrder = "" }) => {
 			return User.getAll().then(rows => rows)
 		},
 		getTravelersByUserId: (_, { userId }) => {
 
+		},
+		getUserByScanId: (_, { scanId })=> {
+			return User.getByScanId(scanId).then(user => user);
 		}
 	},
 	Mutation: {

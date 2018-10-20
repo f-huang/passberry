@@ -232,6 +232,7 @@ type Query {
     getTravelDestinations(limit: Int): [String]!
 
     getUserById(id: ID!): User
+    getUserByScanId(scanId: ID!): User
     getTravelersByUserId(userId: ID!): [Traveler]!
     getAllUsers(limit: Int, sortField: String, sortOrder: String): [User]
 
