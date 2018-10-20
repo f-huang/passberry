@@ -18,7 +18,7 @@ const Icon = styled.img`
 	height: 20px;
 `;
 
-const BackActionBar = ({ to, onBackClick }) =>
+const TransparentActionBar = ({ to, onBackClick }) =>
 	<Root>
 			{to ?
 				<NavLink to={to}>
@@ -30,10 +30,10 @@ const BackActionBar = ({ to, onBackClick }) =>
 	</Root>;
 
 
-BackActionBar.propTypes = {
+TransparentActionBar.propTypes = {
 	to: PropTypes.string,
 	onBackClick: PropTypes.func,
 	title: PropTypes.string
 };
 
-export default BackActionBar;
+export default TransparentActionBar;
