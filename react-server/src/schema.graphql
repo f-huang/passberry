@@ -368,7 +368,6 @@ input CreatePassInput {
 input BurnActivityTicketInput {
 	timestamp: Date!
 	ticketId: ID!
-	passId: ID!
 }
 
 input CreatePaymentInput {

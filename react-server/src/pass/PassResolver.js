@@ -74,13 +74,13 @@ const resolver = {
 				}).catch(e => ({status: getStatus(StatusCodeEnum.serverSideError, e)}))
 			);
 			promises.push(Pass.init({
-					'id': input.passId,
+					'ticketId': input.ticketId,
 					'initTime': input.timestamp,
 					'expirationTime': moment(input.timestamp).add(EXPIRE_INS, 'days').format('YYYY-MM-DD hh:mm:ss')
 				}).catch(e => ({status: getStatus(StatusCodeEnum.serverSideError, e)}))
 			);
 			return Promise.all(promises).then(() =>
-				Pass.getById(input.passId).then(pass => {
+				Pass.getByTicketId(input.ticketId).then(pass => {
 					return ({
 						status: getStatus(StatusCodeEnum.success, 'OK'),
 						pass: pass
