@@ -111,47 +111,51 @@ class ActivityView extends Component {
 	};
 
 	render() {
-		const id = this.props.match.params.id;
+		const id = parseInt(this.props.match.params.id, 10);
+		let activity = this.props.activities && this.props.activities.filter(activity => parseInt(activity.id, 10) === id)[0];
 		return (
-			<Query query={GET_ACTIVITY_BY_ID} variables={{id: id}}>
-				{({loading, error, data }) => {
-					if (loading) return <p> Loading </p>;
-					if (error) return <p> Error </p>;
-					const activity = data.getActivityById;
-					if (!activity)
-						return <Error404/>;
-					return (
-						<Root>
-							<ImageContainer image={defaultImg}>
-							</ImageContainer>
-							<TransparentActionBar onBackClick={this.onBackClick}/>
-							<FloatingContainer>
-								<Container>
-									<TitleContainer><Title>{activity.name}</Title></TitleContainer>
-									<PriceContainer>
-										<StartingFrom>{"à partir de"}</StartingFrom>
-										<Price>{activity.price.child.toFixed(2) + '€'}</Price>
-									</PriceContainer>
-								</Container>
-							</FloatingContainer>
-							{this.props.detailsAreShowing ?
-								<ExpandedActivityDetails activity={activity} onClick={this.onClickAddToCart}/> :
-								<ActivityDetails activity={activity} onClick={this.onClickAddToCart}/>
-							}
-							<TicketQuantity product={activity}/>
-							<ButtonNextStep onClick={this.onClickAddToCart}>{"Ajouter dans le panier"}</ButtonNextStep>
-							<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>
-						</Root>
-					);
-				}}
-			</Query>
+			<div>
+				<Query query={GET_ACTIVITY_BY_ID} variables={{id: id}}>
+					{({loading, error, data}) => {
+						if (loading) return <p> Loading </p>;
+						if (error) return <p> Error </p>;
+						activity = data.getActivityById;
+						if (!activity)
+							return <Error404/>;
+						else
+							return "";
+					}}
+				</Query>
+				<Root>
+					<ImageContainer image={defaultImg}>
+					</ImageContainer>
+					<TransparentActionBar onBackClick={this.onBackClick}/>
+					<FloatingContainer>
+						<Container>
+							<TitleContainer><Title>{activity.name}</Title></TitleContainer>
+							<PriceContainer>
+								<StartingFrom>{"à partir de"}</StartingFrom>
+								<Price>{activity.price.child.toFixed(2) + '€'}</Price>
+							</PriceContainer>
+						</Container>
+					</FloatingContainer>
+					{this.props.detailsAreShowing ?
+						<ExpandedActivityDetails activity={activity} onClick={this.onClickAddToCart}/> :
+						<ActivityDetails activity={activity} onClick={this.onClickAddToCart}/>
+					}
+					<TicketQuantity product={activity}/>
+					<ButtonNextStep onClick={this.onClickAddToCart}>{"Ajouter dans le panier"}</ButtonNextStep>
+					<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>
+				</Root>
+			</div>
 		);
 	}
 }
 
 const mapStateToProps = state => ({
 	destination: state.travelDetails.destination,
-	detailsAreShowing: state.activityPage.detailsAreShowing
+	detailsAreShowing: state.activityPage.detailsAreShowing,
+	activities: state.activities
 });
 
 const mapDispatchToProps = dispatch => ({
