@@ -9,7 +9,7 @@ import { ApolloClient } from 'apollo-client';
 import { createUploadLink } from 'apollo-upload-client';
 import { setContext } from "apollo-link-context";
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { reducer } from "./reducers";
+import { reducers } from "./reducers";
 import { TOKEN } from "./customer/localStorageKeys";
 
 import registerServiceWorker from './registerServiceWorker';
@@ -42,7 +42,7 @@ const client = new ApolloClient({
 	}
 });
 
-const store = createStore(reducer);
+const store = createStore(reducers);
 
 const root =
 	<ApolloProvider client={ client }>

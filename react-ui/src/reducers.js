@@ -9,13 +9,13 @@ import attractionCreateReducer from "./admin/activity/create/activityCreateReduc
 import activityReducer from "./customer/Activity/activityReducers";
 import initReducer from "./initReducers";
 
-export const reducer = combineReducers({
+export const reducers = combineReducers({
 	travelDetails: travelPageReducer,
 	basket: basketReducer.basket,
-	basketPage: basketPageReducer.basketPage,
 	scan: scanReducer.scan,
 	createActivity: attractionCreateReducer,
 	ticketQuantity: ticketQuantity,
+	activities: initReducer.activities,
 	activityPage: activityReducer,
-	activities: initReducer.activities
+	basketPage: basketPageReducer.basketPage,
 });
