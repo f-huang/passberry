@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
-import { hideView } from "./ticketQuantityActions";
+import {hideView, setId} from "./ticketQuantityActions";
 import { addToBasket, removeFromBasket } from "../Basket/basketActions";
 
 import Button from "../../component/Button/Button";
@@ -110,6 +110,11 @@ class TicketQuantity extends React.Component {
 		this.removeItem = this.removeItem.bind(this);
 	}
 
+	componentDidMount() {
+		if (this.props.id)
+			this.props.setTicketQuantityId();
+	}
+
 	closeView = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -135,14 +140,14 @@ class TicketQuantity extends React.Component {
 				<Container>
 					<Title>{"Attribuer les tickets"}</Title>
 					<TravelerView >
-						<tbody> {
+						<tbody>{
 							this.props.travelers.map((traveler, index) => {
 								const travelerItemState = this.props.basket.items ? this.props.basket.items.find(item => {
 										return item.travelerId === traveler.id &&
 											item.product.id === this.props.product.id
 									}
 								) : null;
-								return <tr key={index}>
+								return (<tr key={index}>
 									<td colSpan="3"><Name>{traveler.name}</Name></td>
 									<td colSpan="1">
 										<SelectorContainer>
@@ -151,7 +156,7 @@ class TicketQuantity extends React.Component {
 											<ButtonAddMinus onClick={(e) => this.addItem(e, traveler.id) }>+</ButtonAddMinus>
 										</SelectorContainer>
 									</td>
-								</tr>;
+								</tr>);
 							})}
 						</tbody>
 					</TravelerView>
@@ -164,15 +169,15 @@ class TicketQuantity extends React.Component {
 
 TicketQuantity.propTypes = propTypes;
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
 	return ({
 		travelers: state.travelDetails.travelers,
 		basket: state.basket,
-		isShowing: state.ticketQuantity.isShowing
+		isShowing: state.ticketQuantity.isShowing || (ownProps.id ? state.ticketQuantity.ids[ownProps.id] : false)
 	})
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
 	return ({
 		onClickAddItem: (product, travelerId) => dispatch(addToBasket({
 			quantity: 1,
@@ -183,7 +188,8 @@ const mapDispatchToProps = (dispatch) => {
 			travelerId: travelerId,
 			product: product,
 		})),
-		onClickClose: () => dispatch(hideView())
+		onClickClose: () => dispatch(hideView(ownProps.id)),
+		setTicketQuantityId: () => dispatch(setId(ownProps.id))
 	})
 };
 

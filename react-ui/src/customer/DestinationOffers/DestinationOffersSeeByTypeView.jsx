@@ -15,12 +15,7 @@ class DestinationOffersSeeByTypeView extends React.Component {
 			type => type.value === this.props.type.toLocaleUpperCase()
 		);
 		this.attractionType = found.length === 0 ? null : found[0];
-		this.onActivityClick = this.onActivityClick.bind(this);
 	}
-
-	onActivityClick = (activity) => {
-
-	};
 
 	render() {
 		const params = qs.parse(this.props.location.search);
@@ -32,17 +27,21 @@ class DestinationOffersSeeByTypeView extends React.Component {
 					if (loading) return <p>Loading</p>;
 					if (error) return <p>Error</p>;
 					const activities = data.getActivitiesByType;
-					return activities.map(activity =>
-						<Link to={{pathname:  `/activity/${activity.id}-${activity.name}`, search: `?type=${params.type}`}}>
-							<OfferLargeSized key={activity.id}
-							                 offer={activity}
-							/>
-						</Link>
-					);
+					return activities.map((activity, index) => {
+						return (
+							<Link key={activity.id}
+							      to={{pathname: `/activity/${activity.id}-${activity.name}`,
+								      search: `?type=${params.type}`}}
+							>
+								<OfferLargeSized offer={activity} index={index}/>
+							</Link>
+						);
+					})
 				}}
 			</Query>
 		);
 	}
 }
+
 
 export default withRouter(DestinationOffersSeeByTypeView);

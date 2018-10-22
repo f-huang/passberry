@@ -62,23 +62,23 @@ const Price = styled.span`
 	font-size: 10px;	
 `;
 
-const onClickAdd = (event, onClickShowView) => {
+const onClickAdd = (event, id, onClickShowView) => {
 	event.preventDefault();
 	event.stopPropagation();
 	event.nativeEvent.stopImmediatePropagation();
-	onClickShowView();
+	onClickShowView(id);
 };
 
-const OfferLargeSized = ({offer, onClick, onClickShowView}) => {
+const OfferLargeSized = ({ offer, onClick, onClickShowView }) => {
 	const image = offer.images && offer.images.length > 0 ? offer.images[0] : monacoImg;
 	return (
 		<Container onClick={onClick}>
-			<TicketQuantity product={offer}/>
+			{ <TicketQuantity id={offer.id} product={offer}/> }
 			<TopContainer backgroundImage={image}/>
 			<BottomContainer >
 				<Name><b>{offer.name}</b></Name>
 				<Price>{`Tarif adulte : ${offer.price.adult.toFixed(2)}€`}</Price>
-				<ButtonAdd onClick={e => onClickAdd(e, onClickShowView)}>
+				<ButtonAdd onClick={e => onClickAdd(e, offer.id, onClickShowView)}>
 					{"Ajouter"}
 				</ButtonAdd>
 			</BottomContainer>
@@ -86,9 +86,10 @@ const OfferLargeSized = ({offer, onClick, onClickShowView}) => {
 	);
 };
 
-const mapDispatchToProps = dispatch => {
+
+const mapDispatchToProps = (dispatch) => {
 	return ({
-		onClickShowView: () => dispatch(showView())
+		onClickShowView: (id) => { dispatch(showView(id)) }
 	});
 };
 
