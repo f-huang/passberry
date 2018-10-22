@@ -47,11 +47,6 @@ const ButtonGo = styled(ButtonSubmit)`
 	width: 100%;
 `;
 
-const ButtonGo = styled(ButtonSubmit)`
-	margin: 16px auto;
-	width: 100%;
-`;
-
 const TravelView = (props) => (
 	<Root>
 		<Container>
