@@ -3,9 +3,9 @@ import styled from "styled-components";
 import moment from "moment";
 import EnumEntryState from "../EnumEntryState";
 
-import { Mutation } from "react-apollo";
+import { compose, graphql } from "react-apollo";
 import { connect } from "react-redux";
-import { CREATE_ENTRY } from "../../../queries";
+import {BURN_ACTIVITY_TICKET, CREATE_ENTRY} from "../../../queries";
 import { withRouter } from "react-router-dom";
 
 import Button from "../../../component/Button/Button";
@@ -22,16 +22,17 @@ const ValidateButton = styled(Button)`
 	}
 `;
 
-
 const onValidate = (props) => {
 	props.history.push('/scan-profile');
 };
 
-const onClick = (e, props, mutate) => {
+const timestamp =  moment().format('YYYY-MM-DD hh:mm:ss');
+
+const mutateEntry = (props) => {
 	const variables = {
 		variables : {
 			input : {
-				timestamp: moment().format('YYYY-MM-DD hh:mm:ss'),
+				timestamp: timestamp,
 				state: EnumEntryState.ACCEPTED.value,
 				userId: props.userId,
 				activityId: props.activityId,
@@ -39,23 +40,39 @@ const onClick = (e, props, mutate) => {
 			}
 		}
 	};
+	return props.createEntry(variables);
+};
+
+const mutateActivityTicket = (props) => {
+	const variables = {
+		variables : {
+			input : {
+				timestamp: timestamp,
+				ticketId: props.ticket.id
+			}
+		}
+	};
+	return props.burnActivityTicket(variables);
+};
+
+const onClick = (e, props) => {
 	e.preventDefault();
-	mutate(variables);
+
+	Promise.all([
+		mutateEntry(props),
+		mutateActivityTicket(props)
+	]).then(() =>
+		onValidate(props)
+	);
 };
 
 const ValidateEntryButton = (props) => {
 	const state = getScanState(props.ticket);
 
 	return (
-		<Mutation mutation={ CREATE_ENTRY }
-	                  update={() => { onValidate(props);}}
-		>
-			{ (mutate) => { return (
-				<ValidateButton onClick={e => onClick(e, props, mutate)} disabled={state !== EnumScanState.SUCCESS}>
-					{"Valider"}
-				</ValidateButton>
-			)}}
-		</Mutation>
+		<ValidateButton onClick={e => onClick(e, props)} disabled={state !== EnumScanState.SUCCESS}>
+			{"Valider"}
+		</ValidateButton>
 	);
 };
 
@@ -67,4 +84,10 @@ const mapStateToProps = state => {
 	})
 };
 
-export default withRouter(connect(mapStateToProps)(ValidateEntryButton));
+const withOptions = compose(
+	graphql(CREATE_ENTRY, { name: "createEntry" }),
+	graphql(BURN_ACTIVITY_TICKET, { name: "burnActivityTicket" }),
+	connect(mapStateToProps)
+);
+
+export default withRouter(withOptions(ValidateEntryButton));

@@ -284,6 +284,25 @@ export const GET_TICKET_BY_TRAVELER_ID_AND_ACTIVITY_ID = gql`
 	}
 `;
 
+export const BURN_ACTIVITY_TICKET =gql`
+	mutation burnActivityTicket($input: BurnActivityTicketInput!) {
+		burnActivityTicket(input: $input) {
+			status {
+				code
+				message
+			}
+			pass {
+				id
+				tickets {
+					id
+					usedTime
+					activityId
+				}
+			}
+		}
+	}
+`;
+
 
 export const CREATE_SCAN = gql`
 	mutation createScan($input: CreateScanInput!) {
