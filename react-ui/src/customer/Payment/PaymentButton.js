@@ -3,22 +3,46 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose, graphql } from "react-apollo";
-import { emptyBasket, reinitializeBasket } from "../Basket/basketActions";
-import { VALIDATE_BASKET, CREATE_PASS } from "../../queries";
+import {emptyBasket, reinitializeBasket, updateTravelerIds} from "../Basket/basketActions";
+import {VALIDATE_BASKET, CREATE_PASS, CREATE_TRAVELER} from "../../queries";
 
 import Button from "../../component/Button/Button";
 import EnumBasketState from "../Basket/EnumBasketState";
+import {editTraveler} from "../Travel/travelActions";
 
 class PaymentButton extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.executeMutations = this.executeMutations.bind(this);
-		this.executeMutateBasket = this.executeMutateBasket.bind(this);
-		this.executeMutatePass = this.executeMutatePass.bind(this);
+		this.mutateBasket = this.mutateBasket.bind(this);
+		this.mutatePass = this.mutatePass.bind(this);
+		this.mutateTravelers = this.mutateTravelers.bind(this);
 	}
 
-	executeMutateBasket = () => {
+	componentWillMount() {
+		if (this.props.travelers.find(traveler => traveler.isNew)) {
+			const promises = this.mutateTravelers();
+			Promise.all(promises).then((responses) => {
+				const oldIds = [...new Set(this.props.basketBuyingItems.map(item => item.travelerId.toString()))];
+				const newIds = [...new Set(responses.map(response => response.data.createTraveler.traveler.id))];
+				const ids = oldIds.map((oldId, index) => ({ old: oldId, new: newIds[index]}));
+				responses.map(({ data }) => {
+					const index = this.props.travelers.findIndex(traveler =>
+						traveler.isNew === true && traveler.firstName, 10 === data.createTraveler.traveler.firstName
+					);
+					this.props.updateTraveler({
+						isNew: false,
+						index: index,
+						id: data.createTraveler.traveler.id
+					});
+					this.props.updateBasketTravelerIds(ids);
+				});
+			})
+		}
+	}
+
+	mutateBasket = () => {
 		const travelersIds = [...new Set(this.props.basketBuyingItems.map(item => item.travelerId.toString()))];
 		const items = this.props.basket.items.filter(item =>
 			!travelersIds.includes(item.travelerId.toString())
@@ -45,7 +69,7 @@ class PaymentButton extends React.Component {
 		})
 	};
 
-	executeMutatePass = () => {
+	mutatePass = () => {
 		const travelersIds = [...new Set(this.props.basketBuyingItems.map(item => item.travelerId))];
 		travelersIds.forEach(travelerId => {
 			const tickets = [];
@@ -77,9 +101,24 @@ class PaymentButton extends React.Component {
 		})
 	};
 
+	mutateTravelers = () => {
+		const travelersIds = [...new Set(this.props.basketBuyingItems.map(item => item.travelerId.toString()))];
+		const travelers = this.props.travelers.filter(traveler => travelersIds.includes(traveler.id.toString()));
+		return travelers.map(traveler =>
+			this.props.createTraveler({
+				variables: {
+					input: {
+						firstName: traveler.firstName
+					}
+				}
+			})
+		);
+	};
+
+
 	executeMutations = () => {
-		this.executeMutatePass();
-		this.executeMutateBasket();
+		this.mutatePass();
+		this.mutateBasket();
 	};
 
 	render() {
@@ -113,12 +152,15 @@ const mapStateToProps = state => {
 		startDate: state.travelDetails.travelDates.startDate.format("YYYY-MM-DD"),
 		endDate: state.travelDetails.travelDates.endDate.format("YYYY-MM-DD"),
 		destination: state.travelDetails.destination,
-		userId: 1
-	})
+		travelers: state.travelDetails.travelers,
+		userId: 1,
+	});
 };
 
 const mapDispatchToProps = dispatch => {
 	return ({
+		updateBasketTravelerIds: (ids) => dispatch(updateTravelerIds(ids)),
+		updateTraveler: (traveler) => { dispatch(editTraveler(traveler)) },
 		reinitializeBasket: (basket) => { dispatch(reinitializeBasket(basket)) },
 		emptyBasket: () => { dispatch(emptyBasket()) }
 	})
@@ -127,6 +169,7 @@ const mapDispatchToProps = dispatch => {
 const withOptions = compose(
 	graphql(CREATE_PASS, { name: 'createPass' }),
 	graphql(VALIDATE_BASKET, { name: 'validateBasket' }),
+	graphql(CREATE_TRAVELER, { name: 'createTraveler'}),
 	connect(mapStateToProps, mapDispatchToProps)
 );
 

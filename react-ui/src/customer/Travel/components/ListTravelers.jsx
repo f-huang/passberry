@@ -35,7 +35,7 @@ class ListTravelers extends React.Component {
 	};
 
 	onChangeEditTraveler = (e, index) => {
-		this.props.onChangeEditTraveler({name: e.target.value, index: index})
+		this.props.onChangeEditTraveler({firstName: e.target.value, index: index})
 	};
 
 	onClickAddTraveler = e => {

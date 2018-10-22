@@ -33,7 +33,7 @@ const Traveler = ({traveler, removable, index, onClick, onChange}) => (
 			<TravelInput
 				name={"travelers"}
 				placeholder={"Visiteur " + (index + 1)}
-				value={traveler ? traveler.name || "" : ""}
+				value={traveler ? traveler.firstName || "" : ""}
 				onChange={onChange}
 			/>
 		</Wrap>

@@ -1,9 +1,6 @@
 import {
-	// FILTER_ACTIVITYS,
-	// SEE_ACTIVITY,
-	// SEE_MORE,
 	ADD_TO_BASKET, EMPTY_BASKET, REINITIALIZE_BASKET,
-	REMOVE_FROM_BASKET, SET_BASKET_ID
+	REMOVE_FROM_BASKET, SET_BASKET_ID, UPDATE_TRAVELER_IDS
 } from "./basketActions";
 import { BASKET } from "../localStorageKeys";
 
@@ -57,6 +54,15 @@ function basketReducer(state = basket, action) {
 			localStorage.setItem(BASKET, JSON.stringify(action.basket));
 			return { ...action.basket };
 
+		case UPDATE_TRAVELER_IDS:
+			let items = state.items;
+			action.ids.map(id => {
+				const index = state.items.findIndex(item => parseInt(item.travelerId, 10) === parseInt(id.old, 10));
+				if (index !== -1)
+					items[index].travelerId = id.new;
+			});
+			localStorage.setItem(BASKET, JSON.stringify({...state, items}));
+			return {...state, items};
 
 		case SET_BASKET_ID:
 			const basketWithId = Object.assign({}, state, action.id);
