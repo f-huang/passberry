@@ -63,7 +63,7 @@ class ScanQRCodeView extends React.Component {
 							userId: this.props.userId,
 							qr: result,
 							state: (data.getTravelerByQr === null ? EnumScanState.NOT_FOUND : EnumScanState.PENDING).value,
-							timestamp: moment().format('YYYY-MM-DD hh:mm:ss'),
+							timestamp: moment().format('YYYY-MM-DD HH:mm:ss'),
 					}}};
 				this.props.createScan(variables).then(({ data }) => {
 					if (data)

@@ -15,7 +15,7 @@ class BasketUpdateButton extends React.Component {
 			variables: {
 				input: {
 					basketId: this.props.basket.id,
-					lastUpdateTime: moment(this.props.basket.lastUpdateTime).format('YYYY-MM-DD hh:mm:ss'),
+					lastUpdateTime: moment(this.props.basket.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss'),
 					items: this.props.basket.items ? this.props.basket.items.map(item => ({
 						itemId: item.product.id,
 						type: item.product.type,

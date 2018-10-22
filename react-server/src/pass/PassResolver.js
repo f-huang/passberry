@@ -76,7 +76,7 @@ const resolver = {
 			promises.push(Pass.init({
 					'ticketId': input.ticketId,
 					'initTime': input.timestamp,
-					'expirationTime': moment(input.timestamp).add(EXPIRE_INS, 'days').format('YYYY-MM-DD hh:mm:ss')
+					'expirationTime': moment(input.timestamp).add(EXPIRE_INS, 'days').format('YYYY-MM-DD HH:mm:ss')
 				}).catch(e => ({status: getStatus(StatusCodeEnum.serverSideError, e)}))
 			);
 			return Promise.all(promises).then(() =>

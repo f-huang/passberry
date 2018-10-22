@@ -26,7 +26,7 @@ const onValidate = (props) => {
 	props.history.push('/scan-profile');
 };
 
-const timestamp =  moment().format('YYYY-MM-DD hh:mm:ss');
+const timestamp =  moment().format('YYYY-MM-DD HH:mm:ss');
 
 const mutateEntry = (props) => {
 	const variables = {

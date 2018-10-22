@@ -14,8 +14,8 @@ class BasketCreateButton extends React.Component {
 		const variables = {
 			variables: {
 				input: {
-					initTime: moment(this.props.basket.initTime).format('YYYY-MM-DD hh:mm:ss'),
-					lastUpdateTime: moment(this.props.basket.lastUpdateTime).format('YYYY-MM-DD hh:mm:ss'),
+					initTime: moment(this.props.basket.initTime).format('YYYY-MM-DD HH:mm:ss'),
+					lastUpdateTime: moment(this.props.basket.lastUpdateTime).format('YYYY-MM-DD HH:mm:ss'),
 					items: this.props.basket.items ? this.props.basket.items.map(item => ({
 						itemId: item.product.id,
 						type: item.product.type,
