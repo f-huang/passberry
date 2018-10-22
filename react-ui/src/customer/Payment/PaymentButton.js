@@ -19,6 +19,10 @@ class PaymentButton extends React.Component {
 	}
 
 	executeMutateBasket = () => {
+		const travelersIds = [...new Set(this.props.basketBuyingItems.map(item => item.travelerId.toString()))];
+		const items = this.props.basket.items.filter(item =>
+			!travelersIds.includes(item.travelerId.toString())
+		);
 		this.props.validateBasket({
 			variables: {
 				input: {
@@ -28,18 +32,26 @@ class PaymentButton extends React.Component {
 				}
 			}
 		}).then(() => {
-			this.props.basketState === EnumBasketState.PAID ?
-				this.props.emptyBasket() :
-				this.props.reinitializeBasket(this.props.basket);
-			this.props.history.push('/');
+			if (this.props.basketState === EnumBasketState.PAID) {
+				this.props.emptyBasket();
+				this.props.history.push('/');
+			}
+			else {
+				this.props.reinitializeBasket(
+					{...this.props.basket, items}
+				);
+				this.props.history.push('/basket');
+			}
 		})
 	};
 
 	executeMutatePass = () => {
-		const travelersIds = [...new Set(this.props.basket.items.map(item => item.travelerId))];
+		const travelersIds = [...new Set(this.props.basketBuyingItems.map(item => item.travelerId))];
 		travelersIds.forEach(travelerId => {
 			const tickets = [];
-			const travelerItems = this.props.basket.items.filter(item => item.travelerId === travelerId && item.quantity > 0);
+			const travelerItems = this.props.basketBuyingItems.filter(item =>
+				item.travelerId.toString() === travelerId.toString() && item.quantity > 0
+			);
 			travelerItems.forEach(travelerItem => tickets.push({
 				activityId: travelerItem.product.id,
 				quantity: travelerItem.quantity
@@ -71,8 +83,8 @@ class PaymentButton extends React.Component {
 	};
 
 	render() {
-		if (!this.props.items || this.props.items.length === 0)
-			return <div>Empty Basket</div>
+		if (parseInt(this.props.total, 10) === 0)
+			return <div>Empty Basket</div>;
 		return (
 			<Button onClick={this.executeMutations}>
 				{`Payer €${this.props.total}`}
@@ -88,18 +100,19 @@ const mapStateToProps = state => {
 			state.travelDetails.travelers.find(traveler => traveler.id === parseInt(id, 10))
 		) : state.travelDetails.travelers.map(traveler => traveler.id.toString());
 	const items = state.basket.items ? state.basket.items.filter(item =>
-			ids.includes(item.travelerId.toString()) && item.quantity > 0
-		) : [];
+		ids.includes(item.travelerId.toString()) && item.quantity > 0
+	) : [];
 	const quantities = items ? items.map(item => item.quantity) : [];
 	const prices = items ? items.map(item => item.product.price.adult) : [];
 
 	return ({
 		total: prices.length > 0 ? prices.reduce((total, currentPrice, index) => total + quantities[index] * currentPrice).toFixed(2) : 0,
-		basketState: state.basket.items.length === items.length ? EnumBasketState.PAID : EnumBasketState.HALF_PAID,
+		basketState: state.basket.items && state.basket.items.length === items.length ? EnumBasketState.PAID : EnumBasketState.HALF_PAID,
+		basketBuyingItems: items,
+		basket: state.basket,
 		startDate: state.travelDetails.travelDates.startDate.format("YYYY-MM-DD"),
 		endDate: state.travelDetails.travelDates.endDate.format("YYYY-MM-DD"),
 		destination: state.travelDetails.destination,
-		basket: { ...state.basket, items: items },
 		userId: 1
 	})
 };
