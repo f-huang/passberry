@@ -4,13 +4,13 @@ import ScreenTitle from "../ScreenTitle";
 import ScreenSubtitle from "../ScreenSubtitle";
 import ListTravelers from "./components/ListTravelers";
 import styled from "styled-components";
-import ButtonSubmit from "../../component/Button/ButtonSubmit/ButtonSubmit";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
 
 import backgroundImg from "../../assets/felipe-correia-469512-unsplash.jpg"
 import theme from "../../app/theme";
+import ButtonTravelGo from "./components/ButtonTravelGo";
 
 const Root = styled.div`
 	overflow: hidden;
@@ -42,11 +42,6 @@ const Form = styled.form`
 	max-width: 400px;
 `;
 
-const ButtonGo = styled(ButtonSubmit)`
-	margin: 16px auto;
-	width: 100%;
-`;
-
 const TravelView = (props) => (
 	<Root>
 		<Container>
@@ -56,9 +51,7 @@ const TravelView = (props) => (
 				<TravelForm/>
 				<ListTravelers/>
 				<NavLink to={'/' + props.destination}>
-					<ButtonGo>
-						{ "Go !" }
-					</ButtonGo>
+					<ButtonTravelGo/>
 				</NavLink>
 			</Form>
 		</Container>
@@ -67,7 +60,7 @@ const TravelView = (props) => (
 );
 
 const mapStateToProps = state => ({
-	destination: state.travelDetails.destination || ""
+	destination: state.travelDetails.destination || "",
 });
 
 export default connect(mapStateToProps)(TravelView);

@@ -47,7 +47,7 @@ function travelerReducers (state = travelers, action) {
 			const travelers = state.slice(0);
 			travelers[action.traveler.index] = {
 				id: action.traveler.id ? action.traveler.id : state[action.traveler.index].id,
-				firstName: action.traveler.firstName ? action.traveler.firstName : state[action.traveler.index].firstName,
+				firstName: action.traveler.firstName !== undefined && action.traveler.firstName !== null ? action.traveler.firstName.trim() : state[action.traveler.index].firstName,
 				isNew: action.traveler.isNew !== undefined ? action.traveler.isNew : state[action.traveler.index].isNew,
 			};
 			localStorage.setItem(TRAVELERS, JSON.stringify(travelers));
