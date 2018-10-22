@@ -13,6 +13,7 @@ export const SIGN_IN = `
 	}
 `;
 
+
 export const GET_QR_BY_TOKEN = gql`
 	query getQrByToken($token: String!) {
 		getQrByToken(token: $token)
@@ -364,6 +365,22 @@ export const CREATE_ACTIVITY = gql`
 			status {
 				code
 				message
+			}
+		}
+	}
+`;
+
+export const CREATE_TRAVELER = gql`
+	mutation createTraveler($input: CreateTravelerInput!) {
+		createTraveler(input: $input) {
+			status {
+				code
+				message
+			}
+			traveler {
+				id
+				firstName
+				lastName
 			}
 		}
 	}

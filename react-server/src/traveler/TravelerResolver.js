@@ -1,4 +1,14 @@
+const { getStatus, StatusCodeEnum } = require("../status");
+
 const Traveler = require('./TravelerModel');
+const User = require('../user/UserModel');
+
+const traveler = (input) => ({
+	"first_name": input.firstName,
+	...(input.last_name ? {"last_name": input.lastName} : {}),
+	...(input.birthdate ? { "birthdate": input.birthdate } : {}),
+	...(input.isStudent ? {"student": input.isStudent} : {})
+});
 
 const resolver = {
 	Query: {
@@ -14,6 +24,11 @@ const resolver = {
 		}
 	},
 	Mutation: {
+		createTraveler: (_, { input }) => {
+			return User.create(traveler(input))
+				.then(travelerId => ({status: getStatus(StatusCodeEnum.success, 'OK'), traveler: {...input, id: travelerId}}))
+				.catch(e => ({status: getStatus(StatusCodeEnum.serverSideError, e), traveler: null}));
+		}
 	}
 };
 

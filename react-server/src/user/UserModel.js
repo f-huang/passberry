@@ -154,8 +154,8 @@ exports.create = (user) => new Promise((resolve, reject) => {
 		reject("User is not defined or null");
 		return -1;
 	}
-	user.password = bcrypt.hashSync(user.password, 12);
-	console.log(user.password);
+	if (user.password)
+		user.password = bcrypt.hashSync(user.password, 12);
 	pool.query(sql, user, (error, result) => {
 		if (error) {
 			console.error(error);

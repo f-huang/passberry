@@ -113,7 +113,7 @@ type Activity {
 
 type StudentStatus {
 	isValidated: Boolean!
-	expirationDate: Date!
+	expirationDate: Date
 }
 
 type User {
@@ -275,6 +275,13 @@ input SignUpInput {
 	birthdate: Date
 }
 
+input CreateTravelerInput {
+	firstName: String!
+	lastName: String
+	isStudent: Boolean
+	birthdate: Date
+}
+
 input ActivityPriceInput {
 	adult: Float!
 	child: Float
@@ -415,6 +422,11 @@ type UserCredentials {
 	errorMessage: String
 }
 
+type CreateTravelerPayload {
+	status: Status!
+	traveler: Traveler
+}
+
 type CreateActivityPayload {
 	status: Status!
 }
@@ -478,6 +490,7 @@ type CreateEntryPayload {
 type Mutation {
 	signIn(input: SignInInput!): UserCredentials!
 	signUp(input: SignUpInput!): UserCredentials!
+	createTraveler(input: CreateTravelerInput!): CreateTravelerPayload!
 
 	createActivity(input: CreateActivityInput!): CreateActivityPayload!
     
