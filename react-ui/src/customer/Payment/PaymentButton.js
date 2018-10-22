@@ -71,6 +71,8 @@ class PaymentButton extends React.Component {
 	};
 
 	render() {
+		if (!this.props.items || this.props.items.length === 0)
+			return <div>Empty Basket</div>
 		return (
 			<Button onClick={this.executeMutations}>
 				{`Payer €${this.props.total}`}
@@ -80,14 +82,14 @@ class PaymentButton extends React.Component {
 }
 
 const mapStateToProps = state => {
-	const ids = state.basketPage.travelers ?
+	const ids = state.basketPage.travelers && state.basketPage.travelers ?
 		Object.keys(state.basketPage.travelers).filter(id =>
 			state.basketPage.travelers[id] === true &&
 			state.travelDetails.travelers.find(traveler => traveler.id === parseInt(id, 10))
-		) : state.travelDetails.travelers.map(traveler => traveler.id);
-	const items = state.basket.items.filter(item =>
-			ids.includes(item.travelerId) && item.quantity > 0
-		);
+		) : state.travelDetails.travelers.map(traveler => traveler.id.toString());
+	const items = state.basket.items ? state.basket.items.filter(item =>
+			ids.includes(item.travelerId.toString()) && item.quantity > 0
+		) : [];
 	const quantities = items ? items.map(item => item.quantity) : [];
 	const prices = items ? items.map(item => item.product.price.adult) : [];
 
