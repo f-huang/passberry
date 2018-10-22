@@ -33,15 +33,14 @@ const ActivityCreateButton = (props) => {
 };
 
 const mapStateToProps = (state) => {
-	console.log("state: ", state.createActivity.images);
 	return ({
-		images: state.createActivity.images,
-		name: state.createActivity.name,
-		price: state.createActivity.price,
-		type: state.createActivity.type,
-		description: state.createActivity.description,
-		link: state.createActivity.link,
-		address: state.createActivity.address,
+		images: state.createActivityPage.images,
+		name: state.createActivityPage.name,
+		price: state.createActivityPage.price,
+		type: state.createActivityPage.type,
+		description: state.createActivityPage.description,
+		link: state.createActivityPage.link,
+		address: state.createActivityPage.address,
 	})
 };
 

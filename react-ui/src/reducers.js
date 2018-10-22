@@ -13,9 +13,10 @@ export const reducers = combineReducers({
 	travelDetails: travelPageReducer,
 	basket: basketReducer.basket,
 	scan: scanReducer.scan,
-	createActivity: attractionCreateReducer,
 	ticketQuantity: ticketQuantity,
 	activities: initReducer.activities,
+	lastTimeFetched: initReducer.lastTimeFetched,
 	activityPage: activityReducer,
 	basketPage: basketPageReducer.basketPage,
+	createActivityPage: attractionCreateReducer,
 });

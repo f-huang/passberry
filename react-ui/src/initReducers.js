@@ -1,9 +1,12 @@
 import {
-	INIT_ACTIVITIES
+	INIT_ACTIVITIES, UPDATE_LAST_TIME_FETCHED
 } from "./initActions";
-import { ACTIVITIES } from "./customer/localStorageKeys";
+import {
+	ACTIVITIES, LAST_TIME_FETCHED
+} from "./customer/localStorageKeys";
 
 const initialActivities = JSON.parse(localStorage.getItem(ACTIVITIES)) || [];
+const initialTime = JSON.parse(localStorage.getItem(LAST_TIME_FETCHED)) || null;
 
 const activityReducer = (state = initialActivities, action) => {
 	if (action.type === INIT_ACTIVITIES) {
@@ -13,8 +16,15 @@ const activityReducer = (state = initialActivities, action) => {
 	return state;
 };
 
+const lastTimeFetchedReducer = (state = initialTime, action) => {
+	if (action.type === UPDATE_LAST_TIME_FETCHED)
+		localStorage.setItem(LAST_TIME_FETCHED, JSON.stringify(action.lastTime));
+	return state;
+};
+
 const reducers = {
-	activities: activityReducer
+	activities: activityReducer,
+	lastTimeFetched: lastTimeFetchedReducer
 };
 
 export default reducers;

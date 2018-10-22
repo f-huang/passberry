@@ -2,7 +2,10 @@ import React from "react";
 import { withApollo } from "react-apollo";
 import { connect } from "react-redux";
 import { GET_ALL_ACTIVITIES } from "../queries";
-import { initActivities } from "../initActions";
+import {initActivities, updateLastTimeFetched} from "../initActions";
+import moment from "moment";
+
+const currentTime = moment();
 
 class InitComponent extends React.Component {
 	constructor(props) {
@@ -11,7 +14,13 @@ class InitComponent extends React.Component {
 	}
 
 	componentWillMount() {
-		this.storeActivities();
+		if (this.props.lastTimeFetched) {
+			const expirationTIme = moment(this.props.lastTimeFetched).add(1, 'hours');
+			if (expirationTIme.isAfter(currentTime))
+				this.storeActivities();
+		}
+		else
+			this.storeActivities();
 	}
 
 	storeActivities = () => {
@@ -20,6 +29,7 @@ class InitComponent extends React.Component {
 		}).then(({loading, error, data}) => {
 			if (data && data.getAllActivities) {
 				this.props.storeActivities(data.getAllActivities);
+				this.props.updateLastTimeFetched();
 			}
 		})
 	};
@@ -31,8 +41,13 @@ class InitComponent extends React.Component {
 	}
 }
 
-const mapDispatchToProps = dispatch => ({
-	storeActivities: (activities) => dispatch(initActivities(activities))
+const mapStateToProps = state => ({
+	lastTimeFetched: state.lastTimeFetched
 });
 
-export default connect(null, mapDispatchToProps)(withApollo(InitComponent));
+const mapDispatchToProps = dispatch => ({
+	storeActivities: (activities) => dispatch(initActivities(activities)),
+	updateLastTimeFetched: () => dispatch(updateLastTimeFetched(currentTime)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withApollo(InitComponent));
