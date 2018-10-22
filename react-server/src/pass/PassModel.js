@@ -5,15 +5,16 @@ const Ticket = require('../ticket/TicketModel');
 const TABLE_NAME = 'pass';
 const QR_TABLE_NAME = 'qr_code';
 
-const addTicketsToPass = (rows) => {
+const addTicketsToPass = (passes) => {
 	const promises = [];
-	rows.map(row =>
-		promises.push(Ticket.getPassTickets(row.id).then(tickets =>
-				row.tickets = tickets
-			)
+	passes.map(pass =>
+		promises.push(Ticket.getPassTickets(pass.id).then(tickets => {
+				pass.tickets = tickets.map(ticket => ({ ...ticket }))
+			})
 		));
-	return Promise.all(promises).then (() => {
-		return (rows);
+	return Promise.all(promises).then(() => {
+		// passes.map(pass => pass.tickets.map(ticket => console.log(ticket)));
+		return (passes);
 	})
 };
 
@@ -47,9 +48,9 @@ exports.init = (pass) => new Promise((resolve, reject) => {
 	const sql = `
 		UPDATE ${TABLE_NAME}
 		SET
-		\`init_time\` = CASE WHEN \`init_time\` IS NULL THEN ? ELSE \`init_time\`, 
-		\`expiration_time\` = CASE WHEN \`expiration_time\` IS NULL THEN ? ELSE \`expiration_time\`
-		WHERE id = ? 
+		\`init_time\` = IF(\`init_time\` IS NULL,? ,\`init_time\`), 
+		\`expiration_time\` = IF(\`expiration_time\` IS NULL, ?, \`expiration_time\`)
+		WHERE \`id\`=? 
 	`;
 	pool.query(sql, [pass.initTime, pass.expirationTime, pass.id], (error, result) => {
 		if (error) {
@@ -63,15 +64,20 @@ exports.init = (pass) => new Promise((resolve, reject) => {
 
 exports.getById = (id) => new Promise((resolve, reject) => {
 	const sql = `SELECT
-		\`id\`, \`user_id\` AS \`userId\`, \`traveler_id\` AS \`travelerId\`
+		\`id\`, \`user_id\` AS \`userId\`, \`traveler_id\` AS \`travelerId\`,
+		\`init_time\` AS \`initTime\`, \`expiration_time\` AS \`expirationTime\` 
 		FROM ${TABLE_NAME} WHERE id=?`;
-	pool.query(sql, id, (error, row) => {
+	pool.query(sql, id, (error, rows) => {
 		if (error) {
 			console.error(error);
 			reject(error);
 			return null;
 		}
-		resolve(row.insertId);
+		if (!rows || rows.length === 0) {
+			resolve([]);
+			return ;
+		}
+		resolve(addTicketsToPass(rows).then(rows => rows[0]));
 	});
 });
 

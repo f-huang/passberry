@@ -41,7 +41,7 @@ const resolver = {
 		}
 	},
 	Mutation: {
-		createPass: (_, { input }) => {
+		createPass: (_, {input}) => {
 			const ret = {
 				userId: input.pass.userId,
 				travelerId: input.pass.travelerId,
@@ -64,29 +64,29 @@ const resolver = {
 				return Promise.all(promises).then(() => ({
 					status: getStatus(StatusCodeEnum.success, 'OK'), pass: ret
 				}));
-			}).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
+			}).catch(e => ({status: getStatus(StatusCodeEnum.serverSideError, e)}))
 		},
-		burnActivityTicket: (_, { input }) => {
-			return Ticket.update({
-				'id': input.ticketId,
-				'used_time': input.timestamp
-			}).then(result => {
-				Pass.init({
+		burnActivityTicket: (_, {input}) => {
+			const promises = [];
+			promises.push(Ticket.update({
+					'id': input.ticketId,
+					'used_time': input.timestamp
+				}).catch(e => ({status: getStatus(StatusCodeEnum.serverSideError, e)}))
+			);
+			promises.push(Pass.init({
 					'id': input.passId,
 					'initTime': input.timestamp,
-					'expirationTime': moment(input.timestamp).add(EXPIRE_INS, 'days')
-				}).then(result => {
-					Pass.getById(input.passId).then(pass => {
-						Ticket.getPassTickets(input.passId).then(tickets => {
-							pass.tickets = tickets;
-							return ({
-								status: getStatus(StatusCodeEnum.success, 'OK'),
-								pass: pass
-							})
-						})
+					'expirationTime': moment(input.timestamp).add(EXPIRE_INS, 'days').format('YYYY-MM-DD hh:mm:ss')
+				}).catch(e => ({status: getStatus(StatusCodeEnum.serverSideError, e)}))
+			);
+			return Promise.all(promises).then(() =>
+				Pass.getById(input.passId).then(pass => {
+					return ({
+						status: getStatus(StatusCodeEnum.success, 'OK'),
+						pass: pass
 					});
-				}).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
-			}).catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e)}))
+				})
+			);
 		}
 	}
 };

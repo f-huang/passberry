@@ -15,7 +15,7 @@ exports.create = (ticket) => new Promise((resolve, reject) => {
 });
 
 exports.update = (ticket) => new Promise((resolve, reject) => {
-	const sql = `UPDATE ${TABLE_NAME} SET ?`;
+	const sql = `UPDATE ${TABLE_NAME} SET ? WHERE \`id\`=${ticket.id}`;
 	pool.query(sql, ticket, (error, row) => {
 		if (error) {
 			console.error(error);
