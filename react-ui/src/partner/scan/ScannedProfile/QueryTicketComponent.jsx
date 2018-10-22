@@ -8,15 +8,8 @@ import {
 	UPDATE_SCAN_STATE
 } from "../../../queries";
 import EnumScanState from "../EnumScanState";
-
-const getScanState = (ticket) => {
-	if (ticket === null)
-		return EnumScanState.NOT_FOUND;
-	else if (ticket.usedTime !== null)
-		return EnumScanState.ALREADY_USED;
-	else
-		return EnumScanState.SUCCESS;
-};
+import Ticket from "./Ticket";
+import getScanState from "./getScanState";
 
 const updateScan = (client, state, scanId) => {
 	client.mutate({
@@ -31,7 +24,7 @@ const updateScan = (client, state, scanId) => {
 };
 
 
-const QueryTicketComponent = ({ traveler, activityId, scanId, client }) => {
+const QueryTicketComponent = ({ traveler, activityId, scanId, client, setTicket }) => {
 	const variables = {
 		travelerId: traveler.id,
 		activityId: activityId
@@ -46,12 +39,8 @@ const QueryTicketComponent = ({ traveler, activityId, scanId, client }) => {
 				const ticket = data.getTicketByTravelerIdAndActivityId;
 				const state = getScanState(ticket);
 				updateScan(client, state, scanId);
-				if (state === EnumScanState.NOT_FOUND)
-					return <p>Ticket not found</p>;
-				else if (state  === EnumScanState.ALREADY_USED)
-					return <p>Ticket already used</p>;
-				else if (state === EnumScanState.SUCCESS)
-					return <p>{ticket.id} @ {ticket.activityId}</p>
+				setTicket(ticket);
+				return <Ticket/>;
 			}}
 		</Query>
 	);

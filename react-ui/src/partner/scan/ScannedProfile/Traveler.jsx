@@ -3,20 +3,43 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import theme from "../../../app/theme";
 import moment from "moment";
+import EnumFareType from "../EnumFareType";
 
 const Root = styled.div`
 	background-color: ${theme.colorInverse};
 	border-radius: 6px;
+	padding: 12px;
 	width: 100%;
 `;
 
-const Name = styled.span`
-	font-size: 15px;
+const Name = styled.div`
+	font-size: 16px;
 	font-weight: bold;
 `;
 
+const Age = styled.div`
+	font-size: 14px;
+	margin-top: 7px;
+`;
 
-const EnumFareType = {ADULT: "ADULT", CHILD: "CHILD", STUDENT: "STUDENT"};
+const Fare = styled.div`
+	font-size: 14px;
+	margin-top: 7px;
+`;
+
+const Checked = styled.div`
+	margin-top: 7px;
+	color: ${theme.colorPurple};
+	font-size: 16px;
+	font-weight: bold;
+`;
+
+const ByVuego = styled.span`
+	font-size: 13px;
+	font-weight: 100;
+	font-style: italic;
+`;
+
 
 const getAge = (birthdate) => {
 	if (birthdate)
@@ -28,12 +51,6 @@ const getAge = (birthdate) => {
 const getFareType = (studentStatus, age, ticketPrice) => {
 	if (ticketPrice && parseInt(ticketPrice.maxAgeForChild, 10) > parseInt(age, 10))
 		return EnumFareType.CHILD;
-	// else if (status && moment(status.expirationDate).isBefore())
-	// 	return "Tarif Étudiant peut-être expiré, à valider par vos soins";
-	// else if (status && status.isValidated)
-	// 	return "Tarif étudiant validé par Vuego";
-	// else if (status && !status.isValidated)
-	// 	return "Tarif étudiant à valider par vos soins";
 	else if (studentStatus)
 		return EnumFareType.STUDENT;
 	else
@@ -46,8 +63,7 @@ const isChecked = (fareType, studentStatus, birthdate) => {
 		return false;
 	else if (fareType === EnumFareType.CHILD && !birthdate)
 		return false;
-	else
-		return true;
+	return true;
 };
 
 const Traveler = ({ traveler, ticketPrice }) => {
@@ -56,9 +72,12 @@ const Traveler = ({ traveler, ticketPrice }) => {
 	return (
 		<Root>
 			<Name>{traveler.firstName} {traveler.lastName}</Name>
-			{age}
-			{fareType}
-			{isChecked(fareType, traveler.studentStatus, traveler.birthDate) ? "vérifié par Vuego" : "à vérifier par vos soins"}
+			<Age>{`${age} ans`}</Age>
+			<Fare>{`Tarif ${fareType.display}`}</Fare>
+			{isChecked(fareType, traveler.studentStatus, traveler.birthDate) ?
+				<Checked>{"Tarif validé"} <ByVuego>{"par Vuego"}</ByVuego></Checked>:
+				<Checked>{"Justificatif à vérifier par vos soins."}</Checked>
+			}
 		</Root>
 	)
 };
