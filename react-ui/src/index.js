@@ -44,17 +44,22 @@ const client = new ApolloClient({
 
 const store = createStore(reducers);
 
-const root =
-	<ApolloProvider client={ client }>
-		<ReduxProvider store={ store }>
-			<CookiesProvider>
-				<InitComponent/>
-				{ routes }
-			</CookiesProvider>
-		</ReduxProvider>
-	</ApolloProvider>;
+class App extends React.Component {
+	render() {
+		return (
+			<ApolloProvider client={client}>
+				<ReduxProvider store={store}>
+					<CookiesProvider>
+						<InitComponent/>
+						{routes}
+					</CookiesProvider>
+				</ReduxProvider>
+			</ApolloProvider>
+		);
+	}
+}
 
 
 // store.subscribe(() => console.log(store.getState()));
-ReactDOM.render(root, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));
 registerServiceWorker();

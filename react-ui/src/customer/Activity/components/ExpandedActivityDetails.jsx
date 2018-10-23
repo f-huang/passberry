@@ -15,6 +15,7 @@ import BottomNavigationBar from "../../../component/BottomNavigationBar/BottomNa
 const Root = styled(ActivityDetailsLayout)`
 	height: 80vh;
 	animation: ${showActivityKeyFrame}  0.6s ease-in-out 0s;
+	animation-fill-mode: both;
 `;
 
 const Arrow = styled(ShowHideArrow)`

@@ -5,7 +5,6 @@ import styled from "styled-components";
 import backIcon from "../../assets/icons/arrow_left_black.svg";
 import homeIcon from "../../assets/icons/home_black.svg";
 import {withRouter} from "react-router-dom";
-import PassInputsHandler from "../../customer/(unused)Pass/PassInputsHandler";
 
 const Bar = styled.div`
 	position: relative;
@@ -46,13 +45,7 @@ class AppBar extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.passHandler = new PassInputsHandler();
 		this.handleBackBtn = this.handleBackBtn.bind(this);
-	}
-
-	componentDidMount() {
-		if (this.props.onMount)
-			this.props.onMount(this.barElement.clientHeight);
 	}
 
 	handleBackBtn = () => {
@@ -72,7 +65,7 @@ class AppBar extends React.Component {
 
 	render() {
 		return (
-			<Bar innerRef={barElement => this.barElement = barElement}>
+			<Bar>
 				{ (this.props.backBtn) &&
 				<Icon
 					src={backIcon}

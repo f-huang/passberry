@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { UPDATE_BASKET} from "../../../queries";
 import { setBasketId } from "../basketActions";
 
-import ButtonNextStep from "../../ButtonNextStep";
+import ButtonNextStep from "../../../component/ButtonNextStep";
 
 class BasketUpdateButton extends React.Component {
 	render() {

@@ -1,7 +1,7 @@
 import React from "react";
 import TravelForm from "./components/TravelForm";
-import ScreenTitle from "../ScreenTitle";
-import ScreenSubtitle from "../ScreenSubtitle";
+import ScreenTitle from "../../component/ScreenTitle";
+import ScreenSubtitle from "../../component/ScreenSubtitle";
 import ListTravelers from "./components/ListTravelers";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";

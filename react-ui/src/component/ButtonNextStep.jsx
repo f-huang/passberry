@@ -1,7 +1,7 @@
 import React from "react";
-import BottomNavigationBar from "../component/BottomNavigationBar/BottomNavigationBar";
+import BottomNavigationBar from "./BottomNavigationBar/BottomNavigationBar";
 import styled from "styled-components";
-import Button from "../component/Button/Button";
+import Button from "./Button/Button";
 import theme from "../app/theme";
 
 const ButtonBasket = styled(Button)`

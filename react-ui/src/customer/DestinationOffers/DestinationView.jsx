@@ -11,7 +11,7 @@ import TravelRecap from "./components/TravelRecap";
 
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import ButtonNextStep from "../ButtonNextStep";
+import ButtonNextStep from "../../component/ButtonNextStep";
 
 const Root = styled.div`
 	width: 100%;

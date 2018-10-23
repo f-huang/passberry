@@ -61,7 +61,6 @@ class BottomNavigationBar extends React.Component {
 
 	static propTypes = {
 		itemSelected: PropTypes.string.isRequired,
-		onMount: PropTypes.func
 	};
 	static BOTTOM_BAR_HEIGHT = '48px';
 
@@ -105,11 +104,6 @@ class BottomNavigationBar extends React.Component {
 	constructor(props) {
 		super(props);
 		this.changePage = this.changePage.bind(this);
-	}
-
-	componentDidMount() {
-		if (this.props.onMount)
-			this.props.onMount(this.navElement.clientHeight);
 	}
 
 	changePage(e, location) {

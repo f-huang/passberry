@@ -49,8 +49,8 @@ class QRView extends React.Component {
 										)}
 									</TabList>
 									{travelers.map(traveler =>
-										<QRContainer>
-											<TabPanel key={'panel'+traveler.id}>
+										<QRContainer key={'panel'+traveler.id}>
+											<TabPanel>
 												<TravelerQRCode travelerId={traveler.id}/>
 											</TabPanel>
 										</QRContainer>

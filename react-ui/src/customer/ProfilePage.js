@@ -1,16 +1,14 @@
 import React from "react";
-import App from "../App";
 import BottomNavigationBar from "../component/BottomNavigationBar/BottomNavigationBar";
+import TransparentActionBar from "../component/ActionBar/TransparentActionBar";
 
 class ProfilePage extends React.Component {
 	render() {
 		return (
-			<App
-				itemSelected={BottomNavigationBar.items.profile}
-				title={`Mon profil`}
-				homeBtn
-			>
-			</App>
+			<div>
+				<TransparentActionBar/>
+				<BottomNavigationBar itemSelected={BottomNavigationBar.items.profile}/>
+			</div>
 		);
 	}
 }
