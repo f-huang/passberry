@@ -4,13 +4,14 @@ import { Query } from "react-apollo";
 import { connect } from "react-redux";
 import { setTraveler } from "../scanActions";
 import { GET_USER_BY_SCAN_ID } from "../../../queries";
+import LoadingView from "../../../component/LoadingView/LoadingView";
 
 
 const QueryTravelerComponent = ({ scanId, setTraveler }) => {
 	return (
 		<Query query={GET_USER_BY_SCAN_ID} variables={{ scanId }}>
 			{({ loading, error, data }) => {
-				if (loading) return <div>Loading</div>;
+				if (loading) return <LoadingView/>;
 				if (error) return <div>Error ticket</div>;
 				if (data && data.getUserByScanId) {
 					setTraveler(data.getUserByScanId);

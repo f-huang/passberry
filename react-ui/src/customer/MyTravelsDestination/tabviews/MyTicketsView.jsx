@@ -7,6 +7,7 @@ import { GET_PASSES_BY_USER_ID } from "../../../queries";
 import ListTickets from "../components/ticket/ListTickets";
 import Error404 from "../../../Error404";
 import TicketLabel from "../components/ticket/TicketLabel";
+import LoadingView from "../../../component/LoadingView/LoadingView";
 
 const Root = styled.div`
 	width: 100vw;
@@ -19,7 +20,7 @@ class MyTicketsView extends React.Component {
 			<Root>
 				<Query query={GET_PASSES_BY_USER_ID} variables={{ userId: this.props.userId }}>
 					{ ({ loading, error, data }) => {
-						if (loading) return <p>Loading</p>;
+						if (loading) return <LoadingView/>;
 						if (error) return <p>Error</p>;
 						const passes = data.getPassesByUserId.passes;
 						if (!passes || passes.length === 0)

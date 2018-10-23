@@ -17,8 +17,9 @@ import defaultImg from "../../assets/monaco.jpg";
 
 import ActivityDetails from "./components/ReducedActivityDetails";
 import ExpandedActivityDetails from "./components/ExpandedActivityDetails";
-import ButtonNextStep from "../ButtonNextStep";
+import ButtonNextStep from "../../component/ButtonNextStep";
 import TicketQuantity from "../TicketQuantity/TicketQuantity";
+import LoadingView from "../../component/LoadingView/LoadingView";
 
 const Root = styled.div`
 	
@@ -117,7 +118,7 @@ class ActivityView extends Component {
 			<div>
 				<Query query={GET_ACTIVITY_BY_ID} variables={{id: id}}>
 					{({loading, error, data}) => {
-						if (loading) return <p> Loading </p>;
+						if (loading) return <LoadingView/>;
 						if (error) return <p> Error </p>;
 						activity = data.getActivityById;
 						if (!activity)

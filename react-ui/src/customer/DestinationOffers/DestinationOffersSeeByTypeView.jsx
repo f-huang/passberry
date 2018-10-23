@@ -8,6 +8,7 @@ import Error404 from "../../Error404";
 import EnumActivityType from "./EnumActivityType";
 import OfferLargeSized from "./components/OfferLargeSized";
 import Link from "../../Link";
+import LoadingView from "../../component/LoadingView/LoadingView";
 
 class DestinationOffersSeeByTypeView extends React.Component {
 	constructor(props) {
@@ -28,7 +29,7 @@ class DestinationOffersSeeByTypeView extends React.Component {
 				{(!this.props.activities || this.props.activities.length === 0) &&
 				<Query query={GET_ACTIVITIES_BY_TYPE} variables={{ type: this.attractionType.value }}>
 					{ ({ loading, error, data }) => {
-						if (loading) return <p>Loading</p>;
+						if (loading) return <LoadingView/>;
 						if (error) return <p>Error</p>;
 						activities = data.getActivitiesByType;
 						return "";

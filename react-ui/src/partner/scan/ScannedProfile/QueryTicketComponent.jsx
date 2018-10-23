@@ -10,6 +10,7 @@ import {
 import EnumScanState from "../EnumScanState";
 import Ticket from "./Ticket";
 import getScanState from "./getScanState";
+import LoadingView from "../../../component/LoadingView/LoadingView";
 
 const updateScan = (client, state, scanId) => {
 	client.mutate({
@@ -33,7 +34,7 @@ const QueryTicketComponent = ({ traveler, activityId, scanId, client, setTicket 
 		<Query query={ GET_TICKET_BY_TRAVELER_ID_AND_ACTIVITY_ID }
 		       variables={ variables }>
 			{ ({ loading, error, data }) => {
-				if (loading) return <p>Loading</p>;
+				if (loading) return <LoadingView/>
 				if (error) return <p>Error</p>;
 
 				const ticket = data.getTicketByTravelerIdAndActivityId;

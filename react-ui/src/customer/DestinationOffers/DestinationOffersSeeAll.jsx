@@ -8,6 +8,7 @@ import { addToBasket, removeFromBasket } from "../Basket/basketActions";
 import OffersByType from "./components/OffersByType";
 import VuegoMustDoPass from "./components/VuegoMustDoPass";
 import EnumActivityType from "./EnumActivityType";
+import LoadingView from "../../component/LoadingView/LoadingView";
 
 
 class DestinationOffersSeeAll extends React.Component {
@@ -27,7 +28,7 @@ class DestinationOffersSeeAll extends React.Component {
 						return <div key={attractionType.value}>
 							<Query query={GET_ACTIVITIES_BY_TYPE} variables={{type: attractionType.value}}>
 								{({loading, error, data}) => {
-									if (loading) return <p> Loading </p>;
+									if (loading) return <LoadingView/>;
 									if (error) return <p> Error </p>;
 									const activities = data.getActivitiesByType;
 									return activities && activities.length > 0 ?

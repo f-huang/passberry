@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import { Query } from "react-apollo";
 import { GET_QR_BY_USER_ID } from "../../../queries";
 import QRCodeContainer from "../../../component/QRCodeContainer/QRCodeContainer";
+import LoadingView from "../../../component/LoadingView/LoadingView";
 
 const TravelerQRCode = ({ travelerId }) => {
 	return (
 		<Query query={ GET_QR_BY_USER_ID } variables={{ userId: travelerId }}>
 			{ ({ loading, error, data }) => {
-				if (loading) return <p> Loading </p>;
+				if (loading) return <LoadingView/>
 				if (error) return <p> Error </p>;
 
 				if (data.getQrByUserId)

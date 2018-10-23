@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
 import {GET_USER_TRAVELS} from "../../queries";
 import ListTravels from "./components/ListTravels";
+import LoadingView from "../../component/LoadingView/LoadingView";
 
 class MyTravelsView extends React.Component {
 	render() {
@@ -12,7 +13,7 @@ class MyTravelsView extends React.Component {
 			<App itemSelected={BottomNavigationBar.items.myTravels} title={"Mes voyages"} homeBtn>
 				<Query query={ GET_USER_TRAVELS } variables={{ userId: 1 }}>
 					{ ({ loading, error, data}) => {
-						if (loading) return <p>Loading</p>;
+						if (loading) return <LoadingView/>;
 						if (error) return <p>Error</p>;
 						const travels = data.getUserTravels;
 						if (travels.length === 0)
