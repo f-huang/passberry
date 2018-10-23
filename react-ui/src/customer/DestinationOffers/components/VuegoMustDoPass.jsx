@@ -2,7 +2,9 @@ import React from "react";
 import theme from "../../../app/theme";
 import styled from "styled-components";
 
+import { withRouter } from "react-router-dom";
 import imgMonaco from "../../../assets/monaco.jpg";
+import Link from "../../../Link";
 
 const Container = styled.div`
 	display: flex;
@@ -65,8 +67,10 @@ const SecondaryText = styled.p`
 `;
 
 const VuegoMustDoPass = (props) => {
+	const destination = props.match.params.destination.toLocaleLowerCase();
 	return (
 		<Container>
+			<Link to={`/${destination}/vuego-pass`}>
 			<TopContainer>
 				<Title>{"Les Vuego Pass"}</Title>
 				<SeeAllLink href="#">{"Voir tout"}</SeeAllLink>
@@ -77,8 +81,9 @@ const VuegoMustDoPass = (props) => {
 					<SecondaryText><b><i>{"à partir de 38€"}</i></b></SecondaryText>
 				</Preview>
 			</BottomContainer>
+			</Link>
 		</Container>
 	);
 };
 
-export default VuegoMustDoPass;
+export default withRouter(VuegoMustDoPass);

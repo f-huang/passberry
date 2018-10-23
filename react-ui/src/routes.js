@@ -19,6 +19,7 @@ import MyTravelsDestinationView from "./customer/MyTravelsDestination/MyTravelsD
 import ScanProfileView from "./partner/scan/ScanProfileView";
 import ScannedProfileView from "./partner/scan/ScannedProfile/ScannedProfileView";
 import Destination from "./customer/DestinationOffers/DestinationView";
+import DestinationOffersSeeVuegoPass from "./customer/DestinationOffers/DestinationOffersSeeVuegoPass";
 
 const routes = (
     <BrowserRouter forceRefresh={true}>
@@ -39,6 +40,7 @@ const routes = (
 		    <Route exact path="/scanned-profile/:scanId" component={ScannedProfileView}/>
 		    <Route exact path="/activity/:id-:name" component={Activity}/>
 		    {/*<Route exact path="/partner-see-customer" component={PartnerSeeUser}/>*/}
+		    <Route exact path="/:destination/vuego-pass" component={DestinationOffersSeeVuegoPass}/>
 		    <Route exact path="/:destination" component={Destination}/>
 		    {/*<Route exact path="/profile" component={Profile}/>*/}
 		    <Route component={Error404}/>
