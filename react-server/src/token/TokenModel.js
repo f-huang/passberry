@@ -16,7 +16,6 @@ const getExpirationTime = (token) => {
 const toDateTime = (time) => time ? new Date(time * 1000) : time;
 
 exports.generate = (user, id) => {
-	console.log(user);
 	return jwt.sign(
 		{
 			id: id,

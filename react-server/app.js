@@ -4,12 +4,15 @@
 
 const express = require('express');
 const app = express();
-const bodyParser = require("body-parser");
 const graphqlHTTP = require('express-graphql');
 const { graphqlUploadExpress } = require('graphql-upload');
-const schema = require('./src/schema');
+const bodyParser = require("body-parser");
+const path = require("path");
+const compression = require("compression");
+const helmet = require("helmet");
 const jwt = require('express-jwt');
 
+const schema = require('./src/schema');
 const JWT_SECRET = "temporarySecret";
 
 // =====================================
@@ -19,7 +22,16 @@ const middlewares = [
 	express.static(require('path').join(__dirname, '../')),
 	express.json(),
 	express.urlencoded({extended: true}),
+	helmet(),
+	compression()
 ];
+
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static( `${__dirname}/../build` ));
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "../", "build", "index.html"));
+	});
+}
 
 // =====================================
 app.use(middlewares);

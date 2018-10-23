@@ -43,7 +43,6 @@ exports.connect = (email, password) => new Promise((resolve, reject) => {
 			const user = rows[0];
 			bcrypt.compare(password, user.password, (err, res) => {
 				if (res) {
-					console.log("User found");
 					resolve(user);
 					return user;
 				} else {

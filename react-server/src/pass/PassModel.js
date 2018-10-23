@@ -14,7 +14,6 @@ const addTicketsToPass = (passes) => {
 			})
 		));
 	return Promise.all(promises).then(() => {
-		// passes.map(pass => pass.tickets.map(ticket => console.log(ticket)));
 		return (passes);
 	})
 };

@@ -76,11 +76,9 @@ const resolver = {
 				input.address.countryCode = countryCode;
 				return Activity.create(parent(input))
 					.then(insertId => {
-						console.log(countryCode);
 						input.id = insertId;
 						input.images && input.images.map(async (image, index) => {
 							saveImage(image, index).then(storingPath => {
-								console.log("end --", storingPath);
 								ActivityImage.create(activityImage({
 									activityId: insertId,
 									path: storingPath

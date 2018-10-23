@@ -25,7 +25,6 @@ const basketForValidate = (input) => ({
 const resolver = {
 	Mutation: {
 		createBasket: (_, { input }) => {
-			console.log("Creating basket :", input);
 			const newInput = {...input};
 			newInput.items = JSON.stringify(newInput.items);
 			return Basket.create(basketForCreate(newInput))
@@ -46,15 +45,11 @@ const resolver = {
 		},
 
 		updateBasket: (_, { input }) => {
-			console.log("Updating basket :", input);
 			const newInput = {...input};
 			newInput.items = JSON.stringify(newInput.items);
 			return Basket.update(basketForUpdate(newInput))
 				.then(ret => {
 					return Basket.getUserIdById(input.basketId).then(userId => {
-						console.log(
-							"userId : ", userId
-						);
 						return (
 							{
 								status: getStatus(StatusCodeEnum.success, 'OK'),
@@ -74,7 +69,6 @@ const resolver = {
 
 		validateBasket: (_, { input }) => {
 			// update basket state and userId
-			console.log("Updating basket :", input);
 			return Basket.validate(input.state, input.userId, input.basketId)
 				.then(insertId => {
 					return {

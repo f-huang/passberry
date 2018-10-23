@@ -7,7 +7,6 @@ const resolver = {
 	Query: {
 		getQrByToken: (_, { token }, context) => {
 			const userId = Token.toId(token);
-			// console.log(context.user);
 			return Qr.getByUserId(userId)
 				.then(ret => ret.value)
 				.catch(e => {
