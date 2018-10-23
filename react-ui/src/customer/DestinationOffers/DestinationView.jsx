@@ -9,9 +9,7 @@ import theme from "../../app/theme";
 import DestinationActionBar from "../../component/ActionBar/DestinationActionBar";
 import TravelRecap from "./components/TravelRecap";
 
-import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
-import ButtonNextStep from "../../component/ButtonNextStep";
+import ButtonCurrentBasket from "./components/ButtonCurrentBasket.jsx";
 
 const Root = styled.div`
 	width: 100%;
@@ -47,9 +45,7 @@ class DestinationView extends React.Component {
 				</div>
 				<Container>
 					{middleContainer}
-					<NavLink to={'/basket'}>
-						<ButtonNextStep>{`Panier : ${this.props.total}€`}</ButtonNextStep>
-					</NavLink>
+					<ButtonCurrentBasket/>
 				</Container>
 				<BottomNavigationBar itemSelected={BottomNavigationBar.items.currentTrip}/>
 			</Root>
@@ -57,14 +53,4 @@ class DestinationView extends React.Component {
 	}
 }
 
-const mapStateToProps = state => {
-	const items = state.basket.items;
-	const quantities = items ? items.map(item => item.quantity) : [];
-	const prices = items ? items.map(item => item.product.price.adult) : [];
-	return ({
-		total: prices.length > 0 ? prices.reduce((total, currentPrice, index) => total + quantities[index] * currentPrice).toFixed(2) : 0,
-		destination: state.travelDetails.destination
-	})
-};
-
-export default connect(mapStateToProps)(DestinationView);
+export default (DestinationView);
