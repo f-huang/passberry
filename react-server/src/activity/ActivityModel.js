@@ -7,7 +7,7 @@ const COUNTRY_TABLE_NAME = "country";
 const IMAGE_TABLE_NAME = "activity_image";
 
 const COLUMNS = `\`${TABLE_NAME}\`.\`id\`, ${TABLE_NAME}.\`name\`, \`link\`, \`description\`, \`type\`,
-		\`no_queuing\` as \`noQueuing\`,
+		\`no_queuing\` as \`noQueuing\`, \`is_a_must_do\` AS \`mustDo\`,
 		\`price_adult\` AS \`priceAdult\`, \`price_child\` AS \`priceChild\`,
 		\`price_max_age_for_child\` AS \`priceMaxAgeForChild\`,
 		\`address_street\` AS \`addressStreet\`, \`address_supplement\` AS \`addressSupplement\`,
@@ -58,6 +58,8 @@ exports.getMustDos = (destination) => new Promise((resolve, reject) => {
 		FROM \`${TABLE_NAME}\`
 		LEFT JOIN ${IMAGE_TABLE_NAME} 
 		ON \`${TABLE_NAME}\`.\`id\`=\`${IMAGE_TABLE_NAME}\`.\`activity_id\`
+		INNER JOIN ${COUNTRY_TABLE_NAME}
+		ON ${COUNTRY_TABLE_NAME}.\`code\`=${TABLE_NAME}.\`address_country_code\`
 		WHERE \`address_city\`=? AND \`is_a_must_do\`=1
 		GROUP BY \`${TABLE_NAME}\`.\`id\`
 	`;

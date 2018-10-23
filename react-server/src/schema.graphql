@@ -104,6 +104,7 @@ type Activity {
 	description: String
 	price: ActivityPrice!
 	noQueuing: Boolean!
+	mustDo: Boolean!
 	link: String
 	type: String!
 	address: Address!

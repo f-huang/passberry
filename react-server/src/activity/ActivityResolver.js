@@ -106,6 +106,7 @@ const resolver = {
 		link: parent => parent.link,
 		type: parent => parent.type,
 		noQueuing: parent => parent.noQueuing === 1,
+		mustDo: parent => parent.mustDo === 1,
 		price: parent => ({
 			adult: parseFloat(parent.priceAdult),
 			child: parent.priceChild ? parseFloat(parent.priceChild) : null,

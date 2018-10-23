@@ -33,6 +33,7 @@ export const GET_ALL_ACTIVITIES = gql`
 			name
 			link
 			noQueuing
+			mustDo
 			description
 			price {
 				adult
@@ -202,6 +203,25 @@ export const GET_PASSES_BY_USER_ID = gql`
 					activityId
 					usedTime
 				}
+			}
+		}
+	}
+`;
+
+export const GET_VUEGO_PASS_MUST_DO = gql`
+	query getVuegoPassMustDo($destination: String!) {
+		getVuegoPassMustDo(destination: $destination) {
+			id
+			name
+			description
+			activities {
+				id
+				name
+			}
+			price
+			discount {
+				type
+				amount
 			}
 		}
 	}
