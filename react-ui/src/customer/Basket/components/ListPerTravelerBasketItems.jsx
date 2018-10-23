@@ -67,7 +67,7 @@ class ListPerTravelerBasketItems extends React.Component {
 								<TravelerArrowWrapper>
 									<Arrow onClick={() => this.props.switchTravelerIsShowing(index)}
 									       degrees={this.props.travelerIsShowing[index] ? -45 : 45}/>
-									<Traveler>{traveler.name}</Traveler>
+									<Traveler>{traveler.firstName}</Traveler>
 								</TravelerArrowWrapper>
 								<BasketCheckbox
 									checked={this.props.travelersBasket[traveler.id] ? 'checked' : ''}

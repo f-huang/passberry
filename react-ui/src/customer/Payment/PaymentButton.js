@@ -61,9 +61,7 @@ class PaymentButton extends React.Component {
 				this.props.history.push('/');
 			}
 			else {
-				this.props.reinitializeBasket(
-					{...this.props.basket, items}
-				);
+				this.props.reinitializeBasket({...this.props.basket, items});
 				this.props.history.push('/basket');
 			}
 		})
@@ -133,17 +131,16 @@ class PaymentButton extends React.Component {
 }
 
 const mapStateToProps = state => {
-	const ids = state.basketPage.travelers && state.basketPage.travelers ?
+	let ids = (state.basketPage.travelers ?
 		Object.keys(state.basketPage.travelers).filter(id =>
-			state.basketPage.travelers[id] === true &&
-			state.travelDetails.travelers.find(traveler => traveler.id === parseInt(id, 10))
-		) : state.travelDetails.travelers.map(traveler => traveler.id.toString());
+			state.basketPage.travelers[parseInt(id, 10)] === true &&
+			state.travelDetails.travelers.find(traveler => parseInt(traveler.id, 10) === parseInt(id, 10))
+		) : state.travelDetails.travelers.map(traveler => traveler.id)).map(Number);
 	const items = state.basket.items ? state.basket.items.filter(item =>
-		ids.includes(item.travelerId.toString()) && item.quantity > 0
+		ids.includes(parseInt(item.travelerId, 10)) && item.quantity > 0
 	) : [];
 	const quantities = items ? items.map(item => item.quantity) : [];
 	const prices = items ? items.map(item => item.product.price.adult) : [];
-
 	return ({
 		total: prices.length > 0 ? prices.reduce((total, currentPrice, index) => total + quantities[index] * currentPrice).toFixed(2) : 0,
 		basketState: state.basket.items && state.basket.items.length === items.length ? EnumBasketState.PAID : EnumBasketState.HALF_PAID,
