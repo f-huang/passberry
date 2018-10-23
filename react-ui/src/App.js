@@ -59,7 +59,7 @@ class App extends React.Component {
 			query: GET_ALL_ACTIVITIES,
 		}).then(({loading, error, data}) => {
 			if (data && data.getAllActivities) {
-				this.setState({isLoading: false});
+				this.setState({ isLoading: false });
 				localStorage.setItem(LAST_TIME_FETCHED, JSON.stringify(moment()));
 				localStorage.setItem(ACTIVITIES, JSON.stringify(data.getAllActivities));
 			}
@@ -71,6 +71,8 @@ class App extends React.Component {
 			const expirationTime = moment(this.lastTimeFetched).add(10, 'minutes');
 			if (expirationTime.isAfter(currentTime))
 				this.storeActivities();
+			else
+				this.setState({ isLoading: false })
 		}
 		else
 			this.storeActivities();
