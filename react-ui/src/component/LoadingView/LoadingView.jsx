@@ -40,12 +40,14 @@ const Dot = styled.span`
 	}
 `;
 
-const LoadingView = () => (
-	<Root>
-		<Dot/>
-		<Dot/>
-		<Dot/>
-	</Root>
-);
+const LoadingView = () => {
+	return (
+		<Root>
+			<Dot/>
+			<Dot/>
+			<Dot/>
+		</Root>
+	);
+};
 
 export default (LoadingView);

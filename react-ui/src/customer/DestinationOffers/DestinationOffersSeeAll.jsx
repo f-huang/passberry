@@ -24,7 +24,7 @@ class DestinationOffersSeeAll extends React.Component {
 				<VuegoMustDoPass/>
 				{Object.values(EnumActivityType).map(attractionType => {
 					const activities = this.props.activities && this.props.activities.filter(activity => activity.type === attractionType.value);
-					if (!this.props.activities || this.props.activities.length === 0)
+					if (!this.props.activities || this.props.activities.length === 0) {
 						return <div key={attractionType.value}>
 							<Query query={GET_ACTIVITIES_BY_TYPE} variables={{type: attractionType.value}}>
 								{({loading, error, data}) => {
@@ -32,10 +32,12 @@ class DestinationOffersSeeAll extends React.Component {
 									if (error) return <p> Error </p>;
 									const activities = data.getActivitiesByType;
 									return activities && activities.length > 0 ?
-										<OffersByType type={attractionType} activities={data.getActivitiesByType}/> : "";
+										<OffersByType type={attractionType}
+										              activities={data.getActivitiesByType}/> : "";
 								}}
 							</Query>
 						</div>;
+					}
 					else
 						return (
 							<div key={attractionType.value}>

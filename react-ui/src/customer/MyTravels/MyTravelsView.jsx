@@ -6,11 +6,14 @@ import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavig
 import {GET_USER_TRAVELS} from "../../queries";
 import ListTravels from "./components/ListTravels";
 import LoadingView from "../../component/LoadingView/LoadingView";
+import TransparentActionBar from "../../component/ActionBar/TransparentActionBar";
+import BackActionBar from "../../component/ActionBar/BackActionBar";
 
 class MyTravelsView extends React.Component {
 	render() {
 		return (
-			<App itemSelected={BottomNavigationBar.items.myTravels} title={"Mes voyages"} homeBtn>
+			<div>
+				<BackActionBar title={"Mes voyages"} to={"/"}/>
 				<Query query={ GET_USER_TRAVELS } variables={{ userId: 1 }}>
 					{ ({ loading, error, data}) => {
 						if (loading) return <LoadingView/>;
@@ -23,7 +26,8 @@ class MyTravelsView extends React.Component {
 						}
 					}}
 				</Query>
-			</App>
+				<BottomNavigationBar itemSelected={BottomNavigationBar.items.myTravels}/>
+			</div>
 		)
 	}
 }

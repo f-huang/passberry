@@ -15,7 +15,6 @@ export const reducers = combineReducers({
 	scan: scanReducer.scan,
 	ticketQuantity: ticketQuantity,
 	activities: initReducer.activities,
-	lastTimeFetched: initReducer.lastTimeFetched,
 	activityPage: activityReducer,
 	basketPage: basketPageReducer.basketPage,
 	createActivityPage: attractionCreateReducer,
