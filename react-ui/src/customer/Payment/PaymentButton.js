@@ -26,7 +26,7 @@ class PaymentButton extends React.Component {
 			Promise.all(promises).then((responses) => {
 				const oldIds = [...new Set(this.props.basketBuyingItems.map(item => item.travelerId.toString()))];
 				const newIds = [...new Set(responses.map(response => response.data.createTraveler.traveler.id))];
-				const ids = oldIds.map((oldId, index) => ({ old: oldId, new: newIds[index]}));
+				const ids = oldIds.map((oldId, index) => ({ old: parseInt(oldId, 10), new: parseInt(newIds[index], 10)}));
 				responses.map(({ data }) => {
 					const index = this.props.travelers.findIndex(traveler =>
 						traveler.isNew === true && traveler.firstName, 10 === data.createTraveler.traveler.firstName
@@ -34,7 +34,7 @@ class PaymentButton extends React.Component {
 					this.props.updateTraveler({
 						isNew: false,
 						index: index,
-						id: data.createTraveler.traveler.id
+						id: parseInt(data.createTraveler.traveler.id, 10)
 					});
 					this.props.updateBasketTravelerIds(ids);
 				});
@@ -68,11 +68,11 @@ class PaymentButton extends React.Component {
 	};
 
 	mutatePass = () => {
-		const travelersIds = [...new Set(this.props.basketBuyingItems.map(item => item.travelerId))];
+		const travelersIds = [...new Set(this.props.basketBuyingItems.map(item => parseInt(item.travelerId, 10)))];
 		travelersIds.forEach(travelerId => {
 			const tickets = [];
 			const travelerItems = this.props.basketBuyingItems.filter(item =>
-				item.travelerId.toString() === travelerId.toString() && item.quantity > 0
+				parseInt(item.travelerId, 10) === parseInt(travelerId, 10) && item.quantity > 0
 			);
 			travelerItems.forEach(travelerItem => tickets.push({
 				activityId: travelerItem.product.id,
@@ -120,7 +120,7 @@ class PaymentButton extends React.Component {
 	};
 
 	render() {
-		if (parseInt(this.props.total, 10) === 0)
+		if (parseFloat(this.props.total) === 0)
 			return <div>Empty Basket</div>;
 		return (
 			<Button onClick={this.executeMutations}>

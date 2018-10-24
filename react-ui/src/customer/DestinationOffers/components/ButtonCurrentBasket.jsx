@@ -13,7 +13,8 @@ const ButtonCurrentBasket = (props) => {
 
 
 const mapStateToProps = state => {
-	const items = state.basket.items;
+	let ids = state.travelDetails.travelers.map(traveler => traveler.id).map(Number);
+	const items = state.basket.items.filter(item => ids.includes(parseInt(item.travelerId, 10)) && item.quantity > 0);
 	const quantities = items ? items.map(item => item.quantity) : [];
 	const prices = items ? items.map(item => item.product.price.adult) : [];
 	return ({

@@ -57,16 +57,18 @@ function basketReducer(state = basket, action) {
 		case UPDATE_TRAVELER_IDS:
 			let items = state.items;
 			action.ids.map(id => {
-				const index = state.items.findIndex(item => parseInt(item.travelerId, 10) === parseInt(id.old, 10));
-				if (index !== -1)
-					items[index].travelerId = id.new;
+				let index = state.items.findIndex(item => parseInt(item.travelerId, 10) === parseInt(id.old, 10));
+				do {
+					if (index !== -1)
+						items[index].travelerId = id.new;
+					index = state.items.findIndex(item => parseInt(item.travelerId, 10) === parseInt(id.old, 10));
+				} while (index !== -1)
 			});
 			localStorage.setItem(BASKET, JSON.stringify({...state, items}));
 			return {...state, items};
 
 		case SET_BASKET_ID:
 			const basketWithId = Object.assign({}, state, action.id);
-			console.log("setting basket Id: ", basketWithId);
 			localStorage.setItem(BASKET, JSON.stringify(basketWithId));
 			return basketWithId;
 
