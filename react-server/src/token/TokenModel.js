@@ -15,11 +15,11 @@ const getExpirationTime = (token) => {
 
 const toDateTime = (time) => time ? new Date(time * 1000) : time;
 
-exports.generate = (user, id) => {
+exports.generate = (email, userId) => {
 	return jwt.sign(
 		{
-			id: id,
-			email: user.email,
+			id: userId,
+			email: email,
 		},
 		JWT_SECRET,
 		{ expiresIn: '1y' }

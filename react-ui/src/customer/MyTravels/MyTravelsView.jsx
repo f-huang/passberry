@@ -1,12 +1,10 @@
 import React from "react";
-import App from "../../App";
 import { Query } from "react-apollo";
 import { connect } from "react-redux";
 import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
 import {GET_USER_TRAVELS} from "../../queries";
 import ListTravels from "./components/ListTravels";
 import LoadingView from "../../component/LoadingView/LoadingView";
-import TransparentActionBar from "../../component/ActionBar/TransparentActionBar";
 import BackActionBar from "../../component/ActionBar/BackActionBar";
 
 class MyTravelsView extends React.Component {
@@ -14,7 +12,7 @@ class MyTravelsView extends React.Component {
 		return (
 			<div>
 				<BackActionBar title={"Mes voyages"} to={"/"}/>
-				<Query query={ GET_USER_TRAVELS } variables={{ userId: 1 }}>
+				<Query query={ GET_USER_TRAVELS } variables={{ userId: this.props.userId }}>
 					{ ({ loading, error, data}) => {
 						if (loading) return <LoadingView/>;
 						if (error) return <p>Error</p>;

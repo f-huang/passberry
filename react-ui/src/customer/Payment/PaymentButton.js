@@ -3,12 +3,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose, graphql } from "react-apollo";
-import {emptyBasket, reinitializeBasket, updateTravelerIds} from "../Basket/basketActions";
+import { editTraveler } from "../Travel/travelActions";
+import { emptyBasket, reinitializeBasket, updateTravelerIds } from "../Basket/basketActions";
 import {VALIDATE_BASKET, CREATE_PASS, CREATE_TRAVELER} from "../../queries";
 
 import Button from "../../component/Button/Button";
 import EnumBasketState from "../Basket/EnumBasketState";
-import {editTraveler} from "../Travel/travelActions";
 
 class PaymentButton extends React.Component {
 
@@ -21,7 +21,7 @@ class PaymentButton extends React.Component {
 	}
 
 	componentWillMount() {
-		if (this.props.travelers.find(traveler => traveler.isNew)) {
+		if (this.props.travelers.find(traveler => traveler.isNew === true)) {
 			const promises = this.mutateTravelers();
 			Promise.all(promises).then((responses) => {
 				const oldIds = [...new Set(this.props.basketBuyingItems.map(item => item.travelerId.toString()))];
@@ -100,8 +100,8 @@ class PaymentButton extends React.Component {
 	};
 
 	mutateTravelers = () => {
-		const travelersIds = [...new Set(this.props.basketBuyingItems.map(item => item.travelerId.toString()))];
-		const travelers = this.props.travelers.filter(traveler => travelersIds.includes(traveler.id.toString()));
+		const travelersIds = [...new Set(this.props.basketBuyingItems.map(item => parseInt(item.travelerId, 10)))];
+		const travelers = this.props.travelers.filter(traveler => travelersIds.includes(parseInt(traveler.id, 10)));
 		return travelers.map(traveler =>
 			this.props.createTraveler({
 				variables: {

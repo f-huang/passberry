@@ -2,6 +2,8 @@ const { getStatus, StatusCodeEnum } = require("../status");
 
 const Traveler = require('./TravelerModel');
 const User = require('../user/UserModel');
+const Token = require("../token/TokenModel");
+const Qr = require("../qr/QrModel");
 
 const traveler = (input) => ({
 	"first_name": input.firstName,
@@ -19,14 +21,17 @@ const resolver = {
 		},
 		getTravelerByQr: (_, { qr }) => {
 			return Traveler.getByQr(qr)
-				.then(traveler => traveler)
+				.then(travxeler => traveler)
 				.catch(e => { console.error(e); return null });
 		}
 	},
 	Mutation: {
 		createTraveler: (_, { input }) => {
 			return User.create(traveler(input))
-				.then(travelerId => ({status: getStatus(StatusCodeEnum.success, 'OK'), traveler: {...input, id: travelerId}}))
+				.then(travelerId => {
+					Qr.generate(travelerId);
+					return ({status: getStatus(StatusCodeEnum.success, 'OK'), traveler: {...input, id: travelerId}})
+				})
 				.catch(e => ({status: getStatus(StatusCodeEnum.serverSideError, e), traveler: null}));
 		}
 	}

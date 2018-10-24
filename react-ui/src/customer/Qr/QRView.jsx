@@ -42,6 +42,8 @@ class QRView extends React.Component {
 						if (loading) return <LoadingView/>;
 						if (error) return <p> Error </p>;
 						const travelers = data.getTravelersByUserId;
+						if (!travelers || travelers.length === 0)
+							return (<p>{"Aucun pass acheté"}</p>);
 						return (
 							<Root>
 								<Tabs>
@@ -50,12 +52,13 @@ class QRView extends React.Component {
 											<Tab key={'tab'+traveler.id}>{ traveler.firstName }</Tab>
 										)}
 									</TabList>
-									{travelers.map(traveler =>
-										<QRContainer key={'panel'+traveler.id}>
-											<TabPanel>
-												<TravelerQRCode travelerId={traveler.id}/>
-											</TabPanel>
-										</QRContainer>
+									{travelers.map(traveler => {
+										return	<QRContainer key={'panel' + traveler.id}>
+												<TabPanel>
+													<TravelerQRCode travelerId={traveler.id}/>
+												</TabPanel>
+											</QRContainer>
+										}
 									)}
 
 								</Tabs>

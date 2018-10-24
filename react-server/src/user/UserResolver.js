@@ -51,7 +51,7 @@ const resolver = {
 			return User.create(user(input))
 				.then(userId => {
 					Qr.generate(userId);
-					const token = Token.generate(user, userId);
+					const token = Token.generate(input.email, userId);
 					return { status: getStatus(StatusCodeEnum.success, 'OK'), token: token };
 				})
 				.catch(e => ({ status: getStatus(StatusCodeEnum.serverSideError, e), token: null }));
