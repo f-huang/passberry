@@ -174,7 +174,7 @@ exports.getByQr = (qr) => new Promise((resolve, reject) => {
 
 exports.getUserTravels = (userId) => new Promise((resolve, reject) => {
 	const sql = `SELECT DISTINCT 
-	\`destination\`, \`start_date\` AS \`startDate\`, \`end_date\` AS \`endDate\`, COUNT(*) AS \`numberOfTravelers\`
+	\`destination\`, \`start_date\` AS \`startDate\`, \`end_date\` AS \`endDate\`, COUNT(DISTINCT \`traveler_id\`) AS \`numberOfTravelers\`
 	FROM ${TABLE_NAME} WHERE \`user_id\`=?
 	GROUP BY \`destination\`, \`start_date\`, \`end_date\`
 `;
