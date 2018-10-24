@@ -17,8 +17,7 @@ const Container = styled.div`
 	overflow: hidden;
 	margin: 16px auto;
 	border-radius: 6px;
-	width: 95vw;
-	max-width: 880px;
+	width: 100%;
 `;
 
 const TopContainer = styled.div`

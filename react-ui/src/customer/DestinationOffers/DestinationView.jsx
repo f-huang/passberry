@@ -2,6 +2,7 @@ import React from "react";
 import qs from "query-string";
 import styled from "styled-components";
 
+import { connect } from "react-redux";
 import DestinationOffersSeeByTypeView from "./DestinationOffersSeeByTypeView";
 import DestinationOffers from "./DestinationOffersSeeAll";
 import BottomNavigationBar from "../../component/BottomNavigationBar/BottomNavigationBar";
@@ -53,4 +54,8 @@ class DestinationView extends React.Component {
 	}
 }
 
-export default (DestinationView);
+const mapStateToProps = state => ({
+	destination: state.travelDetails.destination
+});
+
+export default connect(mapStateToProps)(DestinationView);

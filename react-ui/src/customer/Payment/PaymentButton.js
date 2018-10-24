@@ -56,13 +56,13 @@ class PaymentButton extends React.Component {
 				}
 			}
 		}).then(() => {
-			if (this.props.basketState === EnumBasketState.PAID) {
-				this.props.emptyBasket();
-				this.props.history.push('/');
-			}
-			else {
+			if (this.props.basketState === EnumBasketState.HALF_PAID && items.length !== 0) {
 				this.props.reinitializeBasket({...this.props.basket, items});
 				this.props.history.push('/basket');
+			}
+			else {
+				this.props.emptyBasket();
+				this.props.history.push('/my-travels/');
 			}
 		})
 	};

@@ -1,5 +1,6 @@
 import React from "react";
 import qs from "query-string";
+import styled from "styled-components";
 import { connect } from "react-redux";
 import { Query } from "react-apollo";
 import { withRouter} from "react-router-dom";
@@ -9,6 +10,17 @@ import EnumActivityType from "./EnumActivityType";
 import OfferLargeSized from "./components/OfferLargeSized";
 import Link from "../../Link";
 import LoadingView from "../../component/LoadingView/LoadingView";
+
+const Root = styled.div`
+	width: 100%;
+	padding: 24px;
+`;
+
+const Container = styled.div`
+	width: 95vw;
+	max-width: 880px;
+	margin: 0 auto;
+`;
 
 class DestinationOffersSeeByTypeView extends React.Component {
 	constructor(props) {
@@ -25,7 +37,7 @@ class DestinationOffersSeeByTypeView extends React.Component {
 			return <Error404/>;
 		let activities = this.props.activities && this.props.activities.filter(activity => activity.type === this.attractionType.value);
 		return (
-			<div>
+			<Root>
 				{(!this.props.activities || this.props.activities.length === 0) &&
 				<Query query={GET_ACTIVITIES_BY_TYPE} variables={{ type: this.attractionType.value }}>
 					{ ({ loading, error, data }) => {
@@ -36,6 +48,7 @@ class DestinationOffersSeeByTypeView extends React.Component {
 					}}
 				</Query>
 				}
+				<Container>
 				{activities.map((activity, index) => {
 					return (
 						<Link key={activity.id}
@@ -49,7 +62,8 @@ class DestinationOffersSeeByTypeView extends React.Component {
 					);
 				})
 				}
-			</div>
+				</Container>
+			</Root>
 		);
 	}
 }

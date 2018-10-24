@@ -37,7 +37,6 @@ const ListOffers = styled.ul`
 `;
 
 const ListItem = styled.li`
-	cursor: pointer;
 `;
 
 const Type = styled.h3`
