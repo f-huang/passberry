@@ -13,7 +13,7 @@ import {
 import {combineReducers} from "redux";
 import moment from "moment";
 
-const destination = localStorage.getItem(DESTINATION);
+const destination = "Monaco";//localStorage.getItem(DESTINATION);
 let travelers = localStorage.getItem(TRAVELERS);
 travelers = travelers ? JSON.parse(travelers) : [{firstName: "", id: 1, isNew: true }];
 const startDate = localStorage.getItem(START_DATE);

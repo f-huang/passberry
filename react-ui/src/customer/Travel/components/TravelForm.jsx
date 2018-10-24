@@ -96,6 +96,7 @@ class TravelForm extends React.Component {
 								name="destination"
 								placeholder={"Trouver une destination..."}
 								onChange={e => this.props.onChangeDestination(e.target.name, e.target.value)}
+								readOnly
 								value={this.state.destination}
 							/>
 						</Wrap>
