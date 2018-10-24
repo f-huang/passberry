@@ -35,6 +35,7 @@ export const GET_ALL_ACTIVITIES = gql`
 			noQueuing
 			mustDo
 			description
+			images
 			price {
 				adult
 				child

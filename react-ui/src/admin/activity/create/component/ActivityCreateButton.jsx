@@ -20,7 +20,7 @@ const ActivityCreateButton = (props) => {
 	return (
 		<Mutation mutation={ CREATE_ACTIVITY }
 		          update={(cache, { data: { createActivity }}) => {
-		          	console.log(createActivity);
+			          console.log(createActivity);
 		          }}
 		>
 			{ (mutate) =>
@@ -34,12 +34,35 @@ const ActivityCreateButton = (props) => {
 
 const mapStateToProps = (state) => {
 	return ({
+		openingTimes: [
+			{
+				"timeSlot": "10h00-18h00"
+			},
+			{
+				"timeSlot": "10h00-18h00"
+			},
+			{
+				"timeSlot": "10h00-18h00"
+			},
+			{
+				"timeSlot": "10h00-18h00"
+			},
+			{
+				"timeSlot": "10h00-18h00"
+			},
+			{
+				"timeSlot": "10h00-18h00"
+			},
+			{
+				"timeSlot": null
+			}
+		],
 		images: state.createActivityPage.images,
 		name: state.createActivityPage.name,
 		price: state.createActivityPage.price,
 		type: state.createActivityPage.type,
-		description: state.createActivityPage.description,
-		link: state.createActivityPage.link,
+		description: state.createActivityPage.description || null,
+		link: state.createActivityPage.link || null,
 		address: state.createActivityPage.address,
 	})
 };

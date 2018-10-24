@@ -3,7 +3,7 @@ const { getFileExtension } = require("./database/utils");
 const fs = require('fs');
 const path = require('path');
 
-const UPLOAD_DIR = "../uploads/";
+const UPLOAD_DIR = "/../uploads/";
 
 const saveImage = async (image, index) => {
 	const { createReadStream, mimetype, encoding, filename } = await image;

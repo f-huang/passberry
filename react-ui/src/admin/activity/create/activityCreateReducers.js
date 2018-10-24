@@ -22,7 +22,7 @@ const initialState = {
 		supplement: "",
 		city: "",
 		postcode: "",
-		countryCode: ""
+		country: ""
 	},
 };
 
