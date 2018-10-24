@@ -70,7 +70,6 @@ const VuegoMustDoPass = (props) => {
 	const destination = props.match.params.destination.toLocaleLowerCase();
 	return (
 		<Container>
-			<Link to={`/${destination}/vuego-pass`}>
 			<TopContainer>
 				<Title>{"Les Vuego Pass"}</Title>
 				<SeeAllLink href="#">{"Voir tout"}</SeeAllLink>
@@ -81,7 +80,6 @@ const VuegoMustDoPass = (props) => {
 					<SecondaryText><b><i>{"à partir de 38€"}</i></b></SecondaryText>
 				</Preview>
 			</BottomContainer>
-			</Link>
 		</Container>
 	);
 };
