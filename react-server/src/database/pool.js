@@ -1,12 +1,13 @@
 "use strict";
-
+const config = require('./config');
 const mysql = require('mysql');
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
+    host: config.HOST,
+	port: config.PORT,
+    user: config.USER,
+    password: config.PASSWORD,
     multipleStatements: true,
-    database: 'dev_passberry'
+    database: config.DATABASE
 });
 
 module.exports = pool;

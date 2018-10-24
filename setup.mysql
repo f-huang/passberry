@@ -1,6 +1,6 @@
-DROP DATABASE `dev_passberry`;
-CREATE DATABASE IF NOT EXISTS `dev_passberry` CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `dev_passberry`;
+DROP DATABASE `vuego_prod`;
+CREATE DATABASE IF NOT EXISTS `vuego_prod` CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `vuego_prod`;
 
 
 CREATE TABLE IF NOT EXISTS
@@ -161,7 +161,7 @@ CREATE TABLE IF NOT EXISTS
 
 CREATE TABLE IF NOT EXISTS
 	token(
-		`value` VARCHAR(256) NOT NULL,
+		`value` VARCHAR(255) NOT NULL,
 		`user_id` INT UNSIGNED NOT NULL,
 		`init_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		`expiration_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS
 
 CREATE TABLE IF NOT EXISTS
     user_picture_id(
-        `path` VARCHAR(256) UNIQUE NOT NULL,
+        `path` VARCHAR(255) UNIQUE NOT NULL,
         `user_id` INT UNSIGNED NOT NULL,
         `upload_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(`user_id`) REFERENCES user(`id`),
@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS
 
 CREATE TABLE IF NOT EXISTS
     activity_image(
-        `path` VARCHAR(256) UNIQUE NOT NULL,
+        `path` VARCHAR(255) UNIQUE NOT NULL,
         `activity_id` INT UNSIGNED NOT NULL,
         FOREIGN KEY (`activity_id`) REFERENCES activity(`id`),
         PRIMARY KEY(`path`)
@@ -221,7 +221,7 @@ CREATE TABLE IF NOT EXISTS
         `user_id` INT UNSIGNED NOT NULL,
         `basket_id` INT UNSIGNED NOT NULL,
         `state` ENUM('SUCCESS', 'PENDING', 'CANCELED', 'FAILED') DEFAULT 'PENDING',
-        `api_key` VARCHAR(256),
+        `api_key` VARCHAR(255),
         `api_name` VARCHAR(128),
         FOREIGN KEY (`discount_code`) REFERENCES discount(`code`),
         FOREIGN KEY (`basket_id`) REFERENCES basket(`id`),
@@ -317,14 +317,14 @@ CREATE TABLE IF NOT EXISTS
 
 
 LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/countries.csv'
-	INTO TABLE dev_passberry.country
+	INTO TABLE vuego_prod.country
 	FIELDS TERMINATED BY ','
 	OPTIONALLY ENCLOSED BY '"'
 	LINES TERMINATED BY '\n'
 	IGNORE 1 LINES;
 
 LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_partner.csv'
-   	INTO TABLE dev_passberry.partner
+   	INTO TABLE vuego_prod.partner
    	FIELDS TERMINATED BY ','
    	OPTIONALLY ENCLOSED BY '"'
    	LINES TERMINATED BY '\n'
@@ -332,7 +332,7 @@ LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_partner.csv'
 
 
 LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_activity.csv'
-   	INTO TABLE dev_passberry.activity
+   	INTO TABLE vuego_prod.activity
    	FIELDS TERMINATED BY ','
    	OPTIONALLY ENCLOSED BY '"'
    	LINES TERMINATED BY '\n'
@@ -340,7 +340,7 @@ LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_activity.csv'
 
 
 LOAD DATA LOCAL INFILE '/Users/FannyHuang/passberry/populate_user.csv'
-   	INTO TABLE dev_passberry.user
+   	INTO TABLE vuego_prod.user
    	FIELDS TERMINATED BY ','
    	OPTIONALLY ENCLOSED BY '"'
    	LINES TERMINATED BY '\n'

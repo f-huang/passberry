@@ -4,13 +4,14 @@
 
 const express = require('express');
 const app = express();
-const graphqlHTTP = require('express-graphql');
-const { graphqlUploadExpress } = require('graphql-upload');
-const bodyParser = require("body-parser");
+const cors = require("cors");
 const path = require("path");
+const bodyParser = require("body-parser");
 const compression = require("compression");
 const helmet = require("helmet");
 const jwt = require('express-jwt');
+const graphqlHTTP = require('express-graphql');
+const { graphqlUploadExpress } = require('graphql-upload');
 
 const schema = require('./src/schema');
 const JWT_SECRET = "temporarySecret";
@@ -27,9 +28,10 @@ const middlewares = [
 ];
 
 if (process.env.NODE_ENV === "production") {
-	app.use(express.static( `${__dirname}/../build` ));
+	console.log("Production env");
+	app.use(express.static("/var/www/vuego.fr/public_html/index.html"));
 	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "../", "build", "index.html"));
+		res.sendFile(path.resolve("/var/www/vuego.fr/public_html", "index.html"));
 	});
 }
 
@@ -46,16 +48,16 @@ app.use(apiEndPoint, graphqlUploadExpress({
 	maxFiles: 10
 }));
 
-app.use(apiEndPoint, bodyParser.json(), graphqlHTTP(req =>
+app.use(apiEndPoint, cors(), bodyParser.json(), graphqlHTTP(req =>
 	({
 		schema: schema,
-		context: {user: req.user},
-		graphiql: true,
+		context: { user: req.user },
+		graphiql: process.env.NODE_ENV === 'development',
 	})
 ));
 
 app.listen(port);
-console.log(`Listening app at http://localhost:${port}`);
+console.log(`Listening app at http://vuego.fr:${port}`);
 
 // =====================================
 

@@ -3,11 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "private": true,
-  "homepage": "http://localhost/",
-  "repository": {
-    "type": "git",
-    "url": "https://gitlab.com/f-huang/passberry.git"
-  },
+  "homepage": "http://vuego.fr/",
   "scripts": {
     "test": "mocha ./react-server/tests/**/**.js",
     "test-user": "mocha ./react-server/tests/UserTest.js",
@@ -22,7 +18,7 @@
     "devserver": "nodemon react-server/app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "fhuang",
   "license": "ISC",
   "dependencies": {
     "apollo-cache-inmemory": "^1.3.6",
@@ -36,6 +32,7 @@
     "apollo-upload-client": "^9.0.0",
     "bcrypt": "^3.0.2",
     "compression": "^1.7.3",
+    "cors": "^2.8.4",
     "crypto": "^1.0.1",
     "express": "^4.16.4",
     "express-graphql": "^0.6.12",
