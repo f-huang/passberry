@@ -52,7 +52,7 @@ app.use(apiEndPoint, cors(), bodyParser.json(), graphqlHTTP(req =>
 	({
 		schema: schema,
 		context: { user: req.user },
-		graphiql: process.env.NODE_ENV === 'development',
+		graphiql: process.env.NODE_ENV !== 'production',
 	})
 ));
 

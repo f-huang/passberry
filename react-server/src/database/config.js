@@ -1,7 +1,6 @@
 module.exports = {
-	HOST: 'vuego.fr',
-	PORT: 3306,
+	HOST: 'localhost',
 	USER: 'root',
 	PASSWORD: 'root',
-	DATABASE: 'vuego_prod'
+	DATABASE: 'dev_passberry'
 };

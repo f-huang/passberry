@@ -34,9 +34,7 @@ const client = new ApolloClient({
 	// Pass the configuration option { uri: YOUR_GRAPHQL_API_URL } to the `HttpLink` to connect
 	// to a different host
 	// link: authLink.concat(createUploadLink()),
-	link: createUploadLink({
-		uri: 'http://vuego.fr:4000/graphql'
-	}),
+	link: createUploadLink(),
 	cache: new InMemoryCache(),
 	onError: ({ networkError, graphQLErrors }) => {
 		console.log('graphQLErrors', graphQLErrors);
