@@ -21,6 +21,7 @@ const ActivityCreateButton = (props) => {
 		<Mutation mutation={ CREATE_ACTIVITY }
 		          update={(cache, { data: { createActivity }}) => {
 			          console.log(createActivity);
+			          window.location.reload();
 		          }}
 		>
 			{ (mutate) =>

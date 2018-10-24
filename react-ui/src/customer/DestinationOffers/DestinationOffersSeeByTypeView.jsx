@@ -13,12 +13,11 @@ import LoadingView from "../../component/LoadingView/LoadingView";
 
 const Root = styled.div`
 	width: 100%;
-	padding: 24px;
 `;
 
 const Container = styled.div`
-	width: 95vw;
-	max-width: 880px;
+	width: 95%;
+	max-width: 600px;
 	margin: 0 auto;
 `;
 
